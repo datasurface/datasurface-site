@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CQRS Architecture - DataSurface</title>
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="js/nav.js"></script>
+</head>
+<body>
+    <header>
+        <!-- Navigation injected by js/nav.js -->
+    </header>
+    <script>renderNav('.');</script>
+
+    <main class="container" style="padding: 60px 0;">
+        <div style="max-width: 900px; margin: 0 auto;">
+            <h1 style="margin-bottom: 20px;">CQRS: Decoupling Ingestion from Consumption</h1>
+            <p style="font-size: 1.2rem; color: var(--text-light); margin-bottom: 50px;">
+                Command Query Responsibility Segregation (CQRS) is a pattern that separates <em>write</em> operations (ingestion) from <em>read</em> operations (consumption). In DataSurface, this means we ingest data once and replicate it to multiple, optimized consumer destinations.
+            </p>
+
+            <div class="blog-post" style="margin-bottom: 40px;">
+                <h2>Why CQRS?</h2>
+                <p>Traditional data platforms force everyone to query the same massive data lake or warehouse where data is ingested. This creates contention, locks you into a single vendor, and forces a "one size fits all" performance model.</p>
+                <p>With DataSurface CQRS:</p>
+                <ul style="margin: 20px 0 20px 40px; list-style-type: disc;">
+                    <li><strong>Ingest Once:</strong> Expensive extraction from source systems happens only one time.</li>
+                    <li><strong>Consume Everywhere:</strong> Data is replicated to multiple <strong>Consumer Replica Groups (CRGs)</strong> tailored to specific needs.</li>
+                    <li><strong>Physical Isolation:</strong> A heavy analytical query on Snowflake won't slow down an operational dashboard on Postgres.</li>
+                </ul>
+            </div>
+
+            <div class="blog-post" style="margin-bottom: 40px;">
+                <h2>Hybrid Cloud Example</h2>
+                <p>Consider a scenario where you have legacy on-premise data but want to leverage cloud analytics.</p>
+
+                <div style="background: #f8fafc; padding: 30px; border-radius: 12px; border: 1px solid #e2e8f0; margin-top: 20px;">
+                    <h3 style="color: var(--primary-dark); margin-bottom: 15px;">1. The Primary Ingestion (Write Side)</h3>
+                    <p><strong>Location:</strong> On-Premise Data Center<br>
+                    <strong>Technology:</strong> Local Kubernetes & Postgres</p>
+                    <p style="margin-top: 10px;">DataSurface ingests raw data from legacy mainframes or databases into a local Primary Ingestion Platform. This keeps ingress costs zero and ensures low-latency capture.</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 20px;">
+                    <div style="background: #f0f9ff; padding: 20px; border-radius: 8px; border-left: 4px solid #0ea5e9;">
+                        <h4 style="color: #0369a1;">CRG 1: Cloud Analytics Platform</h4>
+                        <p style="font-size: 0.9rem; margin-top: 10px;"><strong>Purpose:</strong> Enterprise Analytics & BI</p>
+                        <p style="font-size: 0.9rem;">Data is replicated to a cloud analytics platform. Marketing and Finance teams run massive queries here without affecting operational systems.</p>
+                    </div>
+
+                    <div style="background: #f0fdf4; padding: 20px; border-radius: 8px; border-left: 4px solid #22c55e;">
+                        <h4 style="color: #15803d;">CRG 2: AWS Aurora</h4>
+                        <p style="font-size: 0.9rem; margin-top: 10px;"><strong>Purpose:</strong> High-Performance App Backend</p>
+                        <p style="font-size: 0.9rem;">A subset of the data is replicated to Aurora to power a customer-facing web application requiring low-latency lookups.</p>
+                    </div>
+
+                    <div style="background: #fff7ed; padding: 20px; border-radius: 8px; border-left: 4px solid #f97316;">
+                        <h4 style="color: #c2410c;">CRG 3: Onsite Postgres</h4>
+                        <p style="font-size: 0.9rem; margin-top: 10px;"><strong>Purpose:</strong> Dev/Test & Non-Prod</p>
+                        <p style="font-size: 0.9rem;">Developers work against a local Postgres replica. This avoids cloud egress costs and prevents accidental load on production cloud resources.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="blog-post">
+                <h2>Flexible Workspace Placement & Cost Optimization</h2>
+                <p>A Consumer Workspace is defined logically in the model. You can choose to place that workspace on any available CRG.</p>
+                <p>You might start a project on the <strong>Onsite Postgres CRG</strong> to keep costs low during development. When ready for production scale, you simply change the configuration to deploy that same Workspace to a <strong>Cloud Analytics CRG</strong>. The consumer code doesn't change—DataSurface handles the platform switch.</p>
+                <p style="margin-top: 15px;">Conversely, if a project on an expensive cloud platform becomes too costly but doesn't require that specific scale, you can seamlessly move that Workspace to a lower-cost CRG when it makes commercial sense.</p>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 DataSurface. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

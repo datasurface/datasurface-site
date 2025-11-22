@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataSurface Blog</title>
+    <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16x16.png">
+    <link rel="shortcut icon" href="../images/favicon.ico">
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="../js/nav.js"></script>
+</head>
+<body>
+    <header>
+        <!-- Navigation injected by js/nav.js -->
+    </header>
+    <script>renderNav('..');</script>
+
+    <main class="container" style="padding: 60px 0;">
+        <h1 style="margin-bottom: 40px;">Latest Thinking</h1>
+
+        <article class="blog-post" style="margin-bottom: 40px; cursor: pointer;" onclick="window.location.href='day-2-trap.html'">
+            <h2 style="margin-bottom: 10px;"><a href="day-2-trap.html" style="color: var(--primary);">The "Day 2" Trap: Why Your New Data Platform Won't Save You</a></h2>
+            <div class="meta">November 22, 2025 &bull; By Billy Newport</div>
+            <p>Many CDOs believe that the moment they sign a multi-year deal for one of the big data vendor products, their company will instantly become more productive. This is dangerously optimistic thinking. The real costs begin on Day 2.</p>
+            <div style="margin-top: 20px;">
+                <a href="day-2-trap.html" class="btn-secondary" style="padding: 8px 16px; font-size: 0.9rem;">Read More</a>
+            </div>
+        </article>
+
+        <article class="blog-post" style="margin-bottom: 40px; cursor: pointer;" onclick="window.location.href='walled-gardens.html'">
+            <h2 style="margin-bottom: 10px;"><a href="walled-gardens.html" style="color: var(--primary);">The Walled Gardens Are Back (And This Time It’s Your Data)</a></h2>
+            <div class="meta">November 18, 2025 &bull; By Billy Newport</div>
+            <p>Today’s data landscape looks eerily like the 90s internet—dominated by proprietary walled gardens. DataSurface is the "HTTP for Data," an open protocol layer that connects producers and consumers while keeping you in control of your destiny.</p>
+            <div style="margin-top: 20px;">
+                <a href="walled-gardens.html" class="btn-secondary" style="padding: 8px 16px; font-size: 0.9rem;">Read More</a>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 DataSurface. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

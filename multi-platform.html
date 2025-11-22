@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Platform Agility - DataSurface</title>
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="js/nav.js"></script>
+</head>
+<body>
+    <header>
+        <!-- Navigation injected by js/nav.js -->
+    </header>
+    <script>renderNav('.');</script>
+
+    <main class="container" style="padding: 60px 0;">
+        <div style="max-width: 900px; margin: 0 auto;">
+            <h1 style="margin-bottom: 20px;">Multi-Platform Agility</h1>
+            <p style="font-size: 1.2rem; color: var(--text-light); margin-bottom: 50px;">
+                Building "Decade-Ware": Systems designed to survive 10+ years of technological change.
+            </p>
+
+            <div class="blog-post" style="margin-bottom: 40px;">
+                <h2>The Problem: Technology Lock-in</h2>
+                <p>Data infrastructure moves fast. What was cutting-edge 5 years ago (Hadoop) is legacy today. What seems standard today might be disrupted tomorrow.</p>
+                <p>Most data systems are tightly coupled to their underlying storage and compute engines. When you need to change vendors, you face a massive, risky, and expensive migration project—often involving rewriting hundreds of pipelines.</p>
+            </div>
+
+            <div class="blog-post" style="margin-bottom: 40px;">
+                <h2>The Solution: Pluggable DataPlatforms</h2>
+                <p>DataSurface abstracts the "how" from the "what". Your model defines the data flows (Producers -> Transformations -> Consumers), while <strong>DataPlatforms</strong> handle the physical execution.</p>
+                
+                <div style="margin-top: 30px;">
+                    <h3 style="color: var(--primary); margin-bottom: 10px;">Decoupled Architecture</h3>
+                    <p>DataPlatforms are plugins. You can add new platform capabilities (e.g., a new high-speed SQL engine or a vector database for AI) at any time without changing your business logic.</p>
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <h3 style="color: var(--primary); margin-bottom: 10px;">Flexible Consumer Assignment</h3>
+                    <p>Consumers (Workspaces) are assigned to DataPlatforms to execute their data requirements. This assignment is a configuration, not code.</p>
+                    <ul style="margin: 15px 0 15px 40px; list-style-type: disc;">
+                        <li><strong>Migration is trivial:</strong> Switch a consumer from one platform to another by changing one line in the model. DataSurface handles the data movement and synchronization.</li>
+                        <li><strong>Frictionless Cost Optimization (Multi-Homing):</strong> A consumer running on an expensive platform can <em>also</em> be assigned to a lower-cost option simultaneously. This allows them to benchmark performance and cost side-by-side. If the lower-cost option works, they can switch over completely by just editing a couple of lines in the model.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="blog-post">
+                <h2>Why This Matters</h2>
+                <p>This architecture effectively future-proofs your data estate. By decoupling producers and consumers from the specific technology used for data movement and storage, you create a system that can evolve.</p>
+                <p>We call this <strong>"Decade-Ware"</strong>—systems designed to last 10 years or more. You can adopt the latest innovations in the data market as plugins, rather than having to rebuild your entire platform from scratch every time the wind changes.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 DataSurface. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

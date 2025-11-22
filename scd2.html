@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCD2 - Automated History | DataSurface</title>
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="js/nav.js"></script>
+</head>
+<body>
+    <header>
+        <!-- Navigation injected by js/nav.js -->
+    </header>
+    <script>renderNav('.');</script>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Automated History (SCD2)</h1>
+                <p>True time travel for your data with zero coding effort.</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="container">
+                <h2>What is SCD2?</h2>
+                <p>Slowly Changing Dimension Type 2 (SCD2) is a data warehousing technique used to track historical data. Unlike standard updates that overwrite existing data (SCD1), SCD2 keeps a full history of changes.</p>
+                <p>DataSurface automates this pattern, adding two system columns to your data to enable point-in-time analysis: <code>batch_in</code> and <code>batch_out</code>.</p>
+                
+                <h3>How It Works</h3>
+                <p>Every record has a validity window defined by batch numbers. When a record is created, it is valid from the ingestion batch until the end of time (MAXINT). When it is updated, the old version is "closed" (its <code>batch_out</code> is set to the previous batch ID), and a new version is inserted with the new batch ID as its <code>batch_in</code>.</p>
+
+                <h3>Example: Tracking Employee Changes</h3>
+                <p>Consider a <code>Person</code> table with the following schema:</p>
+                <div class="code-block">
+                    <table>
+                        <thead>
+                            <tr><th>Column</th><th>Description</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>id</td><td>Unique identifier</td></tr>
+                            <tr><td>firstName</td><td>First Name</td></tr>
+                            <tr><td>surname</td><td>Last Name</td></tr>
+                            <tr><td>dob</td><td>Date of Birth</td></tr>
+                            <tr><td>address</td><td>Current Address</td></tr>
+                            <tr><td>employer</td><td>Current Employer</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4>Step 1: Initial Batch (Batch 100)</h4>
+                <p>We ingest a new employee, John Doe.</p>
+                <div class="code-block">
+                    <table>
+                        <thead>
+                            <tr><th>id</th><th>firstName</th><th>surname</th><th>address</th><th>employer</th><th>batch_in</th><th>batch_out</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>101</td><td>John</td><td>Doe</td><td>123 Main St</td><td>Acme Corp</td><td>100</td><td>MAXINT</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p><em>Status: John works at Acme Corp and lives at 123 Main St.</em></p>
+
+                <h4>Step 2: Update (Batch 105)</h4>
+                <p>John moves to a new apartment. We receive an update.</p>
+                <div class="code-block">
+                    <table>
+                        <thead>
+                            <tr><th>id</th><th>firstName</th><th>surname</th><th>address</th><th>employer</th><th>batch_in</th><th>batch_out</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr class="dimmed"><td>101</td><td>John</td><td>Doe</td><td>123 Main St</td><td>Acme Corp</td><td>100</td><td>104</td></tr>
+                            <tr class="highlight"><td>101</td><td>John</td><td>Doe</td><td>456 Elm St</td><td>Acme Corp</td><td>105</td><td>MAXINT</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p><em>Status: The old record is closed (valid 100-104). The new record is now active (105-MAXINT).</em></p>
+
+                <h4>Step 3: Update (Batch 120)</h4>
+                <p>John changes jobs to Beta Inc.</p>
+                <div class="code-block">
+                    <table>
+                        <thead>
+                            <tr><th>id</th><th>firstName</th><th>surname</th><th>address</th><th>employer</th><th>batch_in</th><th>batch_out</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr class="dimmed"><td>101</td><td>John</td><td>Doe</td><td>123 Main St</td><td>Acme Corp</td><td>100</td><td>104</td></tr>
+                            <tr class="dimmed"><td>101</td><td>John</td><td>Doe</td><td>456 Elm St</td><td>Acme Corp</td><td>105</td><td>119</td></tr>
+                            <tr class="highlight"><td>101</td><td>John</td><td>Doe</td><td>456 Elm St</td><td>Beta Inc</td><td>120</td><td>MAXINT</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4>Step 4: Deletion (Batch 135)</h4>
+                <p>John leaves the system (record deleted in source).</p>
+                <div class="code-block">
+                    <table>
+                        <thead>
+                            <tr><th>id</th><th>firstName</th><th>surname</th><th>address</th><th>employer</th><th>batch_in</th><th>batch_out</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr class="dimmed"><td>101</td><td>John</td><td>Doe</td><td>123 Main St</td><td>Acme Corp</td><td>100</td><td>104</td></tr>
+                            <tr class="dimmed"><td>101</td><td>John</td><td>Doe</td><td>456 Elm St</td><td>Acme Corp</td><td>105</td><td>119</td></tr>
+                            <tr class="dimmed"><td>101</td><td>John</td><td>Doe</td><td>456 Elm St</td><td>Beta Inc</td><td>120</td><td>134</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p><em>Status: No active record exists (all have a <code>batch_out</code>). However, the history remains for forensic analysis.</em></p>
+
+                <h3>Why This Matters</h3>
+                <p>With SCD2, you can ask questions like:</p>
+                <ul>
+                    <li>"Where did John live when he worked for Acme Corp?"</li>
+                    <li>"How many employees did we have as of Batch 110?"</li>
+                </ul>
+                <p>DataSurface manages this complexity automatically, ensuring your analytical data is always accurate and audit-ready.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 DataSurface. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

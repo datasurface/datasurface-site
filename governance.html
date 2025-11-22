@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Governance & Policies - DataSurface</title>
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="js/nav.js"></script>
+</head>
+<body>
+    <header>
+        <!-- Navigation injected by js/nav.js -->
+    </header>
+    <script>renderNav('.');</script>
+
+    <main class="container" style="padding: 60px 0;">
+        <div style="max-width: 900px; margin: 0 auto;">
+            <h1 style="margin-bottom: 20px;">Automated Governance & Policy Enforcement</h1>
+            <p style="font-size: 1.2rem; color: var(--text-light); margin-bottom: 50px;">
+                Governance in DataSurface isn't a document on a wiki—it's executable code. Policies defined at the Zone level are automatically enforced against every dataset and container within that zone.
+            </p>
+
+            <div class="blog-post" style="margin-bottom: 40px;">
+                <h2>Governance Zones</h2>
+                <p>The ecosystem is divided into <strong>Governance Zones</strong> (e.g., "EU Zone", "Finance Zone"). A Zone acts as a federation boundary that defines ownership and applies default policies to all Teams contained within it.</p>
+            </div>
+
+            <div class="blog-post" style="margin-bottom: 40px;">
+                <h2>Policy-Driven Data Placement</h2>
+                <p>Policies control <em>where</em> data can live based on its classification. If a developer tries to place sensitive data in a non-compliant location, the model linting fails, blocking the change.</p>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 30px;">
+                    <div style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-top: 4px solid #ef4444;">
+                        <h4 style="margin-bottom: 10px; color: #b91c1c;">Geographic Restrictions</h4>
+                        <p style="font-size: 0.95rem;">"Data classified as <strong>EU_Citizen_PII</strong> must only be stored in <strong>Infrastructure Locations</strong> tagged as 'EU'."</p>
+                        <p style="font-size: 0.85rem; color: var(--text-light); margin-top: 10px;"><em>Prevents accidental data sovereignty violations.</em></p>
+                    </div>
+
+                    <div style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-top: 4px solid #eab308;">
+                        <h4 style="margin-bottom: 10px; color: #a16207;">Cloud Vendor Lock</h4>
+                        <p style="font-size: 0.95rem;">"Highly Confidential IP data cannot be stored on public cloud vendors (AWS, Azure). It must reside on <strong>Private/On-Premise</strong> infrastructure."</p>
+                        <p style="font-size: 0.85rem; color: var(--text-light); margin-top: 10px;"><em>Enforces security posture automatically.</em></p>
+                    </div>
+
+                    <div style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-top: 4px solid #3b82f6;">
+                        <h4 style="margin-bottom: 10px; color: #1d4ed8;">Storage Type Constraints</h4>
+                        <p style="font-size: 0.95rem;">"Financial Ledger data must be stored in <strong>ACID-compliant</strong> databases (Postgres, Oracle) and cannot be dumped into object storage (S3) without encryption."</p>
+                        <p style="font-size: 0.85rem; color: var(--text-light); margin-top: 10px;"><em>Ensures technical suitability and compliance.</em></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="blog-post">
+                <h2>How It Works</h2>
+                <ol style="margin: 20px 0 20px 40px; list-style-type: decimal; font-size: 1.1rem;">
+                    <li style="margin-bottom: 15px;"><strong>Define Policy:</strong> The Zone Administrator writes a policy in Python (e.g., <code>require_eu_residency_for_pii</code>).</li>
+                    <li style="margin-bottom: 15px;"><strong>Classify Data:</strong> A Data Producer tags a new Dataset column as <code>PII</code>.</li>
+                    <li style="margin-bottom: 15px;"><strong>Assign Infrastructure:</strong> The Producer attempts to map this dataset to an AWS bucket in <code>us-east-1</code>.</li>
+                    <li style="margin-bottom: 15px;"><strong>Linting Fails:</strong> The DataSurface linter runs the policy. It sees <code>PII</code> data mapped to a <code>US</code> location. The build fails with a clear error message.</li>
+                </ol>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 DataSurface. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
