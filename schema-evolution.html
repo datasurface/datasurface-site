@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schema Evolution & Deprecation - DataSurface</title>
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="js/nav.js"></script>
+</head>
+<body>
+    <header>
+        <!-- Navigation injected by js/nav.js -->
+    </header>
+    <script>renderNav('.');</script>
+
+    <main class="container" style="padding: 60px 0;">
+        <div style="max-width: 900px; margin: 0 auto;">
+            <h1 style="margin-bottom: 20px;">Schema Evolution & The Deprecation Protocol</h1>
+            <p style="font-size: 1.2rem; color: var(--text-light); margin-bottom: 50px;">
+                Data changes are inevitable. DataSurface ensures that when schemas evolve, they do so safely. Backwards compatibility is verified through automated linting, and breaking changes are managed through a strict <strong>Deprecation Protocol</strong> that forces producer-consumer alignment before code is merged.
+            </p>
+
+            <div class="blog-post" style="margin-bottom: 40px;">
+                <h2>Automated Backward Compatibility Checks</h2>
+                <p>Every time a developer opens a Pull Request (PR) to modify a `Datastore` schema, the DataSurface linter runs a compatibility check against all existing consumers.</p>
+                <div style="background: #f0fdf4; padding: 20px; border-radius: 8px; border-left: 4px solid #22c55e; margin-top: 20px;">
+                    <h4 style="color: #15803d;">Safe Changes (Allowed)</h4>
+                    <p style="font-size: 0.9rem;">Adding a nullable column, relaxing a constraint.</p>
+                </div>
+                <div style="background: #fef2f2; padding: 20px; border-radius: 8px; border-left: 4px solid #ef4444; margin-top: 15px;">
+                    <h4 style="color: #b91c1c;">Breaking Changes (Blocked)</h4>
+                    <p style="font-size: 0.9rem;">Renaming a column used by a consumer, changing a type from String to Integer.</p>
+                </div>
+                <p style="margin-top: 20px;">If a change is unsafe, the PR check fails immediately, preventing the breakage from ever reaching production.</p>
+            </div>
+
+            <div class="blog-post" style="margin-bottom: 40px;">
+                <h2>The Deprecation Protocol</h2>
+                <p>What if a Producer <em>needs</em> to make a breaking change or retire a dataset? They cannot simply break their consumers. DataSurface enforces a multi-step "handshake" protocol:</p>
+
+                <div style="margin-left: 20px; margin-top: 30px;">
+                    <h3 style="color: var(--primary); margin-bottom: 10px;">Step 1: Producer Attempts Deprecation (Blocked)</h3>
+                    <p>The Producer opens a PR marking a Datastore as <code>deprecated=True</code>. The linter scans the ecosystem and finds active consumers (Workspaces) that depend on this data.</p>
+                    <p><strong>Result:</strong> <span style="color: #ef4444; font-weight: 600;">PR FAILED</span>. The error message lists exactly which Consumer Workspaces have not yet agreed to handle deprecation.</p>
+                </div>
+
+                <div style="margin-left: 20px; margin-top: 30px;">
+                    <h3 style="color: var(--primary); margin-bottom: 10px;">Step 2: The Conversation</h3>
+                    <p>This failure forces a conversation. The Producer must contact the Consumer teams (listed in the PR failure) and negotiate a migration plan.</p>
+                </div>
+
+                <div style="margin-left: 20px; margin-top: 30px;">
+                    <h3 style="color: var(--primary); margin-bottom: 10px;">Step 3: Consumer Opt-In (PR Approval)</h3>
+                    <p>Each Consumer team must update their own `Workspace` definition to explicitly allow consumption of the deprecated dataset (e.g., <code>deprecationsAllowed=DeprecationsAllowed.ALLOWED</code>). They open PRs for their own workspaces.</p>
+                    <p><strong>Result:</strong> <span style="color: #22c55e; font-weight: 600;">PR SUCCEEDED</span>. Consumers signal they are ready/aware.</p>
+                </div>
+
+                <div style="margin-left: 20px; margin-top: 30px;">
+                    <h3 style="color: var(--primary); margin-bottom: 10px;">Step 4: Producer Retries (Success)</h3>
+                    <p>Once all consumers have merged their "allow" flags, the Producer re-runs their original PR.</p>
+                    <p><strong>Result:</strong> <span style="color: #22c55e; font-weight: 600;">PR SUCCEEDED</span>. The dataset is now formally deprecated, and the ecosystem is in a known, safe state.</p>
+                </div>
+            </div>
+
+            <div class="blog-post">
+                <h2>Why This Matters</h2>
+                <p>This protocol eliminates "surprise breakages." It turns an organizational coordination problem into a code-enforced gate. No one can break the build for others without explicit, recorded consent.</p>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 DataSurface. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

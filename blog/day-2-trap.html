@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The "Day 2" Trap - DataSurface Blog</title>
+    <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16x16.png">
+    <link rel="shortcut icon" href="../images/favicon.ico">
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="../js/nav.js"></script>
+</head>
+<body>
+    <header>
+        <!-- Navigation injected by js/nav.js -->
+    </header>
+    <script>renderNav('..');</script>
+
+    <main class="container" style="padding: 60px 0;">
+        <article class="blog-post">
+            <h1>The "Day 2" Trap: Why Your New Data Platform Won't Save You</h1>
+            <div class="meta">November 22, 2025 &bull; By Billy Newport</div>
+            
+            <div class="content">
+                <p>I think many CDOs believe that the moment they sign a multi-year deal for one of the big data vendor products, their company will instantly become more productive. This is dangerously optimistic thinking.</p>
+
+                <p>Looking back at what I built in this space in the mid-2010s, if I were starting again today, I’d need to build the exact same architecture—just on a different foundation. Maybe Iceberg on S3 rather than Parquet on HDFS. A different job scheduler instead of YARN. A catalog on top of S3/Iceberg. But mostly, <strong>nothing has changed in 10 years.</strong></p>
+
+                <p>There are faster SQL engines today that can run on top of S3/Iceberg, but your CPU costs over the next few years will depend entirely on how well that specific SQL engine matches the workloads you force onto it. Because that’s what you’ve been told, right? You only need one engine, and it happens to be whichever one you just purchased.</p>
+
+                <h3>The Reality of "Day 2"</h3>
+
+                <p>After you sign the contract, that’s the end of Day 1. Day 2 starts now, and this is when the real costs begin. You can easily spend tens of millions of dollars per year on labor for the next five years and still end up with a mess.</p>
+
+                <p>If you’re lucky and have people who have done it before, you might end up with a platform that the rest of the firm can build on to save money. But more likely, you will end up with a decentralized collection of proprietary point-to-point data pipelines—"pipeline spaghetti" built around that expensive Day 1 platform you purchased.</p>
+
+                <p>When you leave, and your successor looks at "value for money" against the market products available in the future, decisions made now will determine whether your firm can leverage those future improvements, or whether the technical debt of your current software locks you down.</p>
+
+                <h3>The "Logistics Layer" for Data</h3>
+
+                <p>I built DataSurface with the hindsight of running a massive platform on HDFS/Parquet for six years. I built it to package that experience into a single, off-the-shelf solution that runs on top of what you just purchased—and on top of what your successor will purchase—without the technical debt.</p>
+
+                <p>Think of DataSurface as the Amazon Storefront for your data. Amazon customers order products; they don’t care whether FedEx, UPS, or Amazon’s own trucks deliver the package. If Amazon switches from FedEx to their own shipping fleet to save costs or improve speed, do the customers care? Are they consulted? No. The package just arrives.</p>
+
+                <p>DataSurface is that logistics layer. A data nervous system for your enterprise. It allows multiple platforms—whether Big Data Vendors, traditional databases like Oracle, SQL Server, IBM DB2, or Postgres, across multiple clouds (AWS, Azure, on-premise)—to be used interchangeably to support the requirements of your data consumers as those requirements evolve over time. It allows platforms to be swapped out or upgraded without breaking the business. Without this layer, even a simple version upgrade from a single vendor can turn into a full platform port.</p>
+
+                <p>With DataSurface, migration is a configuration change, not a code rewrite. It is the insurance policy that lets you safely use today’s best engines while keeping your data architecture independent, compliant, and ready for tomorrow.</p>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 DataSurface. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

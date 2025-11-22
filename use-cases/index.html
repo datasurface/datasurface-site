@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Use Cases - DataSurface</title>
+    <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16x16.png">
+    <link rel="shortcut icon" href="../images/favicon.ico">
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="../js/nav.js"></script>
+</head>
+<body>
+    <header>
+        <!-- Navigation injected by js/nav.js -->
+    </header>
+    <script>renderNav('..');</script>
+
+    <main class="container" style="padding: 60px 0;">
+        <h1>Use Cases</h1>
+        <p style="margin-bottom: 40px; max-width: 800px;">DataSurface adapts to complex enterprise scenarios where standard tools hit their limits.</p>
+
+        <div class="features" style="padding: 0; grid-template-columns: 1fr;">
+            <div class="feature-card" style="display: flex; flex-direction: column; gap: 15px;">
+                <h3>Regulatory Data Exchange (RDX)</h3>
+                <p><strong>Problem:</strong> You need to distribute data to regulators or external partners with 100% auditability, lineage, and zero risk of accidental data leakage.</p>
+                <p><strong>Solution:</strong> Use <a href="../governance.html" style="color: var(--primary); text-decoration: underline;">DataSurface policies</a> to strictly define the "contract" of what data leaves the firm. The system automatically generates the pipelines to populate a dedicated, isolated Data Container for the external party. If the policy isn't met, the pipeline doesn't build.</p>
+            </div>
+
+            <div class="feature-card" style="display: flex; flex-direction: column; gap: 15px; margin-top: 30px;">
+                <h3>Cloud Migration without the "Big Bang"</h3>
+                <p><strong>Problem:</strong> You want to move from on-premise Oracle to the cloud, but you have 500 legacy reports that will break if you switch.</p>
+                <p><strong>Solution:</strong> Use <a href="../cqrs.html" style="color: var(--primary); text-decoration: underline;">DataSurface's CQRS</a> (Command Query Responsibility Segregation). Keep the primary ingestion on-premise initially. Spin up a cloud consumer replica in parallel. Migrate consumers one by one to the cloud replica. Once all consumers are moved, switch the primary ingestion to the cloud. The model manages the dual-state complexity for you.</p>
+            </div>
+
+            <div class="feature-card" style="display: flex; flex-direction: column; gap: 15px; margin-top: 30px;">
+                <h3>Agentic AI Data Feed (ADX)</h3>
+                <p><strong>Problem:</strong> AI Agents need reliable, governed access to enterprise data, but giving them direct DB access is a security nightmare.</p>
+                <p><strong>Solution:</strong> Treat the AI Agent as just another Consumer Workspace. Define exactly which tables and columns it can see. DataSurface projects that specific subset into a clean, isolated container (e.g., a vector DB or read-only Postgres) that the Agent can query safely. </p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 DataSurface. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

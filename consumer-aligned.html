@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consumer Aligned Data Flows - DataSurface</title>
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="js/nav.js"></script>
+</head>
+<body>
+    <header>
+        <!-- Navigation injected by js/nav.js -->
+    </header>
+    <script>renderNav('.');</script>
+
+    <main class="container" style="padding: 60px 0;">
+        <div style="max-width: 900px; margin: 0 auto;">
+            <h1 style="margin-bottom: 20px;">Consumer Aligned Data Flows</h1>
+            <p style="font-size: 1.2rem; color: var(--text-light); margin-bottom: 50px;">
+                In DataSurface, data movement is driven entirely by consumer demand. Producers merely signal availability; consumers define the terms of delivery. This inversion of control decouples teams and future-proofs your architecture.
+            </p>
+
+            <div class="blog-post" style="margin-bottom: 40px;">
+                <h2>1. Producer Awareness vs. Consumer Action</h2>
+                <p>A data producer's role is simple: indicate in the model that data is available. They define the schema and the source location. Crucially, <strong>nothing happens</strong> just because a producer defines a dataset.</p>
+                <p>No pipelines are built, no storage is provisioned, and no compute is consumed until a consumer explicitly declares a need for that data in their Workspace. This "pull-based" model prevents data swamps and wasted resources.</p>
+            </div>
+
+            <div class="blog-post" style="margin-bottom: 40px;">
+                <h2>2. Consumer Defined Requirements</h2>
+                <p>The consumer defines the "what" and the "how" of their data needs. They specify:</p>
+                <ul style="margin: 20px 0 20px 40px; list-style-type: disc;">
+                    <li><strong>Delivery Mode:</strong> Do they need full history (SCD2) for analysis, or just the live current state (SCD1) for operational dashboards?</li>
+                    <li><strong>Technology:</strong> What type of database do they want to query? A consumer can request the data in any supported technology, regardless of where the producer stored it.</li>
+                    <li><strong>Latency:</strong> Can they tolerate high latency for batch reporting, or do they need low-latency updates?</li>
+                    <li><strong>Retention:</strong> How long should the records be kept? The consumer sets the retention policy for their workspace.</li>
+                </ul>
+                <p>DataSurface handles the complexity of meeting these diverse requirements from a single source.</p>
+            </div>
+
+            <div class="blog-post" style="margin-bottom: 40px;">
+                <h2>3. The "Zero-Build" Promise: Data Logistics</h2>
+                <p>DataSurface's ultimate goal is to solve <strong>data logistics</strong>. We believe that:</p>
+                <ul style="margin: 20px 0 20px 40px; list-style-type: disc;">
+                    <li><strong>Producers</strong> should focus solely on maintaining the quality and availability of their data.</li>
+                    <li><strong>Consumers</strong> should focus entirely on leveraging value from the data they consume.</li>
+                </ul>
+                <p>Nobody should be building data pipelines. The complex logistics of moving, transforming, and securing data is handled entirely by DataSurface.</p>
+                
+                <div style="background-color: #f8f9fa; border-left: 4px solid var(--primary); padding: 20px; margin: 20px 0;">
+                    <p style="margin-bottom: 10px;"><strong>Just as Amazon frees buyers and sellers from worrying about shipping logistics</strong>, DataSurface frees data teams from pipeline engineering.</p>
+                    <p><strong>Just as internet users and website owners don't worry about how packets move across the network</strong>, DataSurface users don't worry about the underlying transport. It just happens.</p>
+                </div>
+
+                <p>DataSurface strives to make data collaboration as seamless as Amazon makes commerce or the internet makes connectivity.</p>
+            </div>
+
+            <div class="blog-post" style="margin-bottom: 40px;">
+                <h2>4. Long-Term Engineering Freedom</h2>
+                <p>If consumers or producers were responsible for building these pipelines manually, every new requirement would be a customized engineering project. This leads to "pipeline debt" that is impossible to migrate.</p>
+                <p>With DataSurface, moving from technology A to technology B (e.g., migrating from on-prem Hadoop to cloud Snowflake, or from Redshift to Databricks) is a configuration change, not a rewrite. As new consumers emerge with different needs, or as the firm's technology strategy evolves, the model adapts without requiring a complete re-engineering of the data estate.</p>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 DataSurface. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
+

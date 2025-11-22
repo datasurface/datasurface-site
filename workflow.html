@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git-Based Workflow - DataSurface</title>
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="js/nav.js"></script>
+</head>
+<body>
+    <header>
+        <!-- Navigation injected by js/nav.js -->
+    </header>
+    <script>renderNav('.');</script>
+
+    <main class="container" style="padding: 60px 0;">
+        <div style="max-width: 900px; margin: 0 auto;">
+            <h1 style="margin-bottom: 20px;">The Git-Backed Workflow</h1>
+            <p style="font-size: 1.2rem; color: var(--text-light); margin-bottom: 50px;">
+                DataSurface treats your data ecosystem like software code. Collaboration, governance, and deployment are managed entirely through Git, ensuring a complete audit trail and robust validation before any change reaches production.
+            </p>
+
+            <div class="blog-post" style="margin-bottom: 40px;">
+                <h2>1. The Model Ecosystem</h2>
+                <p>The entire data platform is defined by an <strong>Ecosystem</strong> object rooted in a primary Git repository (the <em>liveRepo</em>). This single source of truth defines:</p>
+                <ul style="margin: 20px 0 20px 40px; list-style-type: disc;">
+                    <li><strong>Governance Zones:</strong> Federated areas of ownership (e.g., "Finance Zone", "European Zone").</li>
+                    <li><strong>Teams:</strong> Groups within zones that own data assets.</li>
+                    <li><strong>Infrastructure:</strong> Where data is stored and processed.</li>
+                    <li><strong>Policies:</strong> Rules for data retention, access, and classification.</li>
+                </ul>
+                <p>Each Zone and Team can be linked to its own separate Git repository, allowing decentralized management while maintaining centralized visibility.</p>
+            </div>
+
+            <div class="blog-post" style="margin-bottom: 40px;">
+                <h2>2. Collaborative Change Flow</h2>
+                <p>Teams do not log into a UI to click buttons. They write Python code.</p>
+                
+                <div style="margin-left: 20px; border-left: 4px solid var(--primary); padding-left: 20px;">
+                    <h3 style="margin-bottom: 10px; color: var(--primary);">Step A: Clone & Branch</h3>
+                    <p>A data engineer clones their team's repository and creates a feature branch (e.g., <code>feature/add-sales-data</code>).</p>
+                </div>
+                <div style="margin-left: 20px; border-left: 4px solid var(--primary); padding-left: 20px; margin-top: 20px;">
+                    <h3 style="margin-bottom: 10px; color: var(--primary);">Step B: Modify the Model</h3>
+                    <p>They add a new <code>Datastore</code> or modify a <code>Workspace</code> using the DataSurface Python DSL. They can run tests locally to verify validity.</p>
+                </div>
+                <div style="margin-left: 20px; border-left: 4px solid var(--primary); padding-left: 20px; margin-top: 20px;">
+                    <h3 style="margin-bottom: 10px; color: var(--primary);">Step C: Pull Request (PR)</h3>
+                    <p>They push the branch and open a Pull Request. This triggers the <strong>Automated Linting System</strong>.</p>
+                </div>
+            </div>
+
+            <div class="blog-post" style="margin-bottom: 40px;">
+                <h2>3. Automated Linting & Validation</h2>
+                <p>Before a human even looks at the PR, DataSurface performs a deep semantic validation of the proposed changes:</p>
+                <ul style="margin: 20px 0 20px 40px; list-style-type: disc;">
+                    <li><strong>Referential Integrity:</strong> Does the referenced database actually exist? Are the columns correct?</li>
+                    <li><strong>Policy Compliance:</strong> Is PII data being exposed to a public workspace? Does the data retention policy meet regulatory requirements?</li>
+                    <li><strong>Impact Analysis:</strong> Will this schema change break downstream consumers?</li>
+                </ul>
+                <p>If the linter finds errors, the PR check fails. Merging is blocked until the model is compliant.</p>
+            </div>
+
+            <div class="blog-post" style="margin-bottom: 40px;">
+                <h2>4. Deployment via Tagging</h2>
+                <p>Once merged to <code>main</code>, the changes are effectively "in" the ecosystem but not yet live in every environment. Deployment is controlled by <strong>Runtime Environments (RTEs)</strong> using Git tags.</p>
+                
+                <div style="display: flex; gap: 20px; margin-top: 20px; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 250px; background: #eff6ff; padding: 20px; border-radius: 8px;">
+                        <h4 style="color: var(--primary-dark);">QA Environment</h4>
+                        <p>configured to track tags like <code>VN.n-qa</code>. When you are ready to test, you tag the repo <code>v1.2-qa</code>. The QA environment automatically picks up this version and applies the changes.</p>
+                    </div>
+                    <div style="flex: 1; min-width: 250px; background: #f0fdf4; padding: 20px; border-radius: 8px;">
+                        <h4 style="color: #15803d;">Production Environment</h4>
+                        <p>configured to track <code>VN.n-prod</code>. Only after QA verification do you tag <code>v1.2-prod</code>. The Production environment detects the new tag and safely rolls out the changes.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="blog-post" style="margin-bottom: 40px;">
+                <h2>5. Audit Trails & Access Control</h2>
+                <p>For highly regulated industries, knowing <em>who</em> changed <em>what</em> and <em>when</em> is critical. DataSurface leverages Git's inherent capabilities to provide a tamper-proof audit log.</p>
+                
+                <ul style="margin: 20px 0 20px 40px; list-style-type: disc;">
+                    <li><strong>Permissions:</strong> Access to modify specific parts of the model (e.g., the "Finance Zone") is controlled via Git repository permissions. Only authorized users can merge PRs to the <code>finance-model</code> repo.</li>
+                    <li><strong>Audit History:</strong> Every change to the data platform—from adding a column to changing a retention policy—is a Git commit. The commit log provides a permanent, searchable history of the platform's evolution.</li>
+                    <li><strong>Code Reviews:</strong> Changes require peer review (PR approval) before they can be merged. This enforces the "four-eyes principle" for sensitive configuration changes.</li>
+                </ul>
+                <p>This approach eliminates "configuration drift" and unauthorized "shadow IT" changes, ensuring your data platform remains compliant and secure.</p>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 DataSurface. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

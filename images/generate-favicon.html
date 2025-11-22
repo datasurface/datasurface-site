@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Favicon Generator - DataSurface</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        canvas {
+            border: 1px solid #ccc;
+            margin: 10px;
+        }
+        .preview {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        .preview-item {
+            text-align: center;
+        }
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #1d4ed8;
+        }
+        .instructions {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>DataSurface Favicon Generator</h1>
+    
+    <div class="instructions">
+        <h3>Instructions:</h3>
+        <ol>
+            <li>This page will render the SVG favicon at different sizes</li>
+            <li>Right-click each canvas and "Save image as..." to download</li>
+            <li>Save as: favicon-16x16.png, favicon-32x32.png, favicon.png (48x48)</li>
+            <li>Use an online tool like <a href="https://www.favicon-generator.org/" target="_blank">favicon-generator.org</a> to create favicon.ico from the 48x48 version</li>
+        </ol>
+    </div>
+
+    <div class="preview">
+        <div class="preview-item">
+            <h4>16x16</h4>
+            <canvas id="canvas16" width="16" height="16"></canvas>
+            <br>
+            <button onclick="download('canvas16', 'favicon-16x16.png')">Download</button>
+        </div>
+        <div class="preview-item">
+            <h4>32x32</h4>
+            <canvas id="canvas32" width="32" height="32"></canvas>
+            <br>
+            <button onclick="download('canvas32', 'favicon-32x32.png')">Download</button>
+        </div>
+        <div class="preview-item">
+            <h4>48x48 (main)</h4>
+            <canvas id="canvas48" width="48" height="48"></canvas>
+            <br>
+            <button onclick="download('canvas48', 'favicon.png')">Download</button>
+        </div>
+        <div class="preview-item">
+            <h4>64x64 (preview)</h4>
+            <canvas id="canvas64" width="64" height="64"></canvas>
+            <br>
+            <button onclick="download('canvas64', 'favicon-64x64.png')">Download</button>
+        </div>
+    </div>
+
+    <script>
+        // SVG content
+        const svgContent = `<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+    <g transform="translate(32, 32)">
+        <!-- Ring (Back Segment) -->
+        <path d="M -15 8 A 20 6 -30 0 1 15 -8" fill="none" stroke="#93c5fd" stroke-width="3" stroke-linecap="round" />
+
+        <!-- Stacked Cylinders -->
+        <!-- 4th (Bottom) -->
+        <path d="M-10 4 V8 C-10 10 -5 12 0 12 S10 10 10 8 V4" fill="#1e3a8a" />
+        <ellipse cx="0" cy="4" rx="10" ry="3.5" fill="#1d4ed8" />
+
+        <!-- 3rd -->
+        <path d="M-10 0 V4 C-10 6 -5 8 0 8 S10 6 10 4 V0" fill="#1e40af" />
+        <ellipse cx="0" cy="0" rx="10" ry="3.5" fill="#2563eb" />
+
+        <!-- 2nd -->
+        <path d="M-10 -4 V0 C-10 2 -5 4 0 4 S10 2 10 0 V-4" fill="#2563eb" />
+        <ellipse cx="0" cy="-4" rx="10" ry="3.5" fill="#3b82f6" />
+
+        <!-- 1st (Top) -->
+        <path d="M-10 -8 V-4 C-10 -2 -5 0 0 0 S10 -2 10 -4 V-8" fill="#3b82f6" />
+        <ellipse cx="0" cy="-8" rx="10" ry="3.5" fill="#60a5fa" />
+
+        <!-- Ring (Front Segment) -->
+        <path d="M 15 -8 A 20 6 -30 0 1 -15 8" fill="none" stroke="#1d4ed8" stroke-width="3" stroke-linecap="round" />
+    </g>
+</svg>`;
+
+        function drawSVGToCanvas(canvasId, size) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            
+            const img = new Image();
+            const svgBlob = new Blob([svgContent], {type: 'image/svg+xml;charset=utf-8'});
+            const url = URL.createObjectURL(svgBlob);
+            
+            img.onload = function() {
+                ctx.clearRect(0, 0, size, size);
+                ctx.drawImage(img, 0, 0, size, size);
+                URL.revokeObjectURL(url);
+            };
+            
+            img.src = url;
+        }
+
+        function download(canvasId, filename) {
+            const canvas = document.getElementById(canvasId);
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        // Draw all sizes on page load
+        window.onload = function() {
+            drawSVGToCanvas('canvas16', 16);
+            drawSVGToCanvas('canvas32', 32);
+            drawSVGToCanvas('canvas48', 48);
+            drawSVGToCanvas('canvas64', 64);
+        };
+    </script>
+</body>
+</html>
+

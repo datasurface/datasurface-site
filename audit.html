@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audit & Control - DataSurface</title>
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="js/nav.js"></script>
+</head>
+<body>
+    <header>
+        <!-- Navigation injected by js/nav.js -->
+    </header>
+    <script>renderNav('.');</script>
+
+    <main class="container" style="padding: 60px 0;">
+        <div style="max-width: 900px; margin: 0 auto;">
+            <h1 style="margin-bottom: 20px;">Audit & Control: Compliance by Design</h1>
+            <p style="font-size: 1.2rem; color: var(--text-light); margin-bottom: 50px;">
+                In regulated industries, it is not enough to know <em>what</em> the system does. You must prove <em>who</em> changed it, <em>when</em>, and <em>why</em>. DataSurface leverages the immutable nature of Git to provide an audit trail that is superior to traditional log-based approaches.
+            </p>
+
+            <div class="blog-post" style="margin-bottom: 40px;">
+                <h2>Why Traditional Auditing Fails</h2>
+                <p>Most data platforms rely on activity logs ("User X clicked button Y"). These logs are often:</p>
+                <ul style="margin: 20px 0 20px 40px; list-style-type: disc;">
+                    <li><strong>Ephemeral:</strong> Logs get rotated or lost.</li>
+                    <li><strong>Unstructured:</strong> Difficult to reconstruct the exact state of the system at a past point in time.</li>
+                    <li><strong>Reactive:</strong> They tell you a bad change happened, but they didn't prevent it.</li>
+                </ul>
+            </div>
+
+            <div class="blog-post" style="margin-bottom: 40px;">
+                <h2>The DataSurface Approach: Git as the Ledger</h2>
+                <p>By defining the entire data ecosystem as code in Git, we gain powerful compliance features out of the box:</p>
+
+                <div style="margin-top: 30px;">
+                    <h3 style="color: var(--primary); margin-bottom: 10px;">1. Immutable History</h3>
+                    <p>Every change to the platform—whether it's adding a column, changing a retention policy, or granting access—is a Git commit. This history is cryptographically secure. You can go back to any point in time (e.g., "Show me the state of the Finance Zone on Jan 1st, 2024") and see exactly what the configuration was.</p>
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <h3 style="color: var(--primary); margin-bottom: 10px;">2. Granular Access Control</h3>
+                    <p>DataSurface uses a federated model. You don't grant "Admin" access to the whole platform. You grant write access to specific Git repositories.</p>
+                    <ul style="margin: 10px 0 10px 40px; list-style-type: circle;">
+                        <li><strong>Finance Team:</strong> Can approve PRs in the `finance-model` repo.</li>
+                        <li><strong>HR Team:</strong> Can approve PRs in the `hr-model` repo.</li>
+                        <li><strong>Platform Team:</strong> Controls the `infrastructure` repo.</li>
+                    </ul>
+                    <p>This ensures the Principle of Least Privilege is enforced at the source code level.</p>
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <h3 style="color: var(--primary); margin-bottom: 10px;">3. The "Four-Eyes" Principle</h3>
+                    <p>Critical changes can be configured to require Pull Request approval from designated code owners. A developer can propose a change to a sensitive PII dataset, but the change <strong>cannot</strong> be applied until a Data Steward or Compliance Officer reviews and approves the PR.</p>
+                </div>
+            </div>
+
+            <div class="blog-post">
+                <h2>Audit Scenario: "Who deleted the Customer Table?"</h2>
+                <p><strong>Traditional Platform:</strong> Sift through gigabytes of JSON logs hoping to find a "DROP TABLE" event, correlate it with an IP address, and hope that IP maps to a specific user.</p>
+                <p><strong>DataSurface:</strong></p>
+                <ol style="margin: 20px 0 20px 40px; list-style-type: decimal;">
+                    <li>Open the Git history for `customer_model.py`.</li>
+                    <li>Find the commit that removed the `Dataset` definition.</li>
+                    <li>See clearly: <em>"Commit a1b2c3 by <strong>alice@company.com</strong> on Nov 22, 2025. Reviewed and Approved by <strong>bob@company.com</strong>."</em></li>
+                    <li>See the PR description explaining <em>why</em> it was done.</li>
+                </ol>
+                <p>This level of traceability is instant and unambiguous.</p>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 DataSurface. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
