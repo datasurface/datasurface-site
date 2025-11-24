@@ -1,0 +1,534 @@
+/* ============================================
+   DataSurface Hero Animation
+   Animated Data Flow Visualization
+   ============================================ */
+
+/* Hero Layout - Split Design */
+.hero-split {
+    background: linear-gradient(135deg, var(--slate-900) 0%, #0c1829 50%, var(--slate-900) 100%);
+    padding: 0;
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle grid overlay */
+.hero-split::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        linear-gradient(rgba(8, 145, 178, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(8, 145, 178, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+}
+
+/* Radial glow behind visualization */
+.hero-split::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 15%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(8, 145, 178, 0.15) 0%, transparent 70%);
+    transform: translate(0, -50%);
+    pointer-events: none;
+}
+
+.hero-content-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 60px;
+    align-items: center;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 60px 40px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Left side - Text content */
+.hero-text {
+    color: white;
+}
+
+.hero-text h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    letter-spacing: -0.03em;
+    background: linear-gradient(135deg, #ffffff 0%, #22d3ee 50%, #0891b2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.hero-text .tagline {
+    font-size: 1.35rem;
+    color: var(--slate-300);
+    line-height: 1.7;
+    margin-bottom: 40px;
+    max-width: 520px;
+    animation: fadeInUp 0.8s ease-out 0.1s backwards;
+}
+
+.hero-text .hero-buttons {
+    animation: fadeInUp 0.8s ease-out 0.2s backwards;
+    justify-content: flex-start;
+}
+
+/* Right side - Visualization */
+.hero-visualization {
+    position: relative;
+    height: 500px;
+    animation: fadeIn 1s ease-out 0.3s backwards;
+}
+
+/* ============================================
+   Data Flow Visualization
+   ============================================ */
+
+.data-flow-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* Node styling */
+.flow-node {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    z-index: 10;
+}
+
+.node-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    position: relative;
+    box-shadow: 0 0 30px rgba(8, 145, 178, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.node-circle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 50px rgba(8, 145, 178, 0.5);
+}
+
+/* Producer nodes - Left side */
+.node-producer .node-circle {
+    background: linear-gradient(135deg, #0e7490 0%, #0891b2 100%);
+    border: 2px solid #22d3ee;
+}
+
+/* Consumer nodes - Right side */
+.node-consumer .node-circle {
+    background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
+    border: 2px solid #5eead4;
+}
+
+/* Central DataSurface hub */
+.node-hub {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.node-hub .node-circle {
+    width: 140px;
+    height: 140px;
+    background: linear-gradient(135deg, var(--slate-800) 0%, var(--slate-900) 100%);
+    border: 3px solid var(--primary);
+    font-size: 1rem;
+    font-weight: 700;
+    color: white;
+    flex-direction: column;
+    gap: 4px;
+    box-shadow: 
+        0 0 60px rgba(8, 145, 178, 0.4),
+        inset 0 0 30px rgba(8, 145, 178, 0.1);
+}
+
+.node-hub .node-circle::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 2px dashed rgba(34, 211, 238, 0.3);
+    animation: spin 20s linear infinite;
+}
+
+.node-hub .node-circle .hub-icon {
+    font-size: 2rem;
+    margin-bottom: 4px;
+}
+
+.node-hub .node-circle .hub-text {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--primary-light);
+}
+
+.node-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--slate-300);
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* Producer positions */
+.producer-1 { left: 5%; top: 15%; }
+.producer-2 { left: 0%; top: 45%; }
+.producer-3 { left: 5%; top: 75%; }
+
+/* Consumer positions */
+.consumer-1 { right: 5%; top: 10%; }
+.consumer-2 { right: 0%; top: 40%; }
+.consumer-3 { right: 5%; top: 70%; }
+
+/* ============================================
+   Animated Connection Lines (SVG)
+   ============================================ */
+
+.flow-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.flow-line {
+    fill: none;
+    stroke: url(#flowGradient);
+    stroke-width: 2;
+    stroke-linecap: round;
+    opacity: 0.6;
+}
+
+/* ============================================
+   Flowing Particles
+   ============================================ */
+
+.particle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: var(--primary-light);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--primary-light), 0 0 20px var(--primary);
+    opacity: 0;
+    z-index: 5;
+}
+
+/* Particle animations - Producer to Hub */
+@keyframes flowToHub1 {
+    0% {
+        left: 12%;
+        top: 18%;
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    10% { opacity: 1; transform: scale(1); }
+    90% { opacity: 1; transform: scale(1); }
+    100% {
+        left: 45%;
+        top: 48%;
+        opacity: 0;
+        transform: scale(0.5);
+    }
+}
+
+@keyframes flowToHub2 {
+    0% {
+        left: 10%;
+        top: 48%;
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    10% { opacity: 1; transform: scale(1); }
+    90% { opacity: 1; transform: scale(1); }
+    100% {
+        left: 45%;
+        top: 50%;
+        opacity: 0;
+        transform: scale(0.5);
+    }
+}
+
+@keyframes flowToHub3 {
+    0% {
+        left: 12%;
+        top: 78%;
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    10% { opacity: 1; transform: scale(1); }
+    90% { opacity: 1; transform: scale(1); }
+    100% {
+        left: 45%;
+        top: 52%;
+        opacity: 0;
+        transform: scale(0.5);
+    }
+}
+
+/* Particle animations - Hub to Consumer */
+@keyframes flowFromHub1 {
+    0% {
+        left: 55%;
+        top: 48%;
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    10% { opacity: 1; transform: scale(1); }
+    90% { opacity: 1; transform: scale(1); }
+    100% {
+        left: 85%;
+        top: 14%;
+        opacity: 0;
+        transform: scale(0.5);
+    }
+}
+
+@keyframes flowFromHub2 {
+    0% {
+        left: 55%;
+        top: 50%;
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    10% { opacity: 1; transform: scale(1); }
+    90% { opacity: 1; transform: scale(1); }
+    100% {
+        left: 88%;
+        top: 44%;
+        opacity: 0;
+        transform: scale(0.5);
+    }
+}
+
+@keyframes flowFromHub3 {
+    0% {
+        left: 55%;
+        top: 52%;
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    10% { opacity: 1; transform: scale(1); }
+    90% { opacity: 1; transform: scale(1); }
+    100% {
+        left: 85%;
+        top: 74%;
+        opacity: 0;
+        transform: scale(0.5);
+    }
+}
+
+/* Apply animations to particles */
+.particle-in-1 { animation: flowToHub1 3s ease-in-out infinite; }
+.particle-in-2 { animation: flowToHub2 3s ease-in-out infinite 0.5s; }
+.particle-in-3 { animation: flowToHub3 3s ease-in-out infinite 1s; }
+.particle-in-4 { animation: flowToHub1 3s ease-in-out infinite 1.5s; }
+.particle-in-5 { animation: flowToHub2 3s ease-in-out infinite 2s; }
+.particle-in-6 { animation: flowToHub3 3s ease-in-out infinite 2.5s; }
+
+.particle-out-1 { animation: flowFromHub1 3s ease-in-out infinite 0.3s; background: #5eead4; box-shadow: 0 0 10px #5eead4, 0 0 20px #14b8a6; }
+.particle-out-2 { animation: flowFromHub2 3s ease-in-out infinite 0.8s; background: #5eead4; box-shadow: 0 0 10px #5eead4, 0 0 20px #14b8a6; }
+.particle-out-3 { animation: flowFromHub3 3s ease-in-out infinite 1.3s; background: #5eead4; box-shadow: 0 0 10px #5eead4, 0 0 20px #14b8a6; }
+.particle-out-4 { animation: flowFromHub1 3s ease-in-out infinite 1.8s; background: #5eead4; box-shadow: 0 0 10px #5eead4, 0 0 20px #14b8a6; }
+.particle-out-5 { animation: flowFromHub2 3s ease-in-out infinite 2.3s; background: #5eead4; box-shadow: 0 0 10px #5eead4, 0 0 20px #14b8a6; }
+.particle-out-6 { animation: flowFromHub3 3s ease-in-out infinite 2.8s; background: #5eead4; box-shadow: 0 0 10px #5eead4, 0 0 20px #14b8a6; }
+
+/* Hub pulse animation */
+@keyframes hubPulse {
+    0%, 100% {
+        box-shadow: 
+            0 0 60px rgba(8, 145, 178, 0.4),
+            inset 0 0 30px rgba(8, 145, 178, 0.1);
+    }
+    50% {
+        box-shadow: 
+            0 0 80px rgba(8, 145, 178, 0.6),
+            inset 0 0 40px rgba(8, 145, 178, 0.2);
+    }
+}
+
+.node-hub .node-circle {
+    animation: hubPulse 2s ease-in-out infinite;
+}
+
+/* Spin animation for dashed border */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Node float animation */
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+.node-producer, .node-consumer {
+    animation: float 4s ease-in-out infinite;
+}
+
+.producer-1, .consumer-1 { animation-delay: 0s; }
+.producer-2, .consumer-2 { animation-delay: 0.5s; }
+.producer-3, .consumer-3 { animation-delay: 1s; }
+
+/* ============================================
+   Labels below visualization
+   ============================================ */
+
+.flow-labels {
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10%;
+}
+
+.flow-label {
+    text-align: center;
+    color: var(--slate-400);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 600;
+}
+
+.flow-label-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -40px;
+    color: var(--primary-light);
+}
+
+/* ============================================
+   Stats Bar below hero
+   ============================================ */
+
+.hero-stats {
+    background: rgba(255, 255, 255, 0.03);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 24px 0;
+}
+
+.hero-stats .container {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    flex-wrap: wrap;
+}
+
+.hero-stat {
+    text-align: center;
+    color: white;
+}
+
+.hero-stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-light);
+    margin-bottom: 4px;
+}
+
+.hero-stat-label {
+    font-size: 0.8rem;
+    color: var(--slate-400);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+
+@media (max-width: 1100px) {
+    .hero-content-wrapper {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 40px;
+    }
+    
+    .hero-text .tagline {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .hero-text .hero-buttons {
+        justify-content: center;
+    }
+    
+    .hero-visualization {
+        height: 400px;
+    }
+    
+    .hero-text h1 {
+        font-size: 2.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-split {
+        min-height: auto;
+        padding: 40px 0;
+    }
+    
+    .hero-content-wrapper {
+        padding: 20px;
+    }
+    
+    .hero-text h1 {
+        font-size: 2.2rem;
+    }
+    
+    .hero-text .tagline {
+        font-size: 1.1rem;
+    }
+    
+    .hero-visualization {
+        height: 300px;
+    }
+    
+    .node-circle {
+        width: 60px;
+        height: 60px;
+        font-size: 1.4rem;
+    }
+    
+    .node-hub .node-circle {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .hero-stats .container {
+        gap: 30px;
+    }
+}
+

@@ -8,6 +8,7 @@
     <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="images/favicon.png">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/hero-animation.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -20,13 +21,102 @@
     <script>renderNav('.');</script>
 
     <main>
-        <section class="hero">
-            <div class="container">
-                <h1>The Data Logistics Company</h1>
-                <p class="hero-sub">Decouple your data intent from the underlying technology stack. A governed, model-driven logistics layer that connects any producer to any consumer, on any cloud.</p>
-                <div class="hero-buttons">
-                    <a href="examples/index.html" class="btn-secondary">See the Model</a>
-                    <a href="contact.html" class="btn-primary">Get Started →</a>
+        <!-- New Animated Hero Section -->
+        <section class="hero-split">
+            <div class="hero-content-wrapper">
+                <!-- Left side: Text -->
+                <div class="hero-text">
+                    <h1>The Data Logistics Company</h1>
+                    <p class="tagline">Decouple your data intent from the underlying technology stack. A governed, model-driven logistics layer that connects any producer to any consumer, on any cloud.</p>
+                    <div class="hero-buttons">
+                        <a href="examples/index.html" class="btn-secondary" style="border-color: rgba(255,255,255,0.3); color: white;">See the Model</a>
+                        <a href="contact.html" class="btn-primary">Get Started →</a>
+                    </div>
+                </div>
+
+                <!-- Right side: Animated Visualization -->
+                <div class="hero-visualization">
+                    <div class="data-flow-container">
+                        <!-- Producer Nodes (Left) -->
+                        <div class="flow-node node-producer producer-1">
+                            <div class="node-circle">🗄️</div>
+                            <span class="node-label">Database</span>
+                        </div>
+                        <div class="flow-node node-producer producer-2">
+                            <div class="node-circle">📡</div>
+                            <span class="node-label">API Stream</span>
+                        </div>
+                        <div class="flow-node node-producer producer-3">
+                            <div class="node-circle">📁</div>
+                            <span class="node-label">File Source</span>
+                        </div>
+
+                        <!-- Central Hub -->
+                        <div class="flow-node node-hub">
+                            <div class="node-circle">
+                                <span class="hub-icon">⚡</span>
+                                <span class="hub-text">DataSurface</span>
+                            </div>
+                        </div>
+
+                        <!-- Consumer Nodes (Right) -->
+                        <div class="flow-node node-consumer consumer-1">
+                            <div class="node-circle">📊</div>
+                            <span class="node-label">Analytics</span>
+                        </div>
+                        <div class="flow-node node-consumer consumer-2">
+                            <div class="node-circle">🤖</div>
+                            <span class="node-label">AI/ML</span>
+                        </div>
+                        <div class="flow-node node-consumer consumer-3">
+                            <div class="node-circle">📈</div>
+                            <span class="node-label">Reporting</span>
+                        </div>
+
+                        <!-- Animated Particles (Producers → Hub) -->
+                        <div class="particle particle-in-1"></div>
+                        <div class="particle particle-in-2"></div>
+                        <div class="particle particle-in-3"></div>
+                        <div class="particle particle-in-4"></div>
+                        <div class="particle particle-in-5"></div>
+                        <div class="particle particle-in-6"></div>
+
+                        <!-- Animated Particles (Hub → Consumers) -->
+                        <div class="particle particle-out-1"></div>
+                        <div class="particle particle-out-2"></div>
+                        <div class="particle particle-out-3"></div>
+                        <div class="particle particle-out-4"></div>
+                        <div class="particle particle-out-5"></div>
+                        <div class="particle particle-out-6"></div>
+
+                        <!-- Labels -->
+                        <div class="flow-labels">
+                            <span class="flow-label">Data Producers</span>
+                            <span class="flow-label">Data Consumers</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats bar -->
+            <div class="hero-stats">
+                <div class="container">
+                    <div class="hero-stat">
+                        <div class="hero-stat-value">P + C + T</div>
+                        <div class="hero-stat-label">Complexity Model</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-value">Git-Backed</div>
+                        <div class="hero-stat-label">Full Audit Trail</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-value">Multi-Cloud</div>
+                        <div class="hero-stat-label">AWS · Azure · K8s</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-value">10+ Years</div>
+                        <div class="hero-stat-label">Decade-Ware Design</div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -54,14 +144,14 @@
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px;" class="stagger-children">
                 <article class="article-card">
                     <h3 style="margin-bottom: 15px; font-size: 1.4rem;">
-                        <a href="blog/walled-gardens.html" style="color: var(--primary); text-decoration: none;">The Walled Gardens Are Back</a>
+                        <a href="blog/walled-gardens.html" style="color: var(--primary-light); text-decoration: none;">The Walled Gardens Are Back</a>
                     </h3>
-                    <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 15px; font-weight: 500;">And This Time It's Your Data</p>
-                    <p style="margin-bottom: 20px; line-height: 1.7;">
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px; font-weight: 500;">And This Time It's Your Data</p>
+                    <p style="margin-bottom: 20px; line-height: 1.7; color: var(--text-secondary);">
                         Today's data landscape looks eerily like the 90s internet—dominated by proprietary walled gardens from Big Data Vendors. 
-                        <strong>DataSurface is the "HTTP for Data"</strong>, an open protocol layer that connects producers and consumers while keeping you in control of your destiny, free from vendor lock-in.
+                        <strong style="color: var(--text-primary);">DataSurface is the "HTTP for Data"</strong>, an open protocol layer that connects producers and consumers while keeping you in control of your destiny, free from vendor lock-in.
                     </p>
-                    <p style="margin-bottom: 20px; line-height: 1.7; font-style: italic; color: var(--text-light); padding-left: 16px; border-left: 3px solid var(--primary-light);">
+                    <p style="margin-bottom: 20px; line-height: 1.7; font-style: italic; color: var(--text-muted); padding: 16px; background: var(--bg-elevated); border-left: 3px solid var(--primary-light); border-radius: 0 8px 8px 0;">
                         "Just as internet users don't care how packets traverse the network, DataSurface users won't care how data moves from producers to consumers."
                     </p>
                     <a href="blog/walled-gardens.html" class="btn-secondary" style="display: inline-block;">Read the Full Story →</a>
@@ -69,14 +159,14 @@
 
                 <article class="article-card">
                     <h3 style="margin-bottom: 15px; font-size: 1.4rem;">
-                        <a href="blog/day-2-trap.html" style="color: var(--primary); text-decoration: none;">The "Day 2" Trap</a>
+                        <a href="blog/day-2-trap.html" style="color: var(--primary-light); text-decoration: none;">The "Day 2" Trap</a>
                     </h3>
-                    <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 15px; font-weight: 500;">Why Your New Data Platform Won't Save You</p>
-                    <p style="margin-bottom: 20px; line-height: 1.7;">
-                        Many CDOs believe that signing a multi-year deal for Snowflake or Databricks will instantly make their company productive. <strong>This is dangerously optimistic thinking.</strong> 
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px; font-weight: 500;">Why Your New Data Platform Won't Save You</p>
+                    <p style="margin-bottom: 20px; line-height: 1.7; color: var(--text-secondary);">
+                        Many CDOs believe that signing a multi-year deal for Snowflake or Databricks will instantly make their company productive. <strong style="color: var(--text-primary);">This is dangerously optimistic thinking.</strong> 
                         The real costs begin on Day 2—and you can easily spend tens of millions on labor building "pipeline spaghetti" around that expensive platform.
                     </p>
-                    <p style="margin-bottom: 20px; line-height: 1.7; font-style: italic; color: var(--text-light); padding-left: 16px; border-left: 3px solid var(--primary-light);">
+                    <p style="margin-bottom: 20px; line-height: 1.7; font-style: italic; color: var(--text-muted); padding: 16px; background: var(--bg-elevated); border-left: 3px solid var(--primary-light); border-radius: 0 8px 8px 0;">
                         "DataSurface is the logistics layer. The data nervous system for your enterprise that allows platforms to be swapped out or upgraded without breaking the business."
                     </p>
                     <a href="blog/day-2-trap.html" class="btn-secondary" style="display: inline-block;">Read the Full Story →</a>
@@ -117,8 +207,8 @@
         </section>
 
         <section class="container" style="padding: 60px 20px;">
-            <h2 style="text-align: center; margin-bottom: 20px; font-size: 2rem; color: var(--text-light); font-weight: 700;">Built by Engineers Who've Been There</h2>
-            <p style="text-align: center; max-width: 700px; margin: 0 auto 40px; color: var(--text-light);">
+            <h2 style="text-align: center; margin-bottom: 20px; font-size: 2rem; color: var(--text-secondary); font-weight: 700;">Built by Engineers Who've Been There</h2>
+            <p style="text-align: center; max-width: 700px; margin: 0 auto 40px; color: var(--text-muted);">
                 DataSurface was created by veterans of enterprise-scale distributed systems. Decades of experience running production data platforms inform every design decision.
             </p>
             <div class="stats-card" style="text-align: center;">
