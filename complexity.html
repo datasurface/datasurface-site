@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P + C + T Complexity Model - DataSurface</title>
+    <link rel="icon" href="images/favicon.ico" sizes="any">
+    <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="images/favicon.png">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="js/nav.js"></script>
+    <style>
+        /* Page-specific styles */
+        .complexity-hero {
+            background: var(--bg-dark);
+            padding: 80px 0 60px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        
+        .complexity-hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--primary-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .complexity-hero .tagline {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .comparison-section {
+            padding: 80px 20px;
+        }
+        
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 100px 1fr;
+            gap: 40px;
+            align-items: start;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        
+        @media (max-width: 900px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .comparison-arrow {
+                transform: rotate(90deg);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .platform-agnostic-section > div[style*="grid-template-columns: 1fr 1fr 1fr"] {
+                grid-template-columns: 1fr !important;
+            }
+        }
+        
+        .comparison-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 40px;
+            border: 1px solid var(--border-default);
+        }
+        
+        .comparison-card.problem {
+            border-color: #ef4444;
+        }
+        
+        .comparison-card.solution {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-glow);
+        }
+        
+        .comparison-card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .comparison-card.problem h2 {
+            color: #f87171;
+        }
+        
+        .comparison-card.solution h2 {
+            color: var(--primary-light);
+        }
+        
+        .comparison-card .subtitle {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+        }
+        
+        .comparison-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-light);
+            font-size: 3rem;
+            font-weight: 300;
+        }
+        
+        /* Visualization containers */
+        .viz-container {
+            background: var(--bg-elevated);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 24px 0;
+            min-height: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .viz-svg {
+            width: 100%;
+            height: 200px;
+        }
+        
+        /* Hub center */
+        .hub-center {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1e293b, #0a0f1a);
+            border: 3px solid var(--primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .hub-center::before {
+            content: '';
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            border: 2px dashed rgba(34, 211, 238, 0.3);
+            animation: spin 15s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .hub-center .icon {
+            font-size: 1.5rem;
+        }
+        
+        .hub-center .label {
+            font-size: 0.5rem;
+            color: var(--primary-light);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 2px;
+        }
+        
+        /* Formula display */
+        .formula {
+            text-align: center;
+            padding: 20px;
+            background: var(--bg-dark);
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        
+        .formula .equation {
+            font-size: 1.8rem;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .formula.problem .equation {
+            color: #f87171;
+        }
+        
+        .formula.solution .equation {
+            color: var(--primary-light);
+        }
+        
+        .formula .description {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 8px;
+        }
+        
+        /* Transformer section */
+        .transformer-section {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 50px;
+            margin-top: 60px;
+            border: 1px solid var(--border-default);
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .transformer-section h2 {
+            color: var(--primary-light);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+        
+        .transformer-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        .transformer-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .transformer-node .circle {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+        }
+        
+        .transformer-node .circle.data {
+            background: var(--bg-elevated);
+            border: 2px solid var(--border-default);
+        }
+        
+        .transformer-node .circle.transformer {
+            background: linear-gradient(135deg, #7c3aed, #8b5cf6);
+            border: 2px solid #a78bfa;
+        }
+        
+        .transformer-node .circle.derived {
+            background: linear-gradient(135deg, #f59e0b, #fbbf24);
+            border: 2px solid #fcd34d;
+        }
+        
+        .transformer-node .label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+        
+        .arrow-right {
+            color: var(--text-muted);
+            font-size: 1.5rem;
+        }
+        
+        /* Key points */
+        .key-points {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+        
+        .key-point {
+            background: var(--bg-elevated);
+            padding: 24px;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .key-point h4 {
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+        
+        .key-point p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        /* Example numbers */
+        .example-calc {
+            background: var(--bg-dark);
+            border-radius: 12px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+        
+        .example-calc h4 {
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            font-size: 1.1rem;
+        }
+        
+        .calc-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        
+        .calc-row:last-child {
+            border-bottom: none;
+        }
+        
+        .calc-row .label {
+            color: var(--text-secondary);
+        }
+        
+        .calc-row .value {
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .calc-row .value.bad {
+            color: #f87171;
+        }
+        
+        .calc-row .value.good {
+            color: var(--primary-light);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <!-- Navigation injected by js/nav.js -->
+    </header>
+    <script>renderNav('.');</script>
+
+    <main>
+        <section class="complexity-hero">
+            <div class="container">
+                <h1>P + C + T Complexity Model</h1>
+                <p class="tagline">How DataSurface transforms exponential pipeline complexity into linear, manageable connections</p>
+            </div>
+        </section>
+
+        <section class="comparison-section">
+            <div class="container">
+                <div class="comparison-grid">
+                    <!-- Traditional Approach -->
+                    <div class="comparison-card problem">
+                        <h2>❌ Traditional Approach</h2>
+                        <p class="subtitle">Point-to-point pipeline chaos</p>
+                        
+                        <div class="viz-container">
+                            <svg class="viz-svg" viewBox="0 0 300 200">
+                                <!-- Spaghetti lines (red, tangled) -->
+                                <g stroke="#ef4444" stroke-width="2" fill="none" opacity="0.6">
+                                    <!-- P1 to all C -->
+                                    <path d="M50,35 Q150,35 250,35"/>
+                                    <path d="M50,35 Q120,70 250,100"/>
+                                    <path d="M50,35 Q100,120 250,165"/>
+                                    <!-- P2 to all C -->
+                                    <path d="M50,100 Q180,50 250,35"/>
+                                    <path d="M50,100 Q150,100 250,100"/>
+                                    <path d="M50,100 Q180,150 250,165"/>
+                                    <!-- P3 to all C -->
+                                    <path d="M50,165 Q100,80 250,35"/>
+                                    <path d="M50,165 Q120,130 250,100"/>
+                                    <path d="M50,165 Q150,165 250,165"/>
+                                </g>
+                                
+                                <!-- Producer nodes -->
+                                <g>
+                                    <circle cx="35" cy="35" r="25" fill="url(#prodGrad)" stroke="#22d3ee" stroke-width="2"/>
+                                    <text x="35" y="42" text-anchor="middle" font-size="20">🗄️</text>
+                                    
+                                    <circle cx="35" cy="100" r="25" fill="url(#prodGrad)" stroke="#22d3ee" stroke-width="2"/>
+                                    <text x="35" y="107" text-anchor="middle" font-size="20">📡</text>
+                                    
+                                    <circle cx="35" cy="165" r="25" fill="url(#prodGrad)" stroke="#22d3ee" stroke-width="2"/>
+                                    <text x="35" y="172" text-anchor="middle" font-size="20">📁</text>
+                                </g>
+                                
+                                <!-- Consumer nodes -->
+                                <g>
+                                    <circle cx="265" cy="35" r="25" fill="url(#consGrad)" stroke="#5eead4" stroke-width="2"/>
+                                    <text x="265" y="42" text-anchor="middle" font-size="20">📊</text>
+                                    
+                                    <circle cx="265" cy="100" r="25" fill="url(#consGrad)" stroke="#5eead4" stroke-width="2"/>
+                                    <text x="265" y="107" text-anchor="middle" font-size="20">🤖</text>
+                                    
+                                    <circle cx="265" cy="165" r="25" fill="url(#consGrad)" stroke="#5eead4" stroke-width="2"/>
+                                    <text x="265" y="172" text-anchor="middle" font-size="20">📈</text>
+                                </g>
+                                
+                                <!-- Labels -->
+                                <text x="35" y="195" text-anchor="middle" fill="#94a3b8" font-size="10">Producers</text>
+                                <text x="265" y="195" text-anchor="middle" fill="#94a3b8" font-size="10">Consumers</text>
+                                
+                                <!-- Gradients -->
+                                <defs>
+                                    <linearGradient id="prodGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#0e7490"/>
+                                        <stop offset="100%" style="stop-color:#0891b2"/>
+                                    </linearGradient>
+                                    <linearGradient id="consGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#0d9488"/>
+                                        <stop offset="100%" style="stop-color:#14b8a6"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
+                        
+                        <p style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 16px;">
+                            Every producer builds custom pipelines to every consumer. Different teams use different technologies, formats, and schedules. Over time, this becomes unmaintainable "pipeline spaghetti."
+                        </p>
+                        
+                        <div class="formula problem">
+                            <div class="equation">P × C</div>
+                            <div class="description">Connections grow exponentially</div>
+                        </div>
+                    </div>
+
+                    <!-- Arrow -->
+                    <div class="comparison-arrow">→</div>
+
+                    <!-- DataSurface Approach -->
+                    <div class="comparison-card solution">
+                        <h2>✓ DataSurface Approach</h2>
+                        <p class="subtitle">Centralized data logistics</p>
+                        
+                        <div class="viz-container">
+                            <svg class="viz-svg" viewBox="0 0 300 200">
+                                <!-- Clean lines to hub (teal, organized) -->
+                                <g stroke="#0891b2" stroke-width="2" fill="none" opacity="0.7">
+                                    <!-- Producers to hub -->
+                                    <line x1="55" y1="35" x2="115" y2="100"/>
+                                    <line x1="55" y1="100" x2="115" y2="100"/>
+                                    <line x1="55" y1="165" x2="115" y2="100"/>
+                                    <!-- Hub to consumers -->
+                                    <line x1="185" y1="100" x2="245" y2="35"/>
+                                    <line x1="185" y1="100" x2="245" y2="100"/>
+                                    <line x1="185" y1="100" x2="245" y2="165"/>
+                                </g>
+                                
+                                <!-- Animated flow particles -->
+                                <g fill="#22d3ee">
+                                    <circle r="3" opacity="0.8">
+                                        <animateMotion dur="2s" repeatCount="indefinite" path="M55,35 L115,100"/>
+                                    </circle>
+                                    <circle r="3" opacity="0.8">
+                                        <animateMotion dur="2.2s" repeatCount="indefinite" path="M55,100 L115,100"/>
+                                    </circle>
+                                    <circle r="3" opacity="0.8">
+                                        <animateMotion dur="2.4s" repeatCount="indefinite" path="M55,165 L115,100"/>
+                                    </circle>
+                                    <circle r="3" opacity="0.8">
+                                        <animateMotion dur="2s" repeatCount="indefinite" path="M185,100 L245,35"/>
+                                    </circle>
+                                    <circle r="3" opacity="0.8">
+                                        <animateMotion dur="2.2s" repeatCount="indefinite" path="M185,100 L245,100"/>
+                                    </circle>
+                                    <circle r="3" opacity="0.8">
+                                        <animateMotion dur="2.4s" repeatCount="indefinite" path="M185,100 L245,165"/>
+                                    </circle>
+                                </g>
+                                
+                                <!-- Producer nodes -->
+                                <g>
+                                    <circle cx="35" cy="35" r="25" fill="url(#prodGrad2)" stroke="#22d3ee" stroke-width="2"/>
+                                    <text x="35" y="42" text-anchor="middle" font-size="20">🗄️</text>
+                                    
+                                    <circle cx="35" cy="100" r="25" fill="url(#prodGrad2)" stroke="#22d3ee" stroke-width="2"/>
+                                    <text x="35" y="107" text-anchor="middle" font-size="20">📡</text>
+                                    
+                                    <circle cx="35" cy="165" r="25" fill="url(#prodGrad2)" stroke="#22d3ee" stroke-width="2"/>
+                                    <text x="35" y="172" text-anchor="middle" font-size="20">📁</text>
+                                </g>
+                                
+                                <!-- DataSurface Hub -->
+                                <g>
+                                    <circle cx="150" cy="100" r="35" fill="url(#hubGrad)" stroke="#0891b2" stroke-width="3"/>
+                                    <circle cx="150" cy="100" r="42" fill="none" stroke="#22d3ee" stroke-width="1" stroke-dasharray="4,4" opacity="0.5">
+                                        <animateTransform attributeName="transform" type="rotate" from="0 150 100" to="360 150 100" dur="20s" repeatCount="indefinite"/>
+                                    </circle>
+                                    <text x="150" y="95" text-anchor="middle" font-size="24">⚡</text>
+                                    <text x="150" y="115" text-anchor="middle" fill="#22d3ee" font-size="7" font-weight="600">DATASURFACE</text>
+                                </g>
+                                
+                                <!-- Consumer nodes -->
+                                <g>
+                                    <circle cx="265" cy="35" r="25" fill="url(#consGrad2)" stroke="#5eead4" stroke-width="2"/>
+                                    <text x="265" y="42" text-anchor="middle" font-size="20">📊</text>
+                                    
+                                    <circle cx="265" cy="100" r="25" fill="url(#consGrad2)" stroke="#5eead4" stroke-width="2"/>
+                                    <text x="265" y="107" text-anchor="middle" font-size="20">🤖</text>
+                                    
+                                    <circle cx="265" cy="165" r="25" fill="url(#consGrad2)" stroke="#5eead4" stroke-width="2"/>
+                                    <text x="265" y="172" text-anchor="middle" font-size="20">📈</text>
+                                </g>
+                                
+                                <!-- Labels -->
+                                <text x="35" y="195" text-anchor="middle" fill="#94a3b8" font-size="10">Producers</text>
+                                <text x="265" y="195" text-anchor="middle" fill="#94a3b8" font-size="10">Consumers</text>
+                                
+                                <!-- Gradients -->
+                                <defs>
+                                    <linearGradient id="prodGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#0e7490"/>
+                                        <stop offset="100%" style="stop-color:#0891b2"/>
+                                    </linearGradient>
+                                    <linearGradient id="consGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#0d9488"/>
+                                        <stop offset="100%" style="stop-color:#14b8a6"/>
+                                    </linearGradient>
+                                    <linearGradient id="hubGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#1e293b"/>
+                                        <stop offset="100%" style="stop-color:#0a0f1a"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
+                        
+                        <p style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 16px;">
+                            Producers connect to DataSurface once. Consumers connect to DataSurface once. The platform handles all the logistics—routing, transformation, governance, and delivery.
+                        </p>
+                        
+                        <div class="formula solution">
+                            <div class="equation">P + C</div>
+                            <div class="description">Connections grow linearly</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Real numbers example -->
+                <div class="example-calc" style="max-width: 600px; margin: 50px auto 0;">
+                    <h4>📊 Real-World Example</h4>
+                    <div class="calc-row">
+                        <span class="label">Producers (P)</span>
+                        <span class="value" style="color: var(--text-primary);">50 data sources</span>
+                    </div>
+                    <div class="calc-row">
+                        <span class="label">Consumers (C)</span>
+                        <span class="value" style="color: var(--text-primary);">100 applications</span>
+                    </div>
+                    <div class="calc-row">
+                        <span class="label">Traditional (P × C)</span>
+                        <span class="value bad">5,000 pipelines</span>
+                    </div>
+                    <div class="calc-row">
+                        <span class="label">DataSurface (P + C)</span>
+                        <span class="value good">150 connections</span>
+                    </div>
+                    <div class="calc-row">
+                        <span class="label">Complexity Reduction</span>
+                        <span class="value good">97% fewer pipelines</span>
+                    </div>
+                </div>
+
+                <!-- Platform Agnostic Section -->
+                <div class="platform-agnostic-section" style="background: linear-gradient(135deg, var(--bg-card) 0%, rgba(8,145,178,0.1) 100%); border-radius: 16px; padding: 50px; margin-top: 60px; border: 1px solid var(--primary); max-width: 1000px; margin-left: auto; margin-right: auto;">
+                    <h2 style="color: var(--primary-light); margin-bottom: 12px; font-size: 1.8rem; text-align: center;">
+                        🚀 An Enabler, Not a Replacement
+                    </h2>
+                    <p style="color: var(--text-secondary); text-align: center; max-width: 800px; margin: 0 auto 30px; line-height: 1.7;">
+                        DataSurface makes building solutions on Snowflake, Databricks, and other platforms <strong style="color: var(--primary-light);">easier and faster</strong>—while keeping your options open.
+                    </p>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; margin-bottom: 30px;">
+                        <!-- Faster Onboarding -->
+                        <div style="background: var(--bg-elevated); border-radius: 12px; padding: 24px; text-align: center;">
+                            <div style="font-size: 2rem; margin-bottom: 12px;">⚡</div>
+                            <h4 style="color: var(--text-primary); margin-bottom: 8px; font-size: 1rem;">Faster Onboarding</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.6;">
+                                New data sources connect to DataSurface once, instantly available to all your platforms—Snowflake, Databricks, or any other.
+                            </p>
+                        </div>
+                        
+                        <!-- Best of Breed -->
+                        <div style="background: var(--bg-elevated); border-radius: 12px; padding: 24px; text-align: center;">
+                            <div style="font-size: 2rem; margin-bottom: 12px;">🏆</div>
+                            <h4 style="color: var(--text-primary); margin-bottom: 8px; font-size: 1rem;">Best of Breed</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.6;">
+                                Use multiple platforms concurrently. Snowflake for analytics, Databricks for ML, Postgres for operations—all from the same data.
+                            </p>
+                        </div>
+                        
+                        <!-- Commercial Flexibility -->
+                        <div style="background: var(--bg-elevated); border-radius: 12px; padding: 24px; text-align: center;">
+                            <div style="font-size: 2rem; margin-bottom: 12px;">📊</div>
+                            <h4 style="color: var(--text-primary); margin-bottom: 8px; font-size: 1rem;">Commercial Flexibility</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.6;">
+                                Swap platforms over time as it makes business sense. Renegotiate contracts from a position of strength.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Key Value Prop -->
+                    <div style="background: var(--bg-dark); border-radius: 12px; padding: 30px; text-align: center; margin-bottom: 30px;">
+                        <p style="color: var(--text-secondary); max-width: 700px; margin: 0 auto; line-height: 1.7; font-size: 1.05rem;">
+                            The data landscape evolves. HDFS gave way to S3 + Spark. Impala came and went. Then came the cloud data warehouses. The next shift is always around the corner.
+                        </p>
+                        <p style="color: var(--primary-light); margin-top: 16px; font-weight: 600; font-size: 1.2rem;">
+                            With DataSurface, adopting new technology is just adding another consumer—not a multi-year migration.
+                        </p>
+                    </div>
+                    
+                    <!-- Multi-cloud diagram -->
+                    <div>
+                        <svg viewBox="0 0 600 200" style="width: 100%; height: auto;">
+                            <!-- AWS Producer -->
+                            <g>
+                                <rect x="10" y="30" width="100" height="60" rx="8" fill="#1e293b" stroke="#ff9900" stroke-width="2"/>
+                                <text x="60" y="55" text-anchor="middle" fill="#ff9900" font-size="10" font-weight="600">AWS</text>
+                                <text x="60" y="72" text-anchor="middle" fill="#94a3b8" font-size="9">Postgres RDS</text>
+                            </g>
+                            
+                            <!-- On-prem Producer -->
+                            <g>
+                                <rect x="10" y="110" width="100" height="60" rx="8" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
+                                <text x="60" y="135" text-anchor="middle" fill="#94a3b8" font-size="10" font-weight="600">On-Premise</text>
+                                <text x="60" y="152" text-anchor="middle" fill="#94a3b8" font-size="9">Oracle DB</text>
+                            </g>
+                            
+                            <!-- Lines to DataSurface -->
+                            <g stroke="#0891b2" stroke-width="2" opacity="0.7">
+                                <line x1="110" y1="60" x2="240" y2="100"/>
+                                <line x1="110" y1="140" x2="240" y2="100"/>
+                            </g>
+                            
+                            <!-- DataSurface Hub -->
+                            <g>
+                                <circle cx="300" cy="100" r="50" fill="url(#hubGrad3)" stroke="#0891b2" stroke-width="3"/>
+                                <circle cx="300" cy="100" r="58" fill="none" stroke="#22d3ee" stroke-width="1" stroke-dasharray="4,4" opacity="0.5">
+                                    <animateTransform attributeName="transform" type="rotate" from="0 300 100" to="360 300 100" dur="20s" repeatCount="indefinite"/>
+                                </circle>
+                                <text x="300" y="92" text-anchor="middle" font-size="24">⚡</text>
+                                <text x="300" y="112" text-anchor="middle" fill="#22d3ee" font-size="8" font-weight="600">DATASURFACE</text>
+                            </g>
+                            
+                            <!-- Lines to Consumers -->
+                            <g stroke="#0891b2" stroke-width="2" opacity="0.7">
+                                <line x1="360" y1="100" x2="490" y2="25"/>
+                                <line x1="360" y1="100" x2="490" y2="75"/>
+                                <line x1="360" y1="100" x2="490" y2="125"/>
+                                <line x1="360" y1="100" x2="490" y2="175"/>
+                            </g>
+                            
+                            <!-- Snowflake Consumer -->
+                            <g>
+                                <rect x="490" y="0" width="100" height="50" rx="8" fill="#1e293b" stroke="#29b5e8" stroke-width="2"/>
+                                <text x="540" y="22" text-anchor="middle" fill="#29b5e8" font-size="10" font-weight="600">Snowflake</text>
+                                <text x="540" y="38" text-anchor="middle" fill="#94a3b8" font-size="9">Analytics</text>
+                            </g>
+                            
+                            <!-- Databricks Consumer -->
+                            <g>
+                                <rect x="490" y="55" width="100" height="50" rx="8" fill="#1e293b" stroke="#ff3621" stroke-width="2"/>
+                                <text x="540" y="77" text-anchor="middle" fill="#ff3621" font-size="10" font-weight="600">Databricks</text>
+                                <text x="540" y="93" text-anchor="middle" fill="#94a3b8" font-size="9">ML / AI</text>
+                            </g>
+                            
+                            <!-- Azure Consumer -->
+                            <g>
+                                <rect x="490" y="110" width="100" height="50" rx="8" fill="#1e293b" stroke="#0078d4" stroke-width="2"/>
+                                <text x="540" y="132" text-anchor="middle" fill="#0078d4" font-size="10" font-weight="600">Azure</text>
+                                <text x="540" y="148" text-anchor="middle" fill="#94a3b8" font-size="9">Synapse</text>
+                            </g>
+                            
+                            <!-- Future Tech Consumer -->
+                            <g>
+                                <rect x="490" y="165" width="100" height="35" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4,4"/>
+                                <text x="540" y="187" text-anchor="middle" fill="#f59e0b" font-size="9" font-weight="600">Next Platform...</text>
+                            </g>
+                            
+                            <!-- Labels -->
+                            <text x="60" y="188" text-anchor="middle" fill="#64748b" font-size="10">Data Sources</text>
+                            <text x="540" y="12" text-anchor="middle" fill="#64748b" font-size="9" dy="-5">Use them all. Concurrently.</text>
+                            
+                            <defs>
+                                <linearGradient id="hubGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#1e293b"/>
+                                    <stop offset="100%" style="stop-color:#0a0f1a"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Transformer Section -->
+                <div class="transformer-section">
+                    <h2>What About Transformers (T)?</h2>
+                    <p style="color: var(--text-secondary); text-align: center; max-width: 700px; margin: 0 auto 30px; line-height: 1.7;">
+                        DataTransformers are a special type of consumer that also produces data. They consume raw data from DataSurface, add value through transformation, and publish derived datasets back into the platform.
+                    </p>
+                    
+                    <div class="transformer-diagram">
+                        <div class="transformer-node">
+                            <div class="circle data">📦</div>
+                            <span class="label">Raw Data<br>(in DataSurface)</span>
+                        </div>
+                        <span class="arrow-right">→</span>
+                        <div class="transformer-node">
+                            <div class="circle transformer">⚙️</div>
+                            <span class="label">Transformer<br>(Consumer + Producer)</span>
+                        </div>
+                        <span class="arrow-right">→</span>
+                        <div class="transformer-node">
+                            <div class="circle derived">✨</div>
+                            <span class="label">Derived Data<br>(back to DataSurface)</span>
+                        </div>
+                    </div>
+                    
+                    <div class="key-points">
+                        <div class="key-point">
+                            <h4>🔄 Dual Role</h4>
+                            <p>Transformers consume existing data and produce new, value-added datasets—all through the same DataSurface connection.</p>
+                        </div>
+                        <div class="key-point">
+                            <h4>📐 Still Linear</h4>
+                            <p>Adding transformers doesn't create exponential complexity. Each transformer is just another participant in the P + C + T model.</p>
+                        </div>
+                        <div class="key-point">
+                            <h4>🏛️ Governed</h4>
+                            <p>Derived data inherits governance policies from source data. Full lineage tracking shows exactly how data was transformed.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CTA -->
+                <div class="cta-section" style="margin-top: 60px;">
+                    <h2>Ready to Simplify Your Data Architecture?</h2>
+                    <p style="margin-bottom: 30px;">
+                        Stop building pipeline spaghetti. Let DataSurface handle the logistics.
+                    </p>
+                    <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+                        <a href="contact.html" class="btn-primary">Get Started</a>
+                        <a href="how-it-works.html" class="btn-secondary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 DataSurface. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
+

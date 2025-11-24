@@ -804,9 +804,110 @@ nav {
 }
 
 /* ============================================
-   Tables in Code Blocks
+   Code Blocks & Syntax Highlighting
    ============================================ */
 
+/* Base code block styling */
+pre {
+    background: var(--bg-darkest);
+    border-radius: 8px;
+    padding: 20px;
+    overflow-x: auto;
+    margin: 20px 0;
+    border: 1px solid var(--border-subtle);
+    font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 0.875rem;
+    line-height: 1.6;
+}
+
+pre code {
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    font-size: inherit;
+    color: var(--text-primary);
+}
+
+code {
+    background: var(--bg-elevated);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 0.875em;
+    color: var(--primary-light);
+}
+
+/* Override highlight.js with dark mode colors */
+.hljs {
+    background: var(--bg-darkest) !important;
+    color: var(--text-primary) !important;
+}
+
+/* Syntax highlighting colors for dark mode */
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-built_in,
+.hljs-name {
+    color: #c792ea !important; /* Purple for keywords */
+}
+
+.hljs-string,
+.hljs-attr {
+    color: #c3e88d !important; /* Green for strings */
+}
+
+.hljs-number,
+.hljs-literal {
+    color: #f78c6c !important; /* Orange for numbers */
+}
+
+.hljs-comment,
+.hljs-quote {
+    color: #546e7a !important; /* Gray for comments */
+    font-style: italic;
+}
+
+.hljs-function,
+.hljs-title {
+    color: #82aaff !important; /* Blue for functions */
+}
+
+.hljs-class .hljs-title {
+    color: #ffcb6b !important; /* Yellow for class names */
+}
+
+.hljs-params {
+    color: var(--text-primary) !important;
+}
+
+.hljs-variable,
+.hljs-template-variable {
+    color: #f07178 !important; /* Red for variables */
+}
+
+.hljs-type {
+    color: #ffcb6b !important; /* Yellow for types */
+}
+
+.hljs-meta {
+    color: #89ddff !important; /* Cyan for meta */
+}
+
+.hljs-symbol,
+.hljs-bullet {
+    color: #89ddff !important;
+}
+
+.hljs-attribute {
+    color: #c792ea !important;
+}
+
+.hljs-selector-class,
+.hljs-selector-id {
+    color: #82aaff !important;
+}
+
+/* Code block with table styling */
 .code-block {
     background: var(--bg-darkest);
     border-radius: 12px;

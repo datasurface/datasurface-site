@@ -449,6 +449,15 @@
 .hero-stat {
     text-align: center;
     color: white;
+    transition: transform 0.2s ease;
+}
+
+.hero-stat:hover {
+    transform: translateY(-3px);
+}
+
+.hero-stat:hover .hero-stat-value {
+    text-shadow: 0 0 20px var(--primary-light);
 }
 
 .hero-stat-value {
