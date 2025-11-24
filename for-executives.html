@@ -8,7 +8,9 @@
     <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="images/favicon.png">
     <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="js/nav.js"></script>
 </head>
 <body>
@@ -210,24 +212,87 @@
                     </div>
                 </div>
 
-                <!-- What CTOs/CDOs Are Saying -->
+                <!-- Early Access Program -->
                 <div style="background: #f8fafc; padding: 50px 40px; border-radius: 12px; margin-bottom: 60px;">
-                    <h2 style="margin-bottom: 35px; font-size: 2rem; text-align: center;">What Your Peers Are Thinking</h2>
-                    <div style="display: grid; gap: 30px; max-width: 800px; margin: 0 auto;">
-                        <blockquote style="border-left: 4px solid var(--primary); padding-left: 25px; font-style: italic; font-size: 1.1rem; line-height: 1.8;">
-                            "We spent $15M building our data platform on a Big Data Vendor. Now they're 3x more expensive and we can't afford to migrate off. 
-                            I wish we'd built on an abstraction layer from day one."
-                            <footer style="margin-top: 15px; font-style: normal; color: var(--text-light);">— CDO, Fortune 500 Financial Services</footer>
-                        </blockquote>
-                        <blockquote style="border-left: 4px solid var(--primary); padding-left: 25px; font-style: italic; font-size: 1.1rem; line-height: 1.8;">
-                            "My team begs me for more headcount to maintain pipelines. What if I could redeploy 60% of them to actually build products?"
-                            <footer style="margin-top: 15px; font-style: normal; color: var(--text-light);">— VP Engineering, SaaS Unicorn</footer>
-                        </blockquote>
-                        <blockquote style="border-left: 4px solid var(--primary); padding-left: 25px; font-style: italic; font-size: 1.1rem; line-height: 1.8;">
-                            "Every time the business asks for new data, it's a 3-month engineering project. By the time we deliver, 
-                            the requirements have changed. We need to move faster."
-                            <footer style="margin-top: 15px; font-style: normal; color: var(--text-light);">— CTO, Healthcare Technology</footer>
-                        </blockquote>
+                    <h2 style="margin-bottom: 35px; font-size: 2rem; text-align: center;">Early Access Program</h2>
+                    <div style="max-width: 800px; margin: 0 auto;">
+                        <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 30px; text-align: center;">
+                            DataSurface is currently in <strong>pre-GA with select pilot partners</strong>. 
+                            We're working with forward-thinking data teams to refine enterprise deployment 
+                            before general availability.
+                        </p>
+                        
+                        <div style="background: white; padding: 40px; border-radius: 8px; margin: 30px 0; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);">
+                            <h3 style="color: var(--primary); margin-bottom: 20px; text-align: center;">✅ Actually Working Today</h3>
+                            <div style="display: grid; gap: 25px; margin-top: 25px;">
+                                <div style="padding: 20px; background: #f8fafc; border-radius: 8px; border-left: 4px solid var(--primary);">
+                                    <div style="font-weight: 700; color: var(--primary); margin-bottom: 8px;">Multi-Cloud + On-Premise</div>
+                                    <p style="margin: 0; line-height: 1.6;">
+                                        Same infrastructure code runs on AWS EKS, local Kubernetes, and Ubuntu clusters. 
+                                        Deploy once, run anywhere.
+                                    </p>
+                                </div>
+                                
+                                <div style="padding: 20px; background: #f8fafc; border-radius: 8px; border-left: 4px solid var(--primary);">
+                                    <div style="font-weight: 700; color: var(--primary); margin-bottom: 8px;">Multi-Database Portability</div>
+                                    <p style="margin: 0; line-height: 1.6;">
+                                        Operational with Postgres, SQL Server, Oracle, and DB2 simultaneously. 
+                                        Consumers can use different databases than producers—DataSurface handles translation.
+                                    </p>
+                                </div>
+                                
+                                <div style="padding: 20px; background: #f8fafc; border-radius: 8px; border-left: 4px solid var(--primary);">
+                                    <div style="font-weight: 700; color: var(--primary); margin-bottom: 8px;">CQRS at Scale</div>
+                                    <p style="margin: 0; line-height: 1.6;">
+                                        Consumer Replica Groups replicating from primary storage (Postgres) to consumer tier 
+                                        (SQL Server, Oracle) with batch consistency and forensic history maintained.
+                                    </p>
+                                </div>
+                                
+                                <div style="padding: 20px; background: #f8fafc; border-radius: 8px; border-left: 4px solid var(--primary);">
+                                    <div style="font-weight: 700; color: var(--primary); margin-bottom: 8px;">Schema Evolution Without Downtime</div>
+                                    <p style="margin: 0; line-height: 1.6;">
+                                        Producer adds columns → DataSurface blocks sync if consumer behind (prevents data loss) → 
+                                        Consumer updates → Data flows automatically. All tested with edge cases.
+                                    </p>
+                                </div>
+                                
+                                <div style="padding: 20px; background: #f8fafc; border-radius: 8px; border-left: 4px solid var(--primary);">
+                                    <div style="font-weight: 700; color: var(--primary); margin-bottom: 8px;">Real Complexity Proven</div>
+                                    <p style="margin: 0; line-height: 1.6;">
+                                        40,000 dataset model (1,000 datastores × 40 tables) loads and validates in 4 seconds. 
+                                        Full DAG generation, schema reconciliation, view creation all working.
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div style="margin-top: 30px; padding: 25px; background: #f0fdf4; border-radius: 8px; border-left: 4px solid #22c55e;">
+                                <p style="margin: 0; line-height: 1.7;">
+                                    <strong>Built by veterans of enterprise-scale systems:</strong> Algorithms and architecture 
+                                    battle-tested from 6 years operating 12M dataset, 1.8PB/day platforms at Goldman Sachs 
+                                    where mistakes = regulatory fines + license revocation.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); padding: 35px; border-radius: 8px; border-left: 6px solid var(--primary); margin-top: 30px;">
+                            <h3 style="color: var(--primary-dark); margin-bottom: 15px;">Are You a Good Fit for Early Access?</h3>
+                            <p style="line-height: 1.7; margin-bottom: 15px;">We're looking for design partners who:</p>
+                            <ul style="margin-left: 20px; line-height: 1.9;">
+                                <li>Spend $2M+ annually on data infrastructure</li>
+                                <li>Have 10+ data engineers maintaining pipelines</li>
+                                <li>Face vendor lock-in or costly migration projects</li>
+                                <li>Need regulatory compliance with audit trails</li>
+                                <li>Want to influence product direction</li>
+                            </ul>
+                        </div>
+
+                        <div style="text-align: center; margin-top: 40px;">
+                            <p style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 25px;">
+                                <strong>Shape the product while solving your data challenges</strong>
+                            </p>
+                            <a href="contact.html" class="btn-primary" style="font-size: 1.1rem; padding: 15px 35px;">Schedule a Conversation</a>
+                        </div>
                     </div>
                 </div>
 

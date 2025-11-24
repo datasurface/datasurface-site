@@ -8,7 +8,9 @@
     <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="images/favicon.png">
     <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="js/nav.js"></script>
 </head>
 <body>
@@ -24,57 +26,57 @@
                 <p class="hero-sub">Decouple your data intent from the underlying technology stack. A governed, model-driven logistics layer that connects any producer to any consumer, on any cloud.</p>
                 <div class="hero-buttons">
                     <a href="examples/index.html" class="btn-secondary">See the Model</a>
-                    <a href="contact.html" class="btn-primary">Get Started</a>
+                    <a href="contact.html" class="btn-primary">Get Started →</a>
                 </div>
             </div>
         </section>
 
-        <section class="features container">
+        <section class="features container stagger-children">
             <div class="feature-card">
-                <h3><a href="workflow.html" style="color: inherit; text-decoration: underline; text-decoration-color: var(--primary);">Model Driven & Git Backed</a></h3>
+                <h3><a href="workflow.html">Model Driven & Git Backed</a></h3>
                 <p>The entire ecosystem—from data schemas to infrastructure provisioning—is defined in a Python DSL stored in Git. Changes are managed via Pull Requests with automated CI/CD validation.</p>
             </div>
             <div class="feature-card">
-                <h3><a href="multi-platform.html" style="color: inherit; text-decoration: underline; text-decoration-color: var(--primary);">Multi-Platform Agility</a></h3>
+                <h3><a href="multi-platform.html">Multi-Platform Agility</a></h3>
                 <p>Run seamlessly on Kubernetes (Local, EKS, AKS). Abstract away the underlying storage technologies so you can swap vendors and platforms without disrupting consumers.</p>
             </div>
             <div class="feature-card">
-                <h3><a href="cqrs.html" style="color: inherit; text-decoration: underline; text-decoration-color: var(--primary);">CQRS Architecture</a></h3>
+                <h3><a href="cqrs.html">CQRS Architecture</a></h3>
                 <p>Ingestion and consumption are decoupled. Ingest once, then replicate to multiple read-optimized Consumer Replica Groups (CRGs) tailored to specific query workloads.</p>
             </div>
         </section>
 
         <section class="container" style="padding: 60px 20px 40px;">
-            <h2 style="text-align: center; margin-bottom: 20px; font-size: 2.5rem;">Why DataSurface?</h2>
-            <p style="text-align: center; max-width: 700px; margin: 0 auto 50px; font-size: 1.1rem; color: var(--text-light);">
+            <h2 class="section-title">Why DataSurface?</h2>
+            <p class="section-subtitle">
                 The data landscape is broken. Enterprises are drowning in point-to-point pipelines and vendor lock-in. Here's why that's about to change.
             </p>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px;">
-                <article style="background: white; padding: 35px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); border-top: 4px solid var(--primary);">
-                    <h3 style="margin-bottom: 15px; font-size: 1.5rem;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px;" class="stagger-children">
+                <article class="article-card">
+                    <h3 style="margin-bottom: 15px; font-size: 1.4rem;">
                         <a href="blog/walled-gardens.html" style="color: var(--primary); text-decoration: none;">The Walled Gardens Are Back</a>
                     </h3>
-                    <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 15px;">And This Time It's Your Data</p>
+                    <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 15px; font-weight: 500;">And This Time It's Your Data</p>
                     <p style="margin-bottom: 20px; line-height: 1.7;">
                         Today's data landscape looks eerily like the 90s internet—dominated by proprietary walled gardens from Big Data Vendors. 
                         <strong>DataSurface is the "HTTP for Data"</strong>, an open protocol layer that connects producers and consumers while keeping you in control of your destiny, free from vendor lock-in.
                     </p>
-                    <p style="margin-bottom: 20px; line-height: 1.7; font-style: italic; color: var(--text-light);">
+                    <p style="margin-bottom: 20px; line-height: 1.7; font-style: italic; color: var(--text-light); padding-left: 16px; border-left: 3px solid var(--primary-light);">
                         "Just as internet users don't care how packets traverse the network, DataSurface users won't care how data moves from producers to consumers."
                     </p>
                     <a href="blog/walled-gardens.html" class="btn-secondary" style="display: inline-block;">Read the Full Story →</a>
                 </article>
 
-                <article style="background: white; padding: 35px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); border-top: 4px solid var(--primary);">
-                    <h3 style="margin-bottom: 15px; font-size: 1.5rem;">
+                <article class="article-card">
+                    <h3 style="margin-bottom: 15px; font-size: 1.4rem;">
                         <a href="blog/day-2-trap.html" style="color: var(--primary); text-decoration: none;">The "Day 2" Trap</a>
                     </h3>
-                    <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 15px;">Why Your New Data Platform Won't Save You</p>
+                    <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 15px; font-weight: 500;">Why Your New Data Platform Won't Save You</p>
                     <p style="margin-bottom: 20px; line-height: 1.7;">
                         Many CDOs believe that signing a multi-year deal for Snowflake or Databricks will instantly make their company productive. <strong>This is dangerously optimistic thinking.</strong> 
                         The real costs begin on Day 2—and you can easily spend tens of millions on labor building "pipeline spaghetti" around that expensive platform.
                     </p>
-                    <p style="margin-bottom: 20px; line-height: 1.7; font-style: italic; color: var(--text-light);">
+                    <p style="margin-bottom: 20px; line-height: 1.7; font-style: italic; color: var(--text-light); padding-left: 16px; border-left: 3px solid var(--primary-light);">
                         "DataSurface is the logistics layer. The data nervous system for your enterprise that allows platforms to be swapped out or upgraded without breaking the business."
                     </p>
                     <a href="blog/day-2-trap.html" class="btn-secondary" style="display: inline-block;">Read the Full Story →</a>
@@ -83,31 +85,31 @@
         </section>
 
         <section class="container" style="padding: 40px 20px;">
-            <div style="background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
-                <h2 style="margin-bottom: 30px; font-size: 2rem;">Core Capabilities</h2>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;">
-                    <div>
-                        <h4 style="color: var(--primary); margin-bottom: 10px;"><a href="scd2.html" style="color: var(--primary); text-decoration: underline;">Automated History (SCD2)</a></h4>
+            <div class="stats-card">
+                <h2 style="margin-bottom: 32px; font-size: 2rem; font-weight: 800;">Core Capabilities</h2>
+                <div class="capabilities-grid">
+                    <div class="capability-item">
+                        <h4><a href="scd2.html">Automated History (SCD2)</a></h4>
                         <p>Consumers can request full forensic history (SCD Type 2) for any dataset. DataSurface automatically manages the tracking, validity dates, and storage—even if the source is just a snapshot.</p>
                     </div>
-                    <div>
-                        <h4 style="color: var(--primary); margin-bottom: 10px;">Live Data (SCD1)</h4>
+                    <div class="capability-item">
+                        <h4>Live Data (SCD1)</h4>
                         <p>For operational dashboards, consumers can request a "Live" view (SCD Type 1). The system maintains a low-latency replica with only the current state of every record.</p>
                     </div>
-                    <div>
-                        <h4 style="margin-bottom: 10px;"><a href="schema-evolution.html" style="color: var(--primary); text-decoration: underline;">Schema Evolution</a></h4>
+                    <div class="capability-item">
+                        <h4><a href="schema-evolution.html">Schema Evolution</a></h4>
                         <p>Schema changes are detected automatically. The system ensures backward compatibility or gracefully manages breaking changes without bringing down the pipeline.</p>
                     </div>
-                    <div>
-                        <h4 style="margin-bottom: 10px;"><a href="governance.html" style="color: var(--primary); text-decoration: underline;">Governance Zones</a></h4>
+                    <div class="capability-item">
+                        <h4><a href="governance.html">Governance Zones</a></h4>
                         <p>Organize data into federated zones with clear ownership. Policies enforced at the zone level ensure compliance across all teams and datasets automatically.</p>
                     </div>
-                    <div>
-                        <h4 style="margin-bottom: 10px;"><a href="audit.html" style="color: var(--primary); text-decoration: underline;">Audit & Control</a></h4>
+                    <div class="capability-item">
+                        <h4><a href="audit.html">Audit & Control</a></h4>
                         <p>Full Git-backed audit trails of every change. Granular access control ensures only authorized users can modify specific parts of the model.</p>
                     </div>
-                    <div>
-                        <h4 style="margin-bottom: 10px;"><a href="consumer-aligned.html" style="color: var(--primary); text-decoration: underline;">Consumer Aligned</a></h4>
+                    <div class="capability-item">
+                        <h4><a href="consumer-aligned.html">Consumer Aligned</a></h4>
                         <p>Data flow is driven by consumer demand. Producers declare availability; consumers define the terms (SCD type, latency, storage format). The platform handles the logistics.</p>
                     </div>
                 </div>
@@ -115,28 +117,28 @@
         </section>
 
         <section class="container" style="padding: 60px 20px;">
-            <h2 style="text-align: center; margin-bottom: 20px; font-size: 2rem; color: var(--text-light);">Built by Engineers Who've Been There</h2>
+            <h2 style="text-align: center; margin-bottom: 20px; font-size: 2rem; color: var(--text-light); font-weight: 700;">Built by Engineers Who've Been There</h2>
             <p style="text-align: center; max-width: 700px; margin: 0 auto 40px; color: var(--text-light);">
                 DataSurface was created by veterans of enterprise-scale distributed systems. Decades of experience running production data platforms inform every design decision.
             </p>
-            <div style="background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); text-align: center;">
-                <div style="display: flex; justify-content: center; align-items: center; gap: 40px; flex-wrap: wrap; margin-bottom: 30px;">
-                    <div>
-                        <div style="font-size: 2.5rem; font-weight: 700; color: var(--primary);">6+ years</div>
-                        <div style="color: var(--text-light);">Running petabyte-scale platforms</div>
+            <div class="stats-card" style="text-align: center;">
+                <div style="display: flex; justify-content: center; align-items: center; gap: 48px; flex-wrap: wrap; margin-bottom: 32px;">
+                    <div class="stat-item">
+                        <div class="stat-number">6+ years</div>
+                        <div class="stat-label">Running petabyte-scale platforms</div>
                     </div>
-                    <div style="border-left: 2px solid #e2e8f0; height: 60px;"></div>
-                    <div>
-                        <div style="font-size: 2.5rem; font-weight: 700; color: var(--primary);">Fortune 500</div>
-                        <div style="color: var(--text-light);">Enterprise experience (IBM, Major banks)</div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <div class="stat-number">Fortune 500</div>
+                        <div class="stat-label">Enterprise experience (IBM, Major banks)</div>
                     </div>
-                    <div style="border-left: 2px solid #e2e8f0; height: 60px;"></div>
-                    <div>
-                        <div style="font-size: 2.5rem; font-weight: 700; color: var(--primary);">24/7/365</div>
-                        <div style="color: var(--text-light);">Production system expertise</div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <div class="stat-number">24/7/365</div>
+                        <div class="stat-label">Production system expertise</div>
                     </div>
                 </div>
-                <a href="about.html" class="btn-secondary" style="font-size: 1rem; padding: 12px 30px;">Learn More About Us</a>
+                <a href="about.html" class="btn-secondary" style="font-size: 1rem; padding: 14px 32px;">Learn More About Us</a>
             </div>
         </section>
 

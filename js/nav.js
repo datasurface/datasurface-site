@@ -17,6 +17,7 @@ function renderNav(rootPath) {
         </div>
         <ul class="nav-links">
             <li><a href="${prefix}index.html">Home</a></li>
+            <li><a href="${prefix}how-it-works.html">How It Works</a></li>
             <li><a href="${prefix}for-executives.html">For CTOs/CDOs</a></li>
             <li class="dropdown">
                 <div class="dropdown-trigger">Platform ▾</div>
@@ -36,7 +37,7 @@ function renderNav(rootPath) {
             <li><a href="${prefix}examples/index.html">Model Examples</a></li>
             <li><a href="${prefix}blog/index.html">Blog</a></li>
             <li><a href="${prefix}about.html">About</a></li>
-            <li><a href="${prefix}contact.html" class="btn-primary">Contact Us</a></li>
+            <li><a href="${prefix}contact.html" class="nav-cta">Contact Us</a></li>
         </ul>
     </nav>
     `;

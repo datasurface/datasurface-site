@@ -8,7 +8,9 @@
     <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="images/favicon.png">
     <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="js/nav.js"></script>
 </head>
 <body>
@@ -29,11 +31,11 @@
             <div style="max-width: 1000px; margin: 0 auto;">
                 
                 <!-- Mission -->
-                <div style="margin-bottom: 60px;">
-                    <h2 style="margin-bottom: 30px; font-size: 2.2rem; text-align: center;">Our Mission</h2>
-                    <div style="background: white; padding: 50px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); text-align: center;">
-                        <p style="font-size: 1.3rem; line-height: 1.8; margin-bottom: 20px; color: var(--text-main);">
-                            <strong>Stop building data pipelines. Start delivering value.</strong>
+                <div style="margin-bottom: 60px;" class="animate-fade-in-up">
+                    <h2 class="section-title" style="margin-bottom: 30px;">Our Mission</h2>
+                    <div class="stats-card" style="text-align: center;">
+                        <p style="font-size: 1.4rem; line-height: 1.8; margin-bottom: 20px; color: var(--text-main); font-weight: 700;">
+                            Stop building data pipelines. Start delivering value.
                         </p>
                         <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-light); max-width: 800px; margin: 0 auto;">
                             We believe data teams should focus on solving business problems, not maintaining infrastructure. 
@@ -44,9 +46,9 @@
 
                 <!-- Founded By -->
                 <div style="margin-bottom: 60px;">
-                    <h2 style="margin-bottom: 30px; font-size: 2.2rem; text-align: center;">Built on Real-World Experience</h2>
-                    <div style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); padding: 50px 40px; border-radius: 12px; border-left: 6px solid var(--primary);">
-                        <h3 style="color: var(--primary-dark); margin-bottom: 20px; font-size: 1.6rem;">Billy Newport - Founder & Chief Architect</h3>
+                    <h2 class="section-title" style="margin-bottom: 30px;">Built on Real-World Experience</h2>
+                    <div style="background: linear-gradient(135deg, rgba(8, 145, 178, 0.08) 0%, rgba(34, 211, 238, 0.05) 100%); padding: 50px 40px; border-radius: 16px; border-left: 6px solid var(--primary);">
+                        <h3 style="color: var(--primary-dark); margin-bottom: 20px; font-size: 1.6rem; font-weight: 700;">Billy Newport - Founder & Chief Architect</h3>
                         <div style="display: grid; gap: 25px;">
                             <p style="font-size: 1.05rem; line-height: 1.8;">
                                 DataSurface was created by Billy Newport, who spent decades building enterprise-scale distributed systems. 
@@ -57,9 +59,9 @@
                                 <li><strong>Enterprise Data Platforms:</strong> Designed and operated a massive data platform on HDFS/Parquet for 6+ years, processing petabytes of data</li>
                                 <li><strong>Distributed Systems Expert:</strong> Deep expertise in building resilient, scalable systems that run 24/7/365 in production</li>
                                 <li><strong>Real-World Scars:</strong> Learned the hard way what works and what doesn't at enterprise scale</li>
-                                <li><strong>Linkedin profile:</strong> <a href="https://www.linkedin.com/in/billy-newport/" target="_blank">https://www.linkedin.com/in/billy-newport/</a></li>
+                                <li><strong>LinkedIn profile:</strong> <a href="https://www.linkedin.com/in/billy-newport/" target="_blank" style="color: var(--primary); text-decoration: underline;">linkedin.com/in/billy-newport</a></li>
                             </ul>
-                            <p style="font-size: 1.05rem; line-height: 1.8; font-style: italic; color: var(--text-light);">
+                            <p style="font-size: 1.05rem; line-height: 1.8; font-style: italic; color: var(--text-light); padding-left: 20px; border-left: 3px solid var(--primary-light);">
                                 "I built DataSurface because I got tired of watching companies waste millions rebuilding the same data infrastructure every 3-5 years. 
                                 The industry needed a logistics layer that would outlive any single technology choice. Something you could bet the company on for a decade or more."
                             </p>
@@ -69,53 +71,53 @@
 
                 <!-- What Makes Us Different -->
                 <div style="margin-bottom: 60px;">
-                    <h2 style="margin-bottom: 35px; font-size: 2.2rem; text-align: center;">What Makes Us Different</h2>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;">
-                        <div style="background: white; padding: 35px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);">
-                            <h4 style="color: var(--primary); margin-bottom: 15px; font-size: 1.3rem;">Battle-Tested Architecture</h4>
-                            <p style="line-height: 1.7;">DataSurface isn't based on theory or whitepapers. It's the distilled lessons from years of running production data platforms that handle billions of records daily.</p>
+                    <h2 class="section-title" style="margin-bottom: 35px;">What Makes Us Different</h2>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;" class="stagger-children">
+                        <div class="feature-card">
+                            <h4 style="color: var(--primary); margin-bottom: 15px; font-size: 1.2rem; font-weight: 700;">Battle-Tested Architecture</h4>
+                            <p style="line-height: 1.7; color: var(--text-light);">DataSurface isn't based on theory or whitepapers. It's the distilled lessons from years of running production data platforms that handle billions of records daily.</p>
                         </div>
-                        <div style="background: white; padding: 35px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);">
-                            <h4 style="color: var(--primary); margin-bottom: 15px; font-size: 1.3rem;">Decade-Ware Mindset</h4>
-                            <p style="line-height: 1.7;">We design for 10+ year lifespans. Your data platform should be an appreciating asset, not something you rewrite every technology cycle.</p>
+                        <div class="feature-card">
+                            <h4 style="color: var(--primary); margin-bottom: 15px; font-size: 1.2rem; font-weight: 700;">Decade-Ware Mindset</h4>
+                            <p style="line-height: 1.7; color: var(--text-light);">We design for 10+ year lifespans. Your data platform should be an appreciating asset, not something you rewrite every technology cycle.</p>
                         </div>
-                        <div style="background: white; padding: 35px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);">
-                            <h4 style="color: var(--primary); margin-bottom: 15px; font-size: 1.3rem;">Vendor Independent</h4>
-                            <p style="line-height: 1.7;">We're not tied to any cloud provider or database vendor. We help you avoid lock-in and make the best technology choices for your needs.</p>
+                        <div class="feature-card">
+                            <h4 style="color: var(--primary); margin-bottom: 15px; font-size: 1.2rem; font-weight: 700;">Vendor Independent</h4>
+                            <p style="line-height: 1.7; color: var(--text-light);">We're not tied to any cloud provider or database vendor. We help you avoid lock-in and make the best technology choices for your needs.</p>
                         </div>
-                        <div style="background: white; padding: 35px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);">
-                            <h4 style="color: var(--primary); margin-bottom: 15px; font-size: 1.3rem;">Enterprise-Grade</h4>
-                            <p style="line-height: 1.7;">Built for regulated industries from day one. Governance, audit trails, and compliance aren't afterthoughts—they're core to the architecture.</p>
+                        <div class="feature-card">
+                            <h4 style="color: var(--primary); margin-bottom: 15px; font-size: 1.2rem; font-weight: 700;">Enterprise-Grade</h4>
+                            <p style="line-height: 1.7; color: var(--text-light);">Built for regulated industries from day one. Governance, audit trails, and compliance aren't afterthoughts—they're core to the architecture.</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Working With -->
+                <!-- Industries We Serve -->
                 <div style="margin-bottom: 60px;">
-                    <h2 style="margin-bottom: 35px; font-size: 2.2rem; text-align: center;">Industries We Serve</h2>
-                    <div style="background: white; padding: 50px 40px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+                    <h2 class="section-title" style="margin-bottom: 35px;">Industries We Serve</h2>
+                    <div class="stats-card">
                         <p style="text-align: center; font-size: 1.1rem; line-height: 1.8; margin-bottom: 35px; color: var(--text-light);">
                             DataSurface is helping organizations across multiple industries modernize their data infrastructure:
                         </p>
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; text-align: center;">
                             <div>
                                 <div style="font-size: 2.5rem; margin-bottom: 10px;">🏦</div>
-                                <h4 style="color: var(--primary-dark); margin-bottom: 5px;">Financial Services</h4>
+                                <h4 style="color: var(--primary-dark); margin-bottom: 5px; font-weight: 700;">Financial Services</h4>
                                 <p style="font-size: 0.95rem; color: var(--text-light);">Banks, Trading Firms, FinTech</p>
                             </div>
                             <div>
                                 <div style="font-size: 2.5rem; margin-bottom: 10px;">🏥</div>
-                                <h4 style="color: var(--primary-dark); margin-bottom: 5px;">Healthcare</h4>
+                                <h4 style="color: var(--primary-dark); margin-bottom: 5px; font-weight: 700;">Healthcare</h4>
                                 <p style="font-size: 0.95rem; color: var(--text-light);">Hospitals, Health Tech, Pharma</p>
                             </div>
                             <div>
                                 <div style="font-size: 2.5rem; margin-bottom: 10px;">📊</div>
-                                <h4 style="color: var(--primary-dark); margin-bottom: 5px;">Data Exchanges</h4>
+                                <h4 style="color: var(--primary-dark); margin-bottom: 5px; font-weight: 700;">Data Exchanges</h4>
                                 <p style="font-size: 0.95rem; color: var(--text-light);">Market Data, Regulatory Reporting</p>
                             </div>
                             <div>
                                 <div style="font-size: 2.5rem; margin-bottom: 10px;">🚀</div>
-                                <h4 style="color: var(--primary-dark); margin-bottom: 5px;">Technology</h4>
+                                <h4 style="color: var(--primary-dark); margin-bottom: 5px; font-weight: 700;">Technology</h4>
                                 <p style="font-size: 0.95rem; color: var(--text-light);">SaaS, AI/ML Platforms, Enterprise Software</p>
                             </div>
                         </div>
@@ -124,36 +126,36 @@
 
                 <!-- Our Approach -->
                 <div style="margin-bottom: 60px;">
-                    <h2 style="margin-bottom: 35px; font-size: 2.2rem; text-align: center;">Our Approach</h2>
-                    <div style="display: grid; gap: 30px;">
-                        <div style="background: white; padding: 35px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); border-left: 4px solid var(--primary);">
-                            <h4 style="color: var(--primary); margin-bottom: 15px; font-size: 1.2rem;">🤝 Partnership, Not Just Software</h4>
-                            <p style="line-height: 1.7;">We're not a "throw it over the wall" software vendor. Our Field Data Engineers work alongside your team to ensure success.</p>
+                    <h2 class="section-title" style="margin-bottom: 35px;">Our Approach</h2>
+                    <div style="display: grid; gap: 20px;">
+                        <div class="article-card">
+                            <h4 style="color: var(--primary); margin-bottom: 15px; font-size: 1.15rem; font-weight: 700;">🤝 Partnership, Not Just Software</h4>
+                            <p style="line-height: 1.7; color: var(--text-light);">We're not a "throw it over the wall" software vendor. Our Field Data Engineers work alongside your team to ensure success.</p>
                         </div>
-                        <div style="background: white; padding: 35px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); border-left: 4px solid var(--primary);">
-                            <h4 style="color: var(--primary); margin-bottom: 15px; font-size: 1.2rem;">🎯 Focused on Outcomes</h4>
-                            <p style="line-height: 1.7;">We measure success by your ability to deliver data products faster, not by how many features we ship. Your ROI is our KPI.</p>
+                        <div class="article-card">
+                            <h4 style="color: var(--primary); margin-bottom: 15px; font-size: 1.15rem; font-weight: 700;">🎯 Focused on Outcomes</h4>
+                            <p style="line-height: 1.7; color: var(--text-light);">We measure success by your ability to deliver data products faster, not by how many features we ship. Your ROI is our KPI.</p>
                         </div>
-                        <div style="background: white; padding: 35px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); border-left: 4px solid var(--primary);">
-                            <h4 style="color: var(--primary); margin-bottom: 15px; font-size: 1.2rem;">🔒 Enterprise-First Security</h4>
-                            <p style="line-height: 1.7;">Designed for regulated industries from the ground up. Git-backed audit trails, policy enforcement, and federated governance are core, not add-ons.</p>
+                        <div class="article-card">
+                            <h4 style="color: var(--primary); margin-bottom: 15px; font-size: 1.15rem; font-weight: 700;">🔒 Enterprise-First Security</h4>
+                            <p style="line-height: 1.7; color: var(--text-light);">Designed for regulated industries from the ground up. Git-backed audit trails, policy enforcement, and federated governance are core, not add-ons.</p>
                         </div>
-                        <div style="background: white; padding: 35px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); border-left: 4px solid var(--primary);">
-                            <h4 style="color: var(--primary); margin-bottom: 15px; font-size: 1.2rem;">📈 Continuous Evolution</h4>
-                            <p style="line-height: 1.7;">The data landscape never stops changing. Our platform evolves continuously, and your annual support contract ensures you benefit from every improvement.</p>
+                        <div class="article-card">
+                            <h4 style="color: var(--primary); margin-bottom: 15px; font-size: 1.15rem; font-weight: 700;">📈 Continuous Evolution</h4>
+                            <p style="line-height: 1.7; color: var(--text-light);">The data landscape never stops changing. Our platform evolves continuously, and your annual support contract ensures you benefit from every improvement.</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- CTA -->
-                <div style="text-align: center; background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%); color: white; padding: 50px 40px; border-radius: 12px;">
-                    <h2 style="color: white; margin-bottom: 20px; font-size: 2rem;">Ready to Work Together?</h2>
-                    <p style="font-size: 1.2rem; margin-bottom: 30px; opacity: 0.95;">
+                <div class="cta-section">
+                    <h2 style="font-size: 2rem;">Ready to Work Together?</h2>
+                    <p style="font-size: 1.2rem; margin-bottom: 30px;">
                         Let's discuss how DataSurface can transform your data infrastructure.
                     </p>
                     <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
-                        <a href="contact.html" class="btn-primary" style="background: white; color: var(--primary); font-size: 1.1rem; padding: 15px 35px;">Schedule a Consultation</a>
-                        <a href="solutions.html" class="btn-secondary" style="border-color: white; color: white; font-size: 1.1rem; padding: 15px 35px;">View Solutions</a>
+                        <a href="contact.html" class="btn-primary" style="font-size: 1.1rem; padding: 15px 35px;">Schedule a Consultation</a>
+                        <a href="solutions.html" class="btn-secondary" style="font-size: 1.1rem; padding: 15px 35px;">View Solutions</a>
                     </div>
                 </div>
 
@@ -168,4 +170,3 @@
     </footer>
 </body>
 </html>
-

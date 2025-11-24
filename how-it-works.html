@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How DataSurface Works - DataSurface</title>
+    <meta name="description" content="Learn how DataSurface automates data logistics from producers to consumers using GitOps workflows, automatic pipeline generation, and CQRS architecture.">
+    <link rel="icon" href="images/favicon.ico" sizes="any">
+    <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="images/favicon.png">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="js/nav.js"></script>
+</head>
+<body>
+    <header>
+        <!-- Navigation injected by js/nav.js -->
+    </header>
+    <script>renderNav('.');</script>
+
+    <main class="container" style="padding: 60px 0;">
+        <section class="hero">
+            <div class="container">
+                <h1>How DataSurface Works</h1>
+                <p class="hero-sub">From model definition to data flowing in minutes. No custom pipeline code required.</p>
+            </div>
+        </section>
+
+        <!-- Three Steps Overview -->
+        <section style="margin: 60px 0;">
+            <h2 style="text-align: center; margin-bottom: 50px; font-size: 2.2rem;">Three Simple Steps</h2>
+            
+            <div style="display: grid; gap: 50px; max-width: 1000px; margin: 0 auto;">
+                
+                <!-- Step 1: Define Model -->
+                <div style="display: flex; gap: 30px; align-items: start;">
+                    <div style="flex-shrink: 0; width: 80px; height: 80px; background: var(--primary); 
+                                border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px rgba(37, 99, 235, 0.3);">
+                        <span style="color: white; font-size: 2rem; font-weight: 700;">1</span>
+                    </div>
+                    <div style="background: white; padding: 35px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); flex: 1;">
+                        <h3 style="color: var(--primary); margin-bottom: 15px; font-size: 1.5rem;">Define Your Data Model in Git</h3>
+                        <p style="margin-bottom: 20px; line-height: 1.7;">
+                            Declare what data you have (producers), what data you need (consumers), and any transformations 
+                            using a Python DSL. Store in Git with standard pull request workflows. All changes validated automatically.
+                        </p>
+                        
+<pre style="background: #f8fafc; padding: 20px; border-radius: 8px; overflow-x: auto; font-size: 0.9rem;"><code># Data Producer declares availability
+team.addDatastore(
+    name="CustomerDB",
+    datasets=[
+        Dataset(name="customers", columns=[...]),
+        Dataset(name="orders", columns=[...])
+    ],
+    ingestion=SQLSnapshot(
+        credential="db_readonly",
+        schedule=CronTrigger("*/5 * * * *")  # Every 5 min
+    )
+)
+
+# Data Consumer declares requirements  
+workspace.addDatasetSink(
+    datastore="CustomerDB",
+    dataset="customers",
+    requirements=ForensicHistory()  # SCD Type 2
+)</code></pre>
+                        
+                        <div style="margin-top: 20px; padding: 15px; background: #eff6ff; border-radius: 6px;">
+                            <p style="margin: 0; font-size: 0.95rem; line-height: 1.6;">
+                                <strong>Pull Request Validation:</strong> Automated linting checks authorization, 
+                                backward compatibility, policy compliance, and schema correctness before merge.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Assign Infrastructure -->
+                <div style="display: flex; gap: 30px; align-items: start;">
+                    <div style="flex-shrink: 0; width: 80px; height: 80px; background: var(--primary); 
+                                border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px rgba(37, 99, 235, 0.3);">
+                        <span style="color: white; font-size: 2rem; font-weight: 700;">2</span>
+                    </div>
+                    <div style="background: white; padding: 35px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); flex: 1;">
+                        <h3 style="color: var(--primary); margin-bottom: 15px; font-size: 1.5rem;">Infrastructure Team Assigns Workspaces</h3>
+                        <p style="margin-bottom: 20px; line-height: 1.7;">
+                            Central ops team assigns consumer Workspaces to DataPlatforms (dev/qa/prod environments). 
+                            DataSurface automatically generates all infrastructure: Airflow DAGs, database schemas, 
+                            ingestion jobs, merge logic, consumer views.
+                        </p>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 20px; align-items: center; margin: 25px 0;">
+                            <div style="text-align: center; padding: 20px; background: #f8fafc; border-radius: 8px;">
+                                <div style="font-weight: 700; margin-bottom: 8px;">Merge PR</div>
+                                <div style="font-size: 0.9rem; color: var(--text-light);">Model change committed</div>
+                            </div>
+                            <div style="font-size: 2rem; color: var(--primary);">→</div>
+                            <div style="text-align: center; padding: 20px; background: #f8fafc; border-radius: 8px;">
+                                <div style="font-weight: 700; margin-bottom: 8px;">Auto-Generate</div>
+                                <div style="font-size: 0.9rem; color: var(--text-light);">DAGs, schemas, views</div>
+                            </div>
+                        </div>
+                        
+                        <div style="padding: 20px; background: #f0fdf4; border-radius: 8px; border-left: 4px solid #22c55e;">
+                            <p style="margin: 0; font-weight: 600; color: #15803d;">
+                                Minutes from commit to data flowing
+                            </p>
+                            <p style="margin: 10px 0 0 0; font-size: 0.95rem; line-height: 1.6;">
+                                Infrastructure detects model change → regenerates DAGs → jobs start running → 
+                                data begins ingesting automatically. No manual pipeline building required.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Query Data -->
+                <div style="display: flex; gap: 30px; align-items: start;">
+                    <div style="flex-shrink: 0; width: 80px; height: 80px; background: var(--primary); 
+                                border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px rgba(37, 99, 235, 0.3);">
+                        <span style="color: white; font-size: 2rem; font-weight: 700;">3</span>
+                    </div>
+                    <div style="background: white; padding: 35px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); flex: 1;">
+                        <h3 style="color: var(--primary); margin-bottom: 15px; font-size: 1.5rem;">Consumers Query Through Governed Views</h3>
+                        <p style="margin-bottom: 20px; line-height: 1.7;">
+                            Consumers access data through automatically generated SQL views. Views enforce workspace 
+                            permissions and abstract away storage complexity. Data can be replicated to optimal query 
+                            engines via CQRS for performance.
+                        </p>
+                        
+<pre style="background: #f8fafc; padding: 20px; border-radius: 8px; overflow-x: auto; font-size: 0.9rem;"><code>-- Query live records only (SCD Type 1)
+SELECT customer_id, name, email, city
+FROM analytics_workspace.customers_live
+WHERE region = 'US-WEST';
+
+-- Query full history (SCD Type 2)
+SELECT customer_id, name, valid_from, valid_to
+FROM analytics_workspace.customers_all
+WHERE customer_id = 12345
+ORDER BY valid_from;</code></pre>
+
+                        <div style="margin-top: 20px; padding: 15px; background: #eff6ff; border-radius: 6px;">
+                            <p style="margin: 0; font-size: 0.95rem; line-height: 1.6;">
+                                <strong>Automatic Replication:</strong> High-volume consumers get their own database 
+                                via CQRS. Data replicated from primary storage with batch consistency maintained.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Architecture Diagram -->
+        <section style="margin: 80px 0; padding: 50px 40px; background: white; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+            <h2 style="text-align: center; margin-bottom: 40px; font-size: 2.2rem;">The Data Logistics Architecture</h2>
+            
+            <pre style="background: #f8fafc; padding: 30px; border-radius: 8px; font-family: 'SF Mono', 'Consolas', monospace; font-size: 0.85rem; overflow-x: auto; line-height: 1.6; border: 2px solid #e2e8f0;">
+┌──────────────────────────────────────────────────────────────────┐
+│              <strong>DataSurface Model (Git Repository)</strong>              │
+│   Producers + Consumers + Policies + Platform Assignments       │
+│                  Validated via Pull Requests                     │
+└────────────────────┬─────────────────────────────────────────────┘
+                     │ Generates Infrastructure
+                     ▼
+┌──────────────────────────────────────────────────────────────────┐
+│                   <strong>Primary Storage Layer</strong>                      │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐          │
+│  │ Ingest from  │  │ DataTransform│  │ Merge Engine │          │
+│  │ Source DBs   │→ │ (Optional)   │→ │ (SCD1/SCD2)  │          │
+│  └──────────────┘  └──────────────┘  └──────────────┘          │
+│         Postgres / SQL Server / Oracle / DB2                    │
+└────────────┬─────────────────────────────────────────────────────┘
+             │ CQRS Replication (Batch Consistent)
+             │
+             ├──────────┬──────────┬──────────┬──────────┐
+             ▼          ▼          ▼          ▼          ▼
+        ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐
+        │Consumer│ │Consumer│ │Consumer│ │Consumer│ │Consumer│
+        │ DB #1  │ │ DB #2  │ │ DB #3  │ │ DB #4  │ │ DB N   │
+        │────────│ │────────│ │────────│ │────────│ │────────│
+        │ 10 WS  │ │ 25 WS  │ │  8 WS  │ │ 15 WS  │ │ ...    │
+        └────┬───┘ └────┬───┘ └────┬───┘ └────┬───┘ └────┬───┘
+             │          │          │          │          │
+             └──────────┴──────────┴──────────┴──────────┘
+                    Consumers Query Isolated Views
+              (Optimized per workload, scaled independently)
+            </pre>
+            
+            <div style="margin-top: 30px; padding: 25px; background: #eff6ff; border-radius: 8px; text-align: center;">
+                <p style="margin: 0; font-size: 1.05rem; line-height: 1.7;">
+                    <strong>The Key Insight:</strong> Ingest once to primary storage, replicate to many consumers. 
+                    Each consumer gets data in their optimal format without impacting producers or other consumers.
+                </p>
+            </div>
+        </section>
+
+        <!-- Detailed Workflow -->
+        <section style="margin: 80px 0;">
+            <h2 style="text-align: center; margin-bottom: 50px; font-size: 2.2rem;">The Complete Workflow</h2>
+            
+            <div style="display: grid; gap: 40px; max-width: 1000px; margin: 0 auto;">
+                
+                <!-- GovernanceZone/Team Workflow -->
+                <article style="background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); border-top: 4px solid var(--primary);">
+                    <h3 style="color: var(--primary); margin-bottom: 20px; font-size: 1.6rem;">🏛️ GovernanceZone / Team Owner Perspective</h3>
+                    
+                    <div style="margin-bottom: 25px;">
+                        <h4 style="margin-bottom: 10px;">1. Control Your Domain</h4>
+                        <p style="line-height: 1.7; margin-bottom: 15px;">
+                            Each GovernanceZone is managed by a specific Git repository. Zone owners control 
+                            their teams, datastores, workspaces—independent from other zones. Central team 
+                            declares your zone, then you manage everything within it.
+                        </p>
+<pre style="background: #f8fafc; padding: 15px; border-radius: 6px; font-size: 0.85rem;"><code># Central team creates declaration
+ecosystem.addGovernanceZoneDeclaration(
+    name="Finance",
+    owningRepo="github.com/company/finance-data"
+)
+
+# Finance team defines their zone (in their repo)
+zone = GovernanceZone(name="Finance")
+team = zone.addTeam(name="Treasury")</code></pre>
+                    </div>
+
+                    <div style="margin-bottom: 25px;">
+                        <h4 style="margin-bottom: 10px;">2. Set Policies for Your Data</h4>
+                        <p style="line-height: 1.7; margin-bottom: 15px;">
+                            Define who can access your data and for what purpose. Policies are enforced 
+                            automatically during PR validation and at runtime.
+                        </p>
+<pre style="background: #f8fafc; padding: 15px; border-radius: 6px; font-size: 0.85rem;"><code>zone.addPolicy(
+    AllowDisallowPolicy(
+        allow=["FinanceTeam", "AuditTeam"],
+        disallow=["*"],  # Block all others
+        purpose="Regulatory reporting only"
+    )
+)</code></pre>
+                    </div>
+
+                    <div>
+                        <h4 style="margin-bottom: 10px;">3. Submit Pull Requests to Central</h4>
+                        <p style="line-height: 1.7;">
+                            Your changes are submitted as PRs to the central ecosystem repository. 
+                            Automated validation ensures you only modified your authorized zone. 
+                            After merge, your data and policies are live across all environments.
+                        </p>
+                    </div>
+
+                    <div style="margin-top: 25px; padding: 20px; background: #eff6ff; border-radius: 8px; border-left: 4px solid var(--primary);">
+                        <p style="margin: 0; line-height: 1.6; font-weight: 600;">
+                            Federated Governance at Scale
+                        </p>
+                        <p style="margin: 10px 0 0 0; font-size: 0.95rem; line-height: 1.6;">
+                            Each zone operates independently with its own repo and team. M&A integration? 
+                            Just add a new GovernanceZone. Acquired company retains control of their data 
+                            while sharing according to your policies.
+                        </p>
+                    </div>
+                </article>
+                
+                <!-- Data Producer Workflow -->
+                <article style="background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); border-top: 4px solid var(--primary);">
+                    <h3 style="color: var(--primary); margin-bottom: 20px; font-size: 1.6rem;">📤 Data Producer Perspective</h3>
+                    
+                    <div style="margin-bottom: 25px;">
+                        <h4 style="margin-bottom: 10px;">1. Declare Your Data</h4>
+                        <p style="line-height: 1.7; margin-bottom: 15px;">
+                            Define your database schema, specify how to connect (credentials, hostname), 
+                            and set ingestion frequency. Commit to your team's Git repository.
+                        </p>
+<pre style="background: #f8fafc; padding: 15px; border-radius: 6px; font-size: 0.85rem;"><code>datastore = team.addDatastore(
+    name="SalesDB",
+    datasets=[customers, orders, products]
+)</code></pre>
+                    </div>
+
+                    <div style="margin-bottom: 25px;">
+                        <h4 style="margin-bottom: 10px;">2. Submit Pull Request</h4>
+                        <p style="line-height: 1.7;">
+                            Your changes are validated: schemas checked, authorization verified, policies enforced. 
+                            Central team reviews and merges.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h4 style="margin-bottom: 10px;">3. Done</h4>
+                        <p style="line-height: 1.7;">
+                            DataSurface starts ingesting your data automatically. You control who can access it through policies. 
+                            No pipeline code to write or maintain.
+                        </p>
+                    </div>
+                </article>
+
+                <!-- Data Consumer Workflow -->
+                <article style="background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); border-top: 4px solid var(--primary);">
+                    <h3 style="color: var(--primary); margin-bottom: 20px; font-size: 1.6rem;">📥 Data Consumer Perspective</h3>
+                    
+                    <div style="margin-bottom: 25px;">
+                        <h4 style="margin-bottom: 10px;">1. Request the Data You Need</h4>
+                        <p style="line-height: 1.7; margin-bottom: 15px;">
+                            Create a Workspace, specify which datasets you need, and define your requirements 
+                            (live-only vs. full history, latency, retention period).
+                        </p>
+<pre style="background: #f8fafc; padding: 15px; border-radius: 6px; font-size: 0.85rem;"><code>workspace = team.addWorkspace(
+    name="CustomerAnalytics",
+    sinks=[
+        DatasetSink("SalesDB", "customers", LiveOnly()),
+        DatasetSink("SalesDB", "orders", ForensicHistory())
+    ]
+)</code></pre>
+                    </div>
+
+                    <div style="margin-bottom: 25px;">
+                        <h4 style="margin-bottom: 10px;">2. Get Infrastructure Assignment</h4>
+                        <p style="line-height: 1.7;">
+                            Central ops reviews and assigns your Workspace to a DataPlatform 
+                            (production, dev, or specific consumer database for high-volume use).
+                        </p>
+                    </div>
+
+                    <div>
+                        <h4 style="margin-bottom: 10px;">3. Query Your Views</h4>
+                        <p style="line-height: 1.7; margin-bottom: 15px;">
+                            DataSurface creates workspace-specific SQL views. Connect and query. 
+                            Views enforce permissions—you see only your authorized data.
+                        </p>
+<pre style="background: #f8fafc; padding: 15px; border-radius: 6px; font-size: 0.85rem;"><code>-- Connection provided by ops team
+SELECT * FROM customer_analytics.customers_live
+WHERE signup_date > '2025-01-01';</code></pre>
+                    </div>
+                </article>
+
+                <!-- Infrastructure Team Workflow -->
+                <article style="background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); border-top: 4px solid var(--primary);">
+                    <h3 style="color: var(--primary); margin-bottom: 20px; font-size: 1.6rem;">⚙️ Infrastructure Team Perspective</h3>
+                    
+                    <div style="margin-bottom: 25px;">
+                        <h4 style="margin-bottom: 10px;">1. Define Runtime Environments</h4>
+                        <p style="line-height: 1.7;">
+                            Configure DataPlatforms (dev/qa/prod), specify infrastructure 
+                            (Kubernetes namespace, databases, Airflow), set version selectors (which git tags to deploy).
+                        </p>
+                    </div>
+
+                    <div style="margin-bottom: 25px;">
+                        <h4 style="margin-bottom: 10px;">2. Map Workspaces to Platforms</h4>
+                        <p style="line-height: 1.7;">
+                            Assign consumer Workspaces to appropriate DataPlatforms. High-priority or 
+                            high-volume consumers can get dedicated Consumer Replica Groups (CQRS).
+                        </p>
+                    </div>
+
+                    <div>
+                        <h4 style="margin-bottom: 10px;">3. Monitor & Scale</h4>
+                        <p style="line-height: 1.7;">
+                            Watch batch metrics, latency, and load. Add more consumer databases as needed. 
+                            DataSurface handles replication automatically.
+                        </p>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- Key Capabilities -->
+        <section style="margin: 80px 0; padding: 50px 40px; background: #f8fafc; border-radius: 12px;">
+            <h2 style="text-align: center; margin-bottom: 50px; font-size: 2.2rem;">What Happens Automatically</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; max-width: 1000px; margin: 0 auto;">
+                
+                <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);">
+                    <h4 style="color: var(--primary); margin-bottom: 15px;">🔄 Ingestion</h4>
+                    <p style="line-height: 1.7;">
+                        Scheduled jobs pull data from source systems (SQL databases, APIs, files). 
+                        Supports snapshot, watermark-based, and CDC ingestion.
+                    </p>
+                </div>
+
+                <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);">
+                    <h4 style="color: var(--primary); margin-bottom: 15px;">📊 Schema Management</h4>
+                    <p style="line-height: 1.7;">
+                        Tables, columns, indexes automatically created and maintained. 
+                        Schema evolution validated—forward-compatible changes flow through, breaking changes blocked.
+                    </p>
+                </div>
+
+                <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);">
+                    <h4 style="color: var(--primary); margin-bottom: 15px;">🔀 Merge Logic</h4>
+                    <p style="line-height: 1.7;">
+                        SCD Type 1 (live records only) or Type 2 (full forensic history) maintained automatically. 
+                        Handles inserts, updates, deletes transactionally.
+                    </p>
+                </div>
+
+                <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);">
+                    <h4 style="color: var(--primary); margin-bottom: 15px;">🎯 Consumer Views</h4>
+                    <p style="line-height: 1.7;">
+                        Workspace-specific views generated automatically. Permissions enforced at view level. 
+                        Name translation handles database differences.
+                    </p>
+                </div>
+
+                <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);">
+                    <h4 style="color: var(--primary); margin-bottom: 15px;">📈 CQRS Replication</h4>
+                    <p style="line-height: 1.7;">
+                        High-volume consumers replicated to dedicated databases. 
+                        Batch-consistent replication preserves transactional integrity.
+                    </p>
+                </div>
+
+                <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);">
+                    <h4 style="color: var(--primary); margin-bottom: 15px;">🔐 Governance</h4>
+                    <p style="line-height: 1.7;">
+                        Policies enforced automatically. Access controls, data residency, 
+                        purpose restrictions all validated during PR review and at runtime.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Real Example -->
+        <section style="margin: 80px 0;">
+            <h2 style="text-align: center; margin-bottom: 50px; font-size: 2.2rem;">Real-World Example</h2>
+            
+            <div style="max-width: 900px; margin: 0 auto; background: white; padding: 50px 40px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+                
+                <div style="margin-bottom: 40px;">
+                    <h3 style="color: var(--primary); margin-bottom: 15px;">Scenario: Regulatory Reporting System</h3>
+                    <p style="line-height: 1.7; font-size: 1.05rem;">
+                        A bank needs to consolidate data from 50 source systems, run 20 transformations for 
+                        data cleanup/enrichment, and serve 100 downstream reports (some real-time, some historical).
+                    </p>
+                </div>
+
+                <div style="display: grid; gap: 30px;">
+                    
+                    <div style="padding: 25px; background: #fef2f2; border-radius: 8px; border-left: 4px solid #ef4444;">
+                        <h4 style="margin-bottom: 12px;">❌ Traditional Approach</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li>50 × 100 = <strong>5,000 custom pipelines</strong> to maintain</li>
+                            <li>Each producer change breaks downstream consumers</li>
+                            <li>3-6 months to onboard new data source</li>
+                            <li>12-18 months to migrate to new database technology</li>
+                            <li>80% of engineering time on maintenance</li>
+                        </ul>
+                    </div>
+
+                    <div style="padding: 25px; background: #f0fdf4; border-radius: 8px; border-left: 4px solid #22c55e;">
+                        <h4 style="margin-bottom: 12px;">✅ With DataSurface</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li>50 + 20 + 100 = <strong>170 model definitions</strong> (97% less code)</li>
+                            <li>Schema changes automatically propagated with validation</li>
+                            <li>Hours to onboard new source (add to model, merge PR)</li>
+                            <li>Configuration change to swap database vendors</li>
+                            <li>20% engineering time on maintenance, 80% on value</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div style="margin-top: 35px; padding: 25px; background: #eff6ff; border-radius: 8px;">
+                    <p style="margin: 0; line-height: 1.7; font-size: 1.05rem;">
+                        <strong>Outcome:</strong> The bank reduces data platform costs by 60%, 
+                        delivers new reports in days instead of months, and can migrate from on-premise 
+                        to AWS or Azure with a configuration change instead of an $8M rewrite project.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Technology Transparency -->
+        <section style="margin: 80px 0; padding: 50px 40px; background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%); border-radius: 12px; color: white;">
+            <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+                <h2 style="color: white; margin-bottom: 25px; font-size: 2rem;">The Technology Layer Is Replaceable</h2>
+                <p style="font-size: 1.1rem; line-height: 1.8; opacity: 0.95; margin-bottom: 30px;">
+                    Start on Postgres today. Add SQL Server consumers next month. Migrate primary storage 
+                    to Aurora next year. Move to Azure in 3 years. <strong>Zero pipeline rewrites.</strong>
+                </p>
+                <p style="font-size: 1.2rem; line-height: 1.8; font-weight: 600;">
+                    Your business logic stays the same.<br>
+                    The infrastructure evolves underneath.<br>
+                    Consumers never notice.
+                </p>
+                <div style="margin-top: 40px;">
+                    <a href="contact.html" class="btn-primary" style="background: white; color: var(--primary); font-size: 1.1rem; padding: 15px 35px;">See It In Action</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Common Questions -->
+        <section style="margin: 80px 0;">
+            <h2 style="text-align: center; margin-bottom: 50px; font-size: 2.2rem;">Common Questions</h2>
+            
+            <div style="max-width: 900px; margin: 0 auto; display: grid; gap: 25px;">
+                
+                <details style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);">
+                    <summary style="font-weight: 600; cursor: pointer; font-size: 1.1rem; color: var(--primary);">
+                        What happens when a producer changes their schema?
+                    </summary>
+                    <p style="margin-top: 15px; line-height: 1.7;">
+                        Forward-compatible changes (new columns, new datasets) are validated during PR review. 
+                        If approved, DataSurface automatically updates downstream tables and views. Consumers see 
+                        new columns as NULL until data arrives. Breaking changes (removing columns, changing types) 
+                        are blocked—backward compatibility is enforced.
+                    </p>
+                </details>
+
+                <details style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);">
+                    <summary style="font-weight: 600; cursor: pointer; font-size: 1.1rem; color: var(--primary);">
+                        How does CQRS scaling work?
+                    </summary>
+                    <p style="margin-top: 15px; line-height: 1.7;">
+                        Primary storage ingests data once. High-volume consumers get dedicated Consumer Replica Group 
+                        databases. DataSurface replicates data from primary to consumer databases in batches, 
+                        maintaining transactional consistency. Each consumer database can be optimized for its 
+                        specific workload (different indexes, partitioning, even different database technology).
+                    </p>
+                </details>
+
+                <details style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);">
+                    <summary style="font-weight: 600; cursor: pointer; font-size: 1.1rem; color: var(--primary);">
+                        How long does it take to onboard a new data source?
+                    </summary>
+                    <p style="margin-top: 15px; line-height: 1.7;">
+                        <strong>Initial model definition:</strong> 1-2 hours (define schema, set credentials)<br>
+                        <strong>PR validation:</strong> Automated (seconds)<br>
+                        <strong>Infrastructure generation:</strong> Minutes after merge<br>
+                        <strong>First data available:</strong> One ingestion cycle (minutes to hours depending on source size)<br><br>
+                        Total: Same-day for straightforward sources vs. 3-6 months traditional pipeline building.
+                    </p>
+                </details>
+
+                <details style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);">
+                    <summary style="font-weight: 600; cursor: pointer; font-size: 1.1rem; color: var(--primary);">
+                        What about DataTransformers (ETL/ELT)?
+                    </summary>
+                    <p style="margin-top: 15px; line-height: 1.7;">
+                        DataTransformers are first-class citizens. Define transformation code in Git with versioning. 
+                        DataSurface schedules execution, manages credentials, handles failures. Output becomes a 
+                        new Datastore that consumers can use. Git versioning ensures reproducibility—you know 
+                        exactly which code version produced which batch.
+                    </p>
+                </details>
+
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section style="text-align: center; background: white; padding: 60px 40px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+            <h2 style="margin-bottom: 20px; font-size: 2rem;">Ready to See It Working?</h2>
+            <p style="font-size: 1.15rem; margin-bottom: 35px; color: var(--text-light); max-width: 700px; margin-left: auto; margin-right: auto;">
+                Schedule a technical demo to see DataSurface handling real data workflows: 
+                ingestion, transformation, replication, and schema evolution—all automated.
+            </p>
+            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                <a href="contact.html" class="btn-primary" style="font-size: 1.1rem; padding: 15px 35px;">Schedule Demo</a>
+                <a href="examples/index.html" class="btn-secondary" style="font-size: 1.1rem; padding: 15px 35px;">See Model Examples</a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 DataSurface. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
+
