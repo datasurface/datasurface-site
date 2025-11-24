@@ -30,6 +30,7 @@ function renderNav(rootPath) {
                     <a href="${prefix}schema-evolution.html">Schema Evolution</a>
                     <a href="${prefix}governance.html">Governance & Policy</a>
                     <a href="${prefix}audit.html">Audit & Control</a>
+                    <a href="${prefix}compliance.html">SOC 2 Compliance</a>
                 </div>
             </li>
             <li><a href="${prefix}solutions.html">Solutions & Services</a></li>

@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOC 2 Compliance - DataSurface</title>
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="js/nav.js"></script>
+    <style>
+        .compliance-hero {
+            background: linear-gradient(135deg, var(--dark-bg-darkest) 0%, var(--dark-bg-main) 100%);
+            padding: 80px 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-default);
+        }
+        
+        .compliance-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .compliance-hero .subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 30px;
+            line-height: 1.7;
+        }
+        
+        .trust-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--bg-card);
+            padding: 12px 24px;
+            border-radius: 50px;
+            border: 1px solid var(--primary);
+            color: var(--primary-light);
+            font-weight: 600;
+        }
+        
+        .criteria-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin: 40px 0;
+        }
+        
+        .criteria-card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 30px;
+            border: 1px solid var(--border-default);
+            transition: all 0.3s ease;
+        }
+        
+        .criteria-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 30px rgba(8, 145, 178, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        .criteria-card .code {
+            display: inline-block;
+            background: var(--primary);
+            color: var(--dark-bg-darkest);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        .criteria-card h3 {
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+        }
+        
+        .criteria-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+        
+        .criteria-card .status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border-subtle);
+            color: #22c55e;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .feature-mapping {
+            background: var(--bg-elevated);
+            border-radius: 16px;
+            padding: 40px;
+            margin: 60px 0;
+            border: 1px solid var(--border-default);
+        }
+        
+        .feature-mapping h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--text-primary);
+        }
+        
+        .mapping-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .mapping-table th,
+        .mapping-table td {
+            padding: 16px 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-default);
+        }
+        
+        .mapping-table th {
+            background: var(--bg-card);
+            color: var(--primary-light);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .mapping-table td {
+            color: var(--text-secondary);
+        }
+        
+        .mapping-table tr:hover td {
+            background: var(--bg-card);
+        }
+        
+        .mapping-table .feature-name {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+        
+        .mapping-table .control-code {
+            background: var(--bg-darkest);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--primary-light);
+        }
+        
+        .evidence-section {
+            margin: 60px 0;
+        }
+        
+        .evidence-section h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+        
+        .evidence-section .intro {
+            text-align: center;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 40px;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+        
+        .evidence-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+        
+        .evidence-card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 30px;
+            border: 1px solid var(--border-default);
+        }
+        
+        .evidence-card .icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+        
+        .evidence-card h3 {
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+        
+        .evidence-card ul {
+            margin: 0;
+            padding-left: 20px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+        
+        .responsibility-section {
+            margin: 60px 0;
+        }
+        
+        .responsibility-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        @media (max-width: 768px) {
+            .responsibility-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .responsibility-card {
+            border-radius: 12px;
+            padding: 30px;
+        }
+        
+        .responsibility-card.datasurface {
+            background: linear-gradient(135deg, rgba(8, 145, 178, 0.1) 0%, rgba(34, 211, 238, 0.05) 100%);
+            border: 1px solid var(--primary);
+        }
+        
+        .responsibility-card.customer {
+            background: var(--bg-card);
+            border: 1px solid var(--border-default);
+        }
+        
+        .responsibility-card h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+        
+        .responsibility-card ul {
+            margin: 0;
+            padding-left: 20px;
+            color: var(--text-secondary);
+            line-height: 1.9;
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            border-radius: 16px;
+            padding: 60px 40px;
+            text-align: center;
+            margin: 60px 0;
+        }
+        
+        .cta-section h2 {
+            color: white;
+            margin-bottom: 15px;
+        }
+        
+        .cta-section p {
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 600px;
+            margin: 0 auto 30px;
+            font-size: 1.1rem;
+        }
+        
+        .cta-section .btn-white {
+            display: inline-block;
+            background: white;
+            color: var(--primary-dark);
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        
+        .cta-section .btn-white:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <!-- Navigation injected by js/nav.js -->
+    </header>
+    <script>renderNav('.');</script>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="compliance-hero">
+            <div class="container">
+                <h1>🛡️ SOC 2 Compliance, Built In</h1>
+                <p class="subtitle">
+                    DataSurface provides a framework for implementing SOC 2 controls in your data platform operations. 
+                    Audit trails, access controls, and change management—not bolted on, but architected from day one.
+                </p>
+                <div class="trust-badge">
+                    <span>✓</span> SOC 2 Trust Service Criteria Coverage
+                </div>
+            </div>
+        </section>
+
+        <div class="container" style="padding: 60px 20px;">
+            
+            <!-- Trust Service Criteria Coverage -->
+            <section>
+                <h2 class="section-title" style="text-align: center; margin-bottom: 15px;">Trust Service Criteria Coverage</h2>
+                <p style="text-align: center; color: var(--text-secondary); max-width: 700px; margin: 0 auto 40px; font-size: 1.1rem;">
+                    DataSurface provides native support for key SOC 2 control areas. Here's what you get out of the box.
+                </p>
+                
+                <div class="criteria-grid">
+                    <div class="criteria-card">
+                        <span class="code">CC6</span>
+                        <h3>Logical & Physical Access Controls</h3>
+                        <p>Repository-based authorization, credential management, team isolation, and multi-level access control enforce who can access and modify what.</p>
+                        <div class="status">
+                            <span>●</span> Fully Supported
+                        </div>
+                    </div>
+                    
+                    <div class="criteria-card">
+                        <span class="code">CC7</span>
+                        <h3>System Operations</h3>
+                        <p>Git-backed immutable audit trails, validation logging, and complete change attribution provide forensic-level visibility into all operations.</p>
+                        <div class="status">
+                            <span>●</span> Fully Supported
+                        </div>
+                    </div>
+                    
+                    <div class="criteria-card">
+                        <span class="code">CC8</span>
+                        <h3>Change Management</h3>
+                        <p>Pre-merge validation, backwards compatibility checks, environment resolution, and automated testing ensure changes are authorized and safe.</p>
+                        <div class="status">
+                            <span>●</span> Fully Supported
+                        </div>
+                    </div>
+                    
+                    <div class="criteria-card">
+                        <span class="code">CC9</span>
+                        <h3>Risk Mitigation</h3>
+                        <p>Workspace priority tracking, data container location management, and multi-region support enable business continuity planning.</p>
+                        <div class="status">
+                            <span>●</span> Fully Supported
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Feature to Control Mapping -->
+            <section class="feature-mapping">
+                <h2>Feature → Control Mapping</h2>
+                <div style="overflow-x: auto;">
+                    <table class="mapping-table">
+                        <thead>
+                            <tr>
+                                <th>DataSurface Feature</th>
+                                <th>SOC 2 Control</th>
+                                <th>What It Does</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="feature-name">Repository-Based Authorization</td>
+                                <td><span class="control-code">CC6.1</span></td>
+                                <td>Only commits from authorized repos can modify objects. Changes from unauthorized sources are rejected.</td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Credential Management</td>
+                                <td><span class="control-code">CC6.1</span></td>
+                                <td>Tracks all credentials, separates normal from super-user access, validates credential usage during linting.</td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Multi-Level Authorization</td>
+                                <td><span class="control-code">CC6.3</span></td>
+                                <td>Three-tier model (Ecosystem → Zone → Team) enforces segregation of duties. Platform team can't modify business data.</td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Dataset Approval System</td>
+                                <td><span class="control-code">CC6.3</span></td>
+                                <td>Sensitive datastores require explicit approval before workspaces can access them. Creates audit trail of approvals.</td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Production Status Enforcement</td>
+                                <td><span class="control-code">CC6.6</span></td>
+                                <td>Separates prod/non-prod data. Validates status consistency. Prevents mixing test and production data.</td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Data Classification Policies</td>
+                                <td><span class="control-code">CC6.6</span></td>
+                                <td>Requires classification on all datasets. Governance zones restrict allowed classifications.</td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Deprecation Tracking</td>
+                                <td><span class="control-code">CC6.7</span></td>
+                                <td>Tracks deprecated assets, warns or blocks usage, provides migration paths.</td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Git-Based Audit Trail</td>
+                                <td><span class="control-code">CC7.2</span></td>
+                                <td>Every change is a Git commit. Immutable history with full attribution (who, what, when, why).</td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Pre-Merge Validation</td>
+                                <td><span class="control-code">CC8.1</span></td>
+                                <td>Validates authorization, consistency, and backwards compatibility before accepting any change.</td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Backwards Compatibility Checks</td>
+                                <td><span class="control-code">CC8.1</span></td>
+                                <td>Prevents breaking changes. Schema changes must be additive. Datastore changes can't remove datasets.</td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Workspace Priority</td>
+                                <td><span class="control-code">CC9.1</span></td>
+                                <td>Assigns business importance levels. Priority propagates through dependency chain for recovery planning.</td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Location Tracking</td>
+                                <td><span class="control-code">CC9.1</span></td>
+                                <td>Tracks physical/cloud locations of all data. Enables multi-region DR and data residency compliance.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Evidence for Auditors -->
+            <section class="evidence-section">
+                <h2>📋 Evidence Package for Auditors</h2>
+                <p class="intro">
+                    When auditors come knocking, DataSurface provides structured evidence that demonstrates controls are in place and operating effectively.
+                </p>
+                
+                <div class="evidence-grid">
+                    <div class="evidence-card">
+                        <div class="icon">📁</div>
+                        <h3>Model Definition Files</h3>
+                        <ul>
+                            <li>Complete ecosystem definition showing authorization structure</li>
+                            <li>Governance zone definitions with policies</li>
+                            <li>Team definitions with datastores and workspaces</li>
+                            <li>Full credential inventory</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="evidence-card">
+                        <div class="icon">📜</div>
+                        <h3>Git History</h3>
+                        <ul>
+                            <li>Immutable audit log of every change</li>
+                            <li>Policy change history</li>
+                            <li>Access control modifications</li>
+                            <li>Who approved what, when</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="evidence-card">
+                        <div class="icon">✅</div>
+                        <h3>Validation Reports</h3>
+                        <ul>
+                            <li>CI/CD logs showing validation checks</li>
+                            <li>Failed validation attempts (blocked changes)</li>
+                            <li>Backwards compatibility check results</li>
+                            <li>Production status validation</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="evidence-card">
+                        <div class="icon">🔧</div>
+                        <h3>Configuration Evidence</h3>
+                        <ul>
+                            <li>Repository access controls</li>
+                            <li>Branch protection rules</li>
+                            <li>Required review settings</li>
+                            <li>Commit signing requirements</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Shared Responsibility -->
+            <section class="responsibility-section">
+                <h2 class="section-title" style="text-align: center;">Shared Responsibility Model</h2>
+                <p style="text-align: center; color: var(--text-secondary); max-width: 700px; margin: 0 auto;">
+                    DataSurface is a framework. Achieving SOC 2 certification requires proper configuration and operation. Here's what we handle vs. what you configure.
+                </p>
+                
+                <div class="responsibility-grid">
+                    <div class="responsibility-card datasurface">
+                        <h3><span style="color: var(--primary-light);">⚡</span> DataSurface Provides</h3>
+                        <ul>
+                            <li>Repository-based authorization framework</li>
+                            <li>Multi-level access control model</li>
+                            <li>Credential tracking and validation</li>
+                            <li>Git-backed immutable audit trails</li>
+                            <li>Pre-merge validation pipeline</li>
+                            <li>Backwards compatibility enforcement</li>
+                            <li>Production/non-production separation</li>
+                            <li>Data classification policy engine</li>
+                            <li>Dataset approval workflow</li>
+                            <li>Deprecation management</li>
+                            <li>Location and priority tracking</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="responsibility-card customer">
+                        <h3><span>🏢</span> You Configure</h3>
+                        <ul>
+                            <li>Git repository access controls</li>
+                            <li>Branch protection rules</li>
+                            <li>Pull request review requirements</li>
+                            <li>Commit signing policies</li>
+                            <li>Credential storage (Vault, Secrets Manager)</li>
+                            <li>Credential rotation schedules</li>
+                            <li>Team membership reviews</li>
+                            <li>Classification scheme definitions</li>
+                            <li>Monitoring and alerting</li>
+                            <li>Incident response procedures</li>
+                            <li>Backup and disaster recovery</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Implementation Checklist Preview -->
+            <section style="margin: 60px 0;">
+                <div style="background: var(--bg-card); border-radius: 16px; padding: 40px; border: 1px solid var(--border-default);">
+                    <h2 style="text-align: center; margin-bottom: 30px;">📝 Implementation Checklist</h2>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;">
+                        <div>
+                            <h4 style="color: var(--primary-light); margin-bottom: 15px;">Initial Setup</h4>
+                            <ul style="color: var(--text-secondary); line-height: 2; padding-left: 20px;">
+                                <li>Define ecosystem with repository ownership</li>
+                                <li>Define governance zones matching compliance boundaries</li>
+                                <li>Configure git repository access controls</li>
+                                <li>Enable branch protection and required reviews</li>
+                                <li>Set up CI/CD with validation checks</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 style="color: var(--primary-light); margin-bottom: 15px;">Ongoing Operations</h4>
+                            <ul style="color: var(--text-secondary); line-height: 2; padding-left: 20px;">
+                                <li>Review team membership quarterly</li>
+                                <li>Review credential inventory quarterly</li>
+                                <li>Review workspace priorities semi-annually</li>
+                                <li>Review data classifications annually</li>
+                                <li>Preserve git history permanently</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 style="color: var(--primary-light); margin-bottom: 15px;">Audit Preparation</h4>
+                            <ul style="color: var(--text-secondary); line-height: 2; padding-left: 20px;">
+                                <li>Generate complete git history export</li>
+                                <li>Collect validation reports (12 months)</li>
+                                <li>Document all policy changes</li>
+                                <li>Prepare authorization enforcement evidence</li>
+                                <li>Create gap analysis documentation</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA -->
+            <section class="cta-section">
+                <h2>Ready to Simplify Compliance?</h2>
+                <p>
+                    Schedule a conversation to see how DataSurface can help your organization meet SOC 2 requirements while accelerating data delivery.
+                </p>
+                <a href="contact.html" class="btn-white">Talk to Us About Compliance</a>
+            </section>
+
+            <!-- Related Pages -->
+            <section style="margin: 40px 0;">
+                <h3 style="text-align: center; margin-bottom: 30px; color: var(--text-secondary);">Related Capabilities</h3>
+                <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                    <a href="audit.html" class="btn-secondary">Audit & Control</a>
+                    <a href="governance.html" class="btn-secondary">Governance & Policy</a>
+                    <a href="workflow.html" class="btn-secondary">Git-Backed Workflow</a>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 DataSurface. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
+
