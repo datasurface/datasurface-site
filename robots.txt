@@ -1,0 +1,7 @@
+# DataSurface robots.txt
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://datasurface.com/sitemap.xml
+
