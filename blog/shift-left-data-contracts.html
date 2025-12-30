@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HGQCKTD8WG"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HGQCKTD8WG');
+    </script>
+    <title>How DataSurface Implements True "Shift Left" with Data Contracts - DataSurface Blog</title>
+    <meta name="description" content="DataSurface enforces data contracts through PR workflows, ensuring backward compatibility, controlled deprecation, and mutual approval between producers and consumers.">
+    <link rel="canonical" href="https://datasurface.com/blog/shift-left-data-contracts.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="How DataSurface Implements True 'Shift Left' with Data Contracts">
+    <meta property="og:description" content="Enforcing compatibility and governance at the source through automated PR checks.">
+    <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16x16.png">
+    <link rel="shortcut icon" href="../images/favicon.ico">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="../js/nav.js"></script>
+    <script src="../js/footer.js"></script>
+</head>
+<body>
+    <header>
+        <!-- Navigation injected by js/nav.js -->
+    </header>
+    <script>renderNav('..');</script>
+
+    <main class="container" style="padding: 60px 0;">
+        <article class="blog-post">
+            <h1>How DataSurface Implements True "Shift Left" with Data Contracts — Enforcing Compatibility and Governance at the Source</h1>
+            <div class="meta">December 30, 2025 &bull; By Billy Newport</div>
+            
+            <div class="content">
+                <p>In the world of modern data engineering, the shift left philosophy has gained significant traction. It means moving responsibility for data quality, compatibility, and governance as far "upstream" as possible — to the point where data is produced — rather than waiting for downstream consumers to discover and suffer from issues.</p>
+                
+                <p>While many discussions around shift left focus on data contracts for validation, quality checks, and semantic alignment at ingestion (often in streaming or data mesh contexts), DataSurface takes this concept even further with a uniquely robust, bilateral enforcement model. By integrating data contracts directly into pull request (PR) workflows, DataSurface ensures that both producers and consumers actively participate in maintaining trustworthy data ecosystems.</p>
+
+                <h3>What Makes DataSurface's Approach Stand Out</h3>
+                
+                <p>DataSurface acts as a model-driven logistics layer for data — often described as the "Fedex for Data" — that connects producers to consumers across clouds with strong governance, without vendor lock-in using the best pipeline stacks currently available to meet the consumers current needs. As new pipeline stacks arrives, Datasurface migrated consumers to be 'best' pipeline tech automatically. DataSurface wants to manage the logistics of managing the data movement according to consumer wishes and DataSurface takes advantage of better technology over time to service those consumers.</p>
+                
+                <p>At its core, DataSurface uses data contracts not just as documentation, but as enforceable, living agreements enforced through CI/CD checks. This creates a system where breaking changes are caught early, deprecations trigger necessary conversations, and access is explicitly controlled.</p>
+                
+                <p>Here are the key mechanisms:</p>
+
+                <h3>1. Backward Compatibility Enforcement — Keeping Producers Honest</h3>
+                
+                <p>When a data producer submits a PR that modifies a datastore or dataset they own:</p>
+                <ul style="margin: 20px 0 20px 40px; list-style-type: disc;">
+                    <li>The PR is automatically linted against the existing schema.</li>
+                    <li>Any non-backward-compatible change (e.g., removing a field, changing types in a breaking way) fails the build.</li>
+                </ul>
+                
+                <p>This is pure shift left in action: the producer learns immediately — before merging — that their change would break downstream consumers. No more "surprise" breakages weeks later in analytics pipelines or ML models.</p>
+                
+                <p>The philosophy here is simple yet powerful:</p>
+                
+                <p><strong>Once a producer advertises a dataset in a certain form, they must evolve it in a forward-compatible way. Consumers shouldn't have to chase producers for explanations — the system prevents the breakage upfront.</strong></p>
+
+                <h3>2. Deprecation as a Controlled, Conversation-Forcing Process</h3>
+                
+                <p>Data producers can mark datasets as deprecated in stages:</p>
+                <ul style="margin: 20px 0 20px 40px; list-style-type: disc;">
+                    <li><strong>Soft deprecation:</strong> New Workspaces (consumer environments) are prevented from starting to use the dataset.</li>
+                    <li><strong>Hard deprecation:</strong> Existing consumers are strongly discouraged (or blocked) from continued usage.</li>
+                </ul>
+                
+                <p>Here's where it gets interesting:</p>
+                <ul style="margin: 20px 0 20px 40px; list-style-type: disc;">
+                    <li>Consumers can configure their Workspace policy to reject deprecated data entirely.</li>
+                    <li>If a producer then marks a dataset as deprecated, any affected consumer's dependency causes PR failures in the producer's repo.</li>
+                </ul>
+                
+                <p>This forces a structured conversation:</p>
+                <ul style="margin: 20px 0 20px 40px; list-style-type: disc;">
+                    <li>Why is this being deprecated?</li>
+                    <li>Is there a migration path?</li>
+                    <li>Can the consumer accept the risk or timeline?</li>
+                </ul>
+                
+                <p>The producer cannot silently break things — the consumer's policy acts as a veto, shifting accountability both ways.</p>
+
+                <h3>3. Producer-Controlled Access — Requiring Explicit Approval</h3>
+                
+                <p>The relationship works bidirectionally.</p>
+                
+                <p>Producers can flag certain datasets with a policy that says:</p>
+                <p style="margin-left: 20px; font-style: italic;">"Any new consumer must get my explicit approval before using this data."</p>
+                
+                <p>When a consumer tries to add such a dataset to their Workspace via PR:</p>
+                <ul style="margin: 20px 0 20px 40px; list-style-type: disc;">
+                    <li>The PR fails automatically.</li>
+                    <li>The producer is notified and can add the specific Workspace to an approved list.</li>
+                    <li>Only then can the consumer proceed.</li>
+                </ul>
+                
+                <p>This creates a lightweight approval gate that:</p>
+                <ul style="margin: 20px 0 20px 40px; list-style-type: disc;">
+                    <li>Prevents uncontrolled sprawl</li>
+                    <li>Ensures producers know who's depending on their data</li>
+                    <li>Forces onboarding discussions about SLAs, usage patterns, and expectations</li>
+                </ul>
+                
+                <p>It's essentially mutual consent for critical data dependencies.</p>
+
+                <h3>4. Consumer-Driven Requirements: Retention and Latency</h3>
+                
+                <p>Consumers aren't passive — they declare their needs in the Workspace configuration:</p>
+                <ul style="margin: 20px 0 20px 40px; list-style-type: disc;">
+                    <li>Retention policies (how long data must be kept available)</li>
+                    <li>Latency requirements (how fresh the data must be)</li>
+                </ul>
+                
+                <p>These directly influence:</p>
+                <ul style="margin: 20px 0 20px 40px; list-style-type: disc;">
+                    <li>The data platform's pipeline configuration</li>
+                    <li>How frequently DataSurface pulls/refreshes data from the producer</li>
+                </ul>
+                
+                <p>This closes the loop: consumer expectations aren't just wishes — they become operational constraints enforced by the platform.</p>
+                
+                <p>DataSurface allows multiple data platforms with different technology stacks to be plugged in concurrently and the pipelines supporting sets of consumers can be mapped to these.</p>
+
+                <h3>Why This Matters in a Data Mesh / Decentralized World</h3>
+                
+                <p>Traditional data meshes rely heavily on social contracts, catalogs, and good intentions. DataSurface adds teeth to those contracts through automated enforcement in PRs.</p>
+                
+                <p>The result is a system that:</p>
+                <ul style="margin: 20px 0 20px 40px; list-style-type: disc;">
+                    <li>Prevents breakage before it happens</li>
+                    <li>Makes dependencies explicit and reviewable</li>
+                    <li>Forces healthy communication between domains</li>
+                    <li>Reduces "pipeline spaghetti" and technical debt</li>
+                    <li>Scales governance without central teams micromanaging</li>
+                </ul>
+                
+                <p>In short: DataSurface doesn't just talk about shift left — it engineers it into the development workflow, creating a more reliable, self-regulating data supply chain.</p>
+                
+                <p>If you're building a data mesh, dealing with frequent schema breaks, or trying to establish real governance in a decentralized organization, the combination of enforceable backward compatibility, staged deprecation, mutual approval gates, and consumer-specified SLAs might be exactly the missing piece.</p>
+                
+                <p>Have you implemented something similar in your organization? How do you handle schema evolution and deprecation today? I'd love to hear your thoughts!</p>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <!-- Footer injected by js/footer.js -->
+    </footer>
+    <script>renderFooter('..');</script>
+</body>
+</html>
+

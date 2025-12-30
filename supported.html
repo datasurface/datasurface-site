@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HGQCKTD8WG"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HGQCKTD8WG');
+    </script>
+    <title>Supported Platforms - DataSurface</title>
+    <meta name="description" content="DataSurface integrates with AWS, Snowflake, Databricks, Oracle, PostgreSQL, SQL Server, IBM DB/2, and Kubernetes. See what each platform supports for primary storage, compute, and CQRS.">
+    <link rel="canonical" href="https://datasurface.com/supported.html">
+    <meta property="og:title" content="Supported Platforms - DataSurface">
+    <meta property="og:description" content="See which platforms DataSurface integrates with and what capabilities each supports.">
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="js/nav.js"></script>
+    <script src="js/footer.js"></script>
+    <style>
+        .platform-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 40px 0;
+            background: var(--bg-card);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        .platform-table th,
+        .platform-table td {
+            padding: 16px 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        .platform-table th {
+            background: var(--bg-elevated);
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .platform-table th:first-child {
+            text-align: left;
+        }
+        .platform-table td:first-child {
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .platform-table tr:last-child td {
+            border-bottom: none;
+        }
+        .platform-table tr:hover {
+            background: rgba(8, 145, 178, 0.05);
+        }
+        .platform-icon {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .platform-icon svg {
+            width: 28px;
+            height: 28px;
+            flex-shrink: 0;
+        }
+        .check {
+            color: #4ade80;
+            font-size: 1.3rem;
+        }
+        .dash {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+        }
+        .coming {
+            color: #fbbf24;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        .column-help {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            text-transform: none;
+            letter-spacing: 0;
+            margin-top: 4px;
+        }
+        .legend {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <!-- Navigation injected by js/nav.js -->
+    </header>
+    <script>renderNav('.');</script>
+
+    <main class="container" style="padding: 60px 20px;">
+        <div style="max-width: 1000px; margin: 0 auto;">
+            <h1 style="margin-bottom: 20px;">Supported Platforms</h1>
+            <p style="font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 30px;">
+                DataSurface integrates with the databases and platforms you already use. Here's what each supports.
+            </p>
+
+            <div class="legend">
+                <div class="legend-item">
+                    <span class="check">✓</span> Supported
+                </div>
+                <div class="legend-item">
+                    <span class="dash">—</span> Not applicable
+                </div>
+                <div class="legend-item">
+                    <span class="coming">Coming Soon</span>
+                </div>
+            </div>
+
+            <table class="platform-table">
+                <thead>
+                    <tr>
+                        <th>Platform</th>
+                        <th>
+                            Primary Storage
+                            <span class="column-help">Source of truth for ingested data</span>
+                        </th>
+                        <th>
+                            Compute Engine
+                            <span class="column-help">Runs transformations &amp; pipelines</span>
+                        </th>
+                        <th>
+                            CQRS Storage
+                            <span class="column-help">Consumer replica databases</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="platform-icon">
+                                <svg viewBox="0 0 60 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <text x="30" y="30" text-anchor="middle" fill="#FF9900" font-size="18" font-weight="bold" font-family="Arial">aws</text>
+                                </svg>
+                                AWS
+                            </div>
+                        </td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="platform-icon">
+                                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M24 4v40M4 24h40M9.86 9.86l28.28 28.28M38.14 9.86L9.86 38.14" stroke="#29B5E8" stroke-width="3" stroke-linecap="round"/>
+                                    <circle cx="24" cy="4" r="3" fill="#29B5E8"/>
+                                    <circle cx="24" cy="44" r="3" fill="#29B5E8"/>
+                                    <circle cx="4" cy="24" r="3" fill="#29B5E8"/>
+                                    <circle cx="44" cy="24" r="3" fill="#29B5E8"/>
+                                </svg>
+                                Snowflake
+                            </div>
+                        </td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="platform-icon">
+                                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M24 4L4 16v16l20 12 20-12V16L24 4z" fill="none" stroke="#FF3621" stroke-width="2"/>
+                                    <path d="M24 4v16M4 16l20 4 20-4M24 36l20-12M24 36L4 24" stroke="#FF3621" stroke-width="2"/>
+                                </svg>
+                                Databricks
+                            </div>
+                        </td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="platform-icon">
+                                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="6" y="16" width="36" height="16" rx="8" stroke="#C74634" stroke-width="3" fill="none"/>
+                                </svg>
+                                Oracle
+                            </div>
+                        </td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="dash">—</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="platform-icon">
+                                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <ellipse cx="24" cy="18" rx="14" ry="10" stroke="#336791" stroke-width="2.5" fill="none"/>
+                                    <path d="M10 18v12c0 5.5 6.3 10 14 10s14-4.5 14-10V18" stroke="#336791" stroke-width="2.5" fill="none"/>
+                                </svg>
+                                PostgreSQL
+                            </div>
+                        </td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="dash">—</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="platform-icon">
+                                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="8" y="8" width="32" height="32" rx="4" stroke="#CC2927" stroke-width="2.5" fill="none"/>
+                                    <text x="24" y="30" text-anchor="middle" fill="#CC2927" font-size="14" font-weight="bold" font-family="Arial">SQL</text>
+                                </svg>
+                                SQL Server
+                            </div>
+                        </td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="dash">—</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="platform-icon">
+                                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="8" y="10" width="32" height="28" rx="3" stroke="#054ADA" stroke-width="2.5" fill="none"/>
+                                    <text x="24" y="29" text-anchor="middle" fill="#054ADA" font-size="11" font-weight="bold" font-family="Arial">DB/2</text>
+                                </svg>
+                                IBM DB/2
+                            </div>
+                        </td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="dash">—</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="platform-icon">
+                                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M24 6l16.5 9.5v19L24 44 7.5 34.5v-19L24 6z" stroke="#326CE5" stroke-width="2.5" fill="none"/>
+                                    <circle cx="24" cy="24" r="6" stroke="#326CE5" stroke-width="2" fill="none"/>
+                                </svg>
+                                Kubernetes
+                            </div>
+                        </td>
+                        <td><span class="dash">—</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="dash">—</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div style="background: var(--bg-card); padding: 30px; border-radius: 12px; border: 1px solid var(--border-default); margin-top: 50px;">
+                <h2 style="margin-bottom: 20px; font-size: 1.5rem;">Understanding the Columns</h2>
+                
+                <div style="margin-bottom: 25px;">
+                    <h3 style="color: var(--primary-light); margin-bottom: 8px; font-size: 1.1rem;">Primary Storage</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.7;">
+                        The source of truth for ingested data. This is where DataSurface writes data after ingestion and transformation. 
+                        Platforms that support primary storage can hold your master datasets.
+                    </p>
+                </div>
+
+                <div style="margin-bottom: 25px;">
+                    <h3 style="color: var(--primary-light); margin-bottom: 8px; font-size: 1.1rem;">Compute Engine</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.7;">
+                        Executes data transformations and pipeline logic. Platforms like AWS (via EKS/Lambda), Snowflake, and Databricks 
+                        provide compute capabilities. Traditional databases rely on external compute via Kubernetes.
+                    </p>
+                </div>
+
+                <div>
+                    <h3 style="color: var(--primary-light); margin-bottom: 8px; font-size: 1.1rem;">CQRS Storage</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.7;">
+                        Optimized replicas for consumer queries. DataSurface replicates data to Consumer Replica Groups (CRGs) 
+                        tailored to specific workloads. Any database that can hold query-optimized views qualifies.
+                    </p>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 50px;">
+                <p style="color: var(--text-muted); margin-bottom: 20px;">Need a platform that's not listed?</p>
+                <a href="contact.html" class="btn-primary">Contact Us →</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <!-- Footer injected by js/footer.js -->
+    </footer>
+    <script>renderFooter('.');</script>
+</body>
+</html>
+
+
