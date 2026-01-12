@@ -143,6 +143,29 @@ SELECT 1 as dummy</code></pre>
 
                 <p>Any dbt source package that can extract data becomes an ingestion pathway into DataSurface. Your dbt model pulls from the external API and writes to a DataSurface-managed Datastore, where it gains full governance, SCD2 history tracking, and CQRS replication.</p>
 
+                <h3>Extra Credentials for External Connections</h3>
+                <p>dbt connectors need credentials to authenticate with external systems. DataSurface allows DataTransformers to declare <code>extraCredentials</code> that are securely injected at runtime via Kubernetes secrets:</p>
+                <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; margin: 20px 0;">
+<pre style="margin: 0; color: var(--text-secondary); font-size: 0.9rem; overflow-x: auto;"><code>DataTransformer(
+    "SalesforceIngestion",
+    store=Datastore("SalesforceData", datasets=[...]),
+    code=DBTCodeArtifact(
+        VersionedRepository(
+            GitHubRepository("myorg/salesforce-dbt", "main"),
+            EnvRefReleaseSelector("dbt_version")
+        ),
+        imageKey="dbt_v1_10"
+    ),
+    runAsCredential=Credential("db_writer", CredentialType.USER_PASSWORD),
+    extraCredentials=[
+        Credential("salesforce_api", CredentialType.USER_PASSWORD),
+        Credential("salesforce_token", CredentialType.API_KEY)
+    ],
+    trigger=CronTrigger("Daily", "0 6 * * *")
+)</code></pre>
+                </div>
+                <p>Credentials are injected as environment variables (<code>SALESFORCE_API_USER</code>, <code>SALESFORCE_API_PASSWORD</code>, etc.) that your dbt <code>profiles.yml</code> template can reference. No secrets are ever written to disk.</p>
+
                 <h3>dbt Packages</h3>
                 <p>Use any dbt package for transformations or ingestion:</p>
                 <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; margin: 20px 0;">
