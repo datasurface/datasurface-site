@@ -139,9 +139,10 @@
 <pre style="margin: 0; color: var(--text-secondary); font-size: 0.9rem; overflow-x: auto;"><code>Datastore(
     "CustomerData",
     capture_metadata=SQLCDCIngestion(
-        source_container=EnvRefDataContainer("customer_db"),
-        trigger=CronTrigger("Every15Min", "*/15 * * * *"),
-        credential=Credential("db_reader", CredentialType.USER_PASSWORD)
+        EnvRefDataContainer("customer_db"),
+        CronTrigger("Every15Min", "*/15 * * * *"),
+        Credential("db_reader", CredentialType.USER_PASSWORD),
+        IngestionConsistencyType.MULTI_DATASET
     ),
     datasets=[...]
 )</code></pre>

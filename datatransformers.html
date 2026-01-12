@@ -71,7 +71,11 @@
                 <h3>Configuration Example</h3>
                 <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; margin: 20px 0;">
 <pre style="margin: 0; color: var(--text-secondary); font-size: 0.9rem; overflow-x: auto;"><code>DataTransformer(
-    name="CustomerSegmentation",
+    "CustomerSegmentation",
+    store=Datastore(
+        "SegmentedCustomers",
+        datasets=[...]
+    ),
     code=DBTCodeArtifact(
         VersionedRepository(
             GitHubRepository("myorg/dbt-transforms", "main"),
@@ -79,12 +83,8 @@
         ),
         imageKey="dbt_v1_10"
     ),
-    trigger=CronTrigger("Daily", "0 0 * * *"),
     runAsCredential=Credential("db_writer", CredentialType.USER_PASSWORD),
-    store=Datastore(
-        name="SegmentedCustomers",
-        datasets=[...]
-    )
+    trigger=CronTrigger("Daily", "0 0 * * *")
 )</code></pre>
                 </div>
 
