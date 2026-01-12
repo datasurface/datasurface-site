@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HGQCKTD8WG"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HGQCKTD8WG');
+    </script>
+    <title>Observability - OpenTelemetry & Datadog Integration | DataSurface</title>
+    <meta name="description" content="DataSurface exports metrics and traces to Datadog, Prometheus, Grafana, and any OpenTelemetry-compatible backend. Full governance context in every metric.">
+    <link rel="canonical" href="https://datasurface.com/observability.html">
+    <meta property="og:title" content="Observability - OpenTelemetry & Datadog Integration | DataSurface">
+    <meta property="og:description" content="Enterprise-grade observability with OpenTelemetry integration for Datadog, Prometheus, and more.">
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="js/nav.js"></script>
+    <script src="js/footer.js"></script>
+</head>
+<body>
+    <header>
+        <!-- Navigation injected by js/nav.js -->
+    </header>
+    <script>renderNav('.');</script>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Enterprise Observability</h1>
+                <p>OpenTelemetry integration for Datadog, Prometheus, Grafana, and any OTLP-compatible backend.</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="container">
+                <h2>Why Observability Matters</h2>
+                <p>Data pipelines are only as good as your ability to monitor them. When a job fails at 3 AM, you need answers fast:</p>
+                <ul>
+                    <li>Which job failed and why?</li>
+                    <li>What model version was running?</li>
+                    <li>How long did it take before failing?</li>
+                    <li>What was the impact on downstream consumers?</li>
+                </ul>
+                <p>DataSurface integrates with OpenTelemetry (OTLP) to export metrics and traces to your existing observability stack, with full governance context in every metric.</p>
+
+                <h2>Supported Backends</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 30px 0;">
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 2rem; margin-bottom: 10px;">
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 4C11.16 4 4 11.16 4 20s7.16 16 16 16 16-7.16 16-16S28.84 4 20 4z" fill="#632CA6"/>
+                                <path d="M20 8c-6.63 0-12 5.37-12 12s5.37 12 12 12 12-5.37 12-12S26.63 8 20 8z" fill="#fff"/>
+                                <circle cx="20" cy="20" r="6" fill="#632CA6"/>
+                            </svg>
+                        </div>
+                        <div style="font-weight: 600; color: var(--text-primary);">Datadog</div>
+                    </div>
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 2rem; margin-bottom: 10px;">
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 4l15 8v16l-15 8-15-8V12l15-8z" fill="#E6522C"/>
+                                <path d="M20 12l7 4v8l-7 4-7-4v-8l7-4z" fill="#fff"/>
+                            </svg>
+                        </div>
+                        <div style="font-weight: 600; color: var(--text-primary);">Prometheus</div>
+                    </div>
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 2rem; margin-bottom: 10px;">
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="4" y="4" width="32" height="32" rx="4" fill="#F46800"/>
+                                <path d="M12 28V12h4v16h-4zM20 28V16h4v12h-4zM28 28V20h4v8h-4z" fill="#fff"/>
+                            </svg>
+                        </div>
+                        <div style="font-weight: 600; color: var(--text-primary);">Grafana</div>
+                    </div>
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 2rem; margin-bottom: 10px;">
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 4l16 9.2v18.4L20 36 4 27.6V13.2L20 4z" fill="#425CC7"/>
+                                <text x="20" y="24" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">OTEL</text>
+                            </svg>
+                        </div>
+                        <div style="font-weight: 600; color: var(--text-primary);">Any OTLP Backend</div>
+                    </div>
+                </div>
+
+                <h2>How It Works</h2>
+                <p>Enable telemetry with a simple configuration on your Platform Service Provider:</p>
+                <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; margin: 20px 0;">
+<pre style="margin: 0; color: var(--text-secondary); font-size: 0.9rem; overflow-x: auto;"><code>psp = YellowPlatformServiceProvider(
+    name="Production_PSP",
+    otlpEnabled=True,
+    otlpPort=4318,
+    otlpProtocol="http/protobuf"
+)</code></pre>
+                </div>
+                <p>DataSurface automatically:</p>
+                <ul>
+                    <li>Injects node IP into pods via Kubernetes Downward API</li>
+                    <li>Configures OTLP endpoint for node-local telemetry agents</li>
+                    <li>Uses delta temporality for short-lived job compatibility</li>
+                    <li>Flushes all telemetry before job exit</li>
+                </ul>
+
+                <h2>Governance Context in Every Metric</h2>
+                <p>DataSurface doesn't just export generic metrics. Every trace and metric includes governance context for filtering and correlation:</p>
+
+                <h3>Deployment Attributes</h3>
+                <div class="code-block">
+                    <table>
+                        <thead>
+                            <tr><th>Attribute</th><th>Description</th><th>Example</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>rte_name</code></td><td>Runtime environment</td><td>prod, uat, dev</td></tr>
+                            <tr><td><code>ecosystem_name</code></td><td>Ecosystem/model name</td><td>YellowStarter</td></tr>
+                            <tr><td><code>model_repo</code></td><td>Model git repository</td><td>myorg/model@main</td></tr>
+                            <tr><td><code>model_version</code></td><td>Model git tag</td><td>v2.0.7-prod</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>Job Context</h3>
+                <div class="code-block">
+                    <table>
+                        <thead>
+                            <tr><th>Attribute</th><th>Description</th><th>Example</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>job_type</code></td><td>Type of job</td><td>ingestion, transformer, cqrs</td></tr>
+                            <tr><td><code>datastore</code></td><td>Datastore name</td><td>CustomerStore</td></tr>
+                            <tr><td><code>dataset</code></td><td>Dataset name</td><td>Customers</td></tr>
+                            <tr><td><code>workspace</code></td><td>Workspace name</td><td>Analytics</td></tr>
+                            <tr><td><code>status</code></td><td>Job outcome</td><td>success, failed</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>DataTransformer Attributes</h3>
+                <div class="code-block">
+                    <table>
+                        <thead>
+                            <tr><th>Attribute</th><th>Description</th><th>Example</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>code_artifact_version</code></td><td>Code artifact git tag</td><td>v1.2.3</td></tr>
+                            <tr><td><code>code_artifact_repo</code></td><td>Code repository</td><td>myorg/dbt@main</td></tr>
+                            <tr><td><code>governance_zone</code></td><td>Governance zone</td><td>Finance</td></tr>
+                            <tr><td><code>team</code></td><td>Team name</td><td>DataEngineering</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2>Available Metrics</h2>
+
+                <h3>Job Duration</h3>
+                <p><code>datasurface.job.duration_seconds</code> (histogram) - Measures execution time for all job types:</p>
+                <ul>
+                    <li>Ingestion jobs (staging, merge phases)</li>
+                    <li>DataTransformer execution</li>
+                    <li>CQRS sync jobs</li>
+                    <li>View reconciliation</li>
+                    <li>Git cloning, model loading, and validation</li>
+                </ul>
+
+                <h3>Merge Counters</h3>
+                <div class="code-block">
+                    <table>
+                        <thead>
+                            <tr><th>Metric</th><th>Description</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>datasurface.merge.records_inserted</code></td><td>Records inserted during merge</td></tr>
+                            <tr><td><code>datasurface.merge.records_updated</code></td><td>Records updated during merge</td></tr>
+                            <tr><td><code>datasurface.merge.records_deleted</code></td><td>Records deleted during merge</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>Pipeline Counters</h3>
+                <div class="code-block">
+                    <table>
+                        <thead>
+                            <tr><th>Metric</th><th>Description</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>datasurface.pipeline.records_processed</code></td><td>Records processed by transformers</td></tr>
+                            <tr><td><code>datasurface.cqrs.streams_synced</code></td><td>CQRS streams synchronized</td></tr>
+                            <tr><td><code>datasurface.reconcile.views_count</code></td><td>Views reconciled per container</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2>Example Queries</h2>
+                <h3>Datadog</h3>
+                <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; margin: 20px 0;">
+<pre style="margin: 0; color: var(--text-secondary); font-size: 0.9rem; overflow-x: auto;"><code># All ingestion jobs by platform
+job_type:ingestion | group by platform
+
+# Failed jobs in production
+status:failed rte_name:prod
+
+# Job duration by model version
+avg:datasurface.job.duration_seconds{job_type:ingestion} by {model_version}</code></pre>
+                </div>
+
+                <h3>Prometheus</h3>
+                <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; margin: 20px 0;">
+<pre style="margin: 0; color: var(--text-secondary); font-size: 0.9rem; overflow-x: auto;"><code># Average ingestion duration by platform
+avg by (platform) (datasurface_job_duration_seconds{job_type="ingestion"})
+
+# Records inserted per minute
+sum(rate(datasurface_merge_records_inserted_total[1m])) by (datastore)</code></pre>
+                </div>
+
+                <h2>Technical Details</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin: 30px 0;">
+                    <div style="background: var(--bg-card); padding: 25px; border-radius: 8px; border-left: 4px solid var(--primary);">
+                        <h4 style="color: var(--text-primary); margin-bottom: 10px;">Delta Temporality</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary);">Required by Datadog and optimal for short-lived Kubernetes jobs. Each job reports only its own metrics, not cumulative totals.</p>
+                    </div>
+                    <div style="background: var(--bg-card); padding: 25px; border-radius: 8px; border-left: 4px solid var(--primary);">
+                        <h4 style="color: var(--text-primary); margin-bottom: 10px;">Automatic Flush</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary);">Telemetry is flushed before job exit, ensuring no data loss even for jobs that complete in seconds.</p>
+                    </div>
+                    <div style="background: var(--bg-card); padding: 25px; border-radius: 8px; border-left: 4px solid var(--primary);">
+                        <h4 style="color: var(--text-primary); margin-bottom: 10px;">Node-Local Agents</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary);">Connects to node-local telemetry agents (like Datadog Agent DaemonSet), avoiding cross-node network issues.</p>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 50px;">
+                    <a href="contact.html" class="btn-primary">Set Up Observability</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <!-- Footer injected by js/footer.js -->
+    </footer>
+    <script>renderFooter('.');</script>
+</body>
+</html>

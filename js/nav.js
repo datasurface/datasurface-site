@@ -31,6 +31,10 @@ function renderNav(rootPath) {
                     <a href="${prefix}governance.html">Governance & Policy</a>
                     <a href="${prefix}audit.html">Audit & Control</a>
                     <a href="${prefix}compliance.html">SOC 2 Compliance</a>
+                    <a href="${prefix}cdc.html">Change Data Capture</a>
+                    <a href="${prefix}observability.html">Observability</a>
+                    <a href="${prefix}datatransformers.html">DataTransformers & DBT</a>
+                    <a href="${prefix}runtime-environments.html">Runtime Environments</a>
                 </div>
             </li>
             <li><a href="${prefix}solutions.html">Solutions & Services</a></li>

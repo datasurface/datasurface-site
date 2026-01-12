@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HGQCKTD8WG"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HGQCKTD8WG');
+    </script>
+    <title>Runtime Environments - Deploy Once, Run Everywhere | DataSurface</title>
+    <meta name="description" content="One model definition for dev, QA, and production. RuntimeEnvironments resolve logical references at deployment time with type-safe validation.">
+    <link rel="canonical" href="https://datasurface.com/runtime-environments.html">
+    <meta property="og:title" content="Runtime Environments - Deploy Once, Run Everywhere | DataSurface">
+    <meta property="og:description" content="One model definition for dev, QA, and production with type-safe environment resolution.">
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="js/nav.js"></script>
+    <script src="js/footer.js"></script>
+</head>
+<body>
+    <header>
+        <!-- Navigation injected by js/nav.js -->
+    </header>
+    <script>renderNav('.');</script>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Runtime Environments</h1>
+                <p>Deploy once, run everywhere. One model for dev, QA, and production.</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="container">
+                <h2>The Problem</h2>
+                <p>Traditional approaches to multi-environment deployment require either:</p>
+                <ul>
+                    <li><strong>Separate models per environment</strong> - duplication, drift, maintenance burden</li>
+                    <li><strong>Configuration files</strong> - error-prone, not type-safe, easy to deploy wrong config</li>
+                    <li><strong>Hard-coded environment logic</strong> - brittle, unmaintainable, scattered throughout code</li>
+                </ul>
+                <p>None of these approaches scale. They create risk, slow down deployments, and make onboarding new environments painful.</p>
+
+                <h2>The Solution: RuntimeEnvironments</h2>
+                <p>RuntimeEnvironments (RTEs) use <strong>logical references</strong> in your model that are <strong>resolved at deployment time</strong> via EnvironmentMaps. One model, multiple environments, zero duplication.</p>
+
+                <div style="background: var(--bg-card); padding: 30px; border-radius: 12px; margin: 30px 0; text-align: center;">
+                    <div style="font-family: monospace; font-size: 0.95rem; color: var(--text-secondary);">
+                        <div style="margin-bottom: 20px;">
+                            <span style="color: var(--primary-light); font-weight: 600;">Model Repository</span>
+                            <span style="color: var(--text-muted);"> (Single Source of Truth)</span>
+                        </div>
+                        <div style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;">
+                            <div style="text-align: center;">
+                                <div style="color: #4ade80;">Tag: V1.2.3-dev</div>
+                                <div style="color: var(--text-muted);">&#8595;</div>
+                                <div style="background: var(--bg-elevated); padding: 8px 16px; border-radius: 6px;">RTE(dev)</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="color: #fbbf24;">Tag: V1.2.3-qa</div>
+                                <div style="color: var(--text-muted);">&#8595;</div>
+                                <div style="background: var(--bg-elevated); padding: 8px 16px; border-radius: 6px;">RTE(qa)</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="color: #f87171;">Tag: V1.2.3-prod</div>
+                                <div style="color: var(--text-muted);">&#8595;</div>
+                                <div style="background: var(--bg-elevated); padding: 8px 16px; border-radius: 6px;">RTE(prod)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h2>How It Works</h2>
+
+                <h3>1. Define EnvironmentMaps</h3>
+                <p>Teams define mappings from logical names to physical resources per environment:</p>
+                <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; margin: 20px 0;">
+<pre style="margin: 0; color: var(--text-secondary); font-size: 0.9rem; overflow-x: auto;"><code>team.add(EnvironmentMap(
+    keyword="prod",
+    dataContainers={
+        frozenset(["customer_db"]): PostgresDatabase(
+            "CustomerDB_Prod",
+            hostPort=HostPortPair("prod-db.internal", 5432),
+            databaseName="customer_production",
+            productionStatus=ProductionStatus.PRODUCTION
+        )
+    },
+    dtReleaseSelectors={
+        "transformer_version": VersionPatternReleaseSelector(
+            "V*.*.*-prod", ReleaseType.STABLE_ONLY
+        )
+    }
+))
+
+team.add(EnvironmentMap(
+    keyword="dev",
+    dataContainers={
+        frozenset(["customer_db"]): PostgresDatabase(
+            "CustomerDB_Dev",
+            hostPort=HostPortPair("dev-db.internal", 5432),
+            databaseName="customer_dev",
+            productionStatus=ProductionStatus.NOT_PRODUCTION
+        )
+    },
+    dtReleaseSelectors={
+        "transformer_version": VersionPatternReleaseSelector(
+            "V*.*.*-dev", ReleaseType.STABLE_ONLY
+        )
+    }
+))</code></pre>
+                </div>
+
+                <h3>2. Use Logical References</h3>
+                <p>Your model uses logical references - no environment-specific values:</p>
+                <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; margin: 20px 0;">
+<pre style="margin: 0; color: var(--text-secondary); font-size: 0.9rem; overflow-x: auto;"><code>Datastore(
+    "CustomerData",
+    capture_metadata=SQLSnapshotIngestion(
+        EnvRefDataContainer("customer_db"),  # Logical reference
+        CronTrigger("Hourly", "0 * * * *"),
+        Credential("db_reader", CredentialType.USER_PASSWORD)
+    ),
+    datasets=[...]
+)
+
+DataTransformer(
+    name="MaskCustomerPII",
+    code=PythonCodeArtifact(
+        VersionedRepository(
+            GitHubRepository("myorg/transformers", "main"),
+            EnvRefReleaseSelector("transformer_version")  # Logical reference
+        )
+    ),
+    ...
+)</code></pre>
+                </div>
+
+                <h3>3. Resolution at Deployment</h3>
+                <p>When each RTE deploys, logical references resolve to environment-specific values:</p>
+                <div class="code-block">
+                    <table>
+                        <thead>
+                            <tr><th>Logical Reference</th><th>Prod Resolution</th><th>Dev Resolution</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>EnvRefDataContainer("customer_db")</code></td>
+                                <td>prod-db.internal:5432</td>
+                                <td>dev-db.internal:5432</td>
+                            </tr>
+                            <tr>
+                                <td><code>EnvRefReleaseSelector("transformer_version")</code></td>
+                                <td>V1.0.0-prod</td>
+                                <td>V1.1.0-dev</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2>Safety Features</h2>
+                <p>The linter validates your model at PR time, preventing common mistakes:</p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin: 30px 0;">
+                    <div style="background: var(--bg-card); padding: 25px; border-radius: 8px; border-left: 4px solid #4ade80;">
+                        <h4 style="color: var(--text-primary); margin-bottom: 10px;">Reference Validation</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary);">Every <code>EnvRefDataContainer</code> key must exist in the team's EnvironmentMaps. Missing references fail at lint time, not runtime.</p>
+                    </div>
+                    <div style="background: var(--bg-card); padding: 25px; border-radius: 8px; border-left: 4px solid #4ade80;">
+                        <h4 style="color: var(--text-primary); margin-bottom: 10px;">Production Status</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary);">Production RTEs only reference production-status DataContainers. Dev/QA RTEs only reference non-production. No accidental cross-contamination.</p>
+                    </div>
+                    <div style="background: var(--bg-card); padding: 25px; border-radius: 8px; border-left: 4px solid #4ade80;">
+                        <h4 style="color: var(--text-primary); margin-bottom: 10px;">Complete Coverage</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary);">Every RTE must have corresponding EnvironmentMaps for all teams it uses. Incomplete configurations are caught before deployment.</p>
+                    </div>
+                </div>
+
+                <h2>Deployment Workflow</h2>
+                <ol>
+                    <li><strong>Develop</strong> - Teams develop and test with dev RTE (watches for <code>-dev</code> tags)</li>
+                    <li><strong>Tag for QA</strong> - Tag model with <code>V1.2.3-qa</code> for QA environment testing</li>
+                    <li><strong>QA validates</strong> - QA RTE picks up tag, deploys with qa EnvironmentMaps</li>
+                    <li><strong>Tag for Prod</strong> - After validation, tag <code>V1.2.3-prod</code> for production</li>
+                    <li><strong>Prod deploys</strong> - Prod RTE picks up tag, deploys with prod EnvironmentMaps</li>
+                </ol>
+                <p>Each RTE's infrastructure updates independently within 5-15 minutes of tagging.</p>
+
+                <h2>Benefits</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin: 30px 0;">
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px;">
+                        <h4 style="color: var(--primary-light); margin-bottom: 8px;">Single Source of Truth</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary);">One model definition for all environments. No duplication, no drift.</p>
+                    </div>
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px;">
+                        <h4 style="color: var(--primary-light); margin-bottom: 8px;">Type-Safe Resolution</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary);">IDE autocomplete, compile-time validation, no string typos.</p>
+                    </div>
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px;">
+                        <h4 style="color: var(--primary-light); margin-bottom: 8px;">Independent Versions</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary);">Dev on V1.3.0, prod on V1.2.5. Each environment at its own pace.</p>
+                    </div>
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px;">
+                        <h4 style="color: var(--primary-light); margin-bottom: 8px;">Easy Onboarding</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary);">New environments just add EnvironmentMaps. No model changes required.</p>
+                    </div>
+                </div>
+
+                <h2>Real-World Impact</h2>
+                <ul>
+                    <li><strong>No environment-specific branches</strong> - single codebase, single PR workflow</li>
+                    <li><strong>No manual config edits</strong> - all configuration in type-safe Python</li>
+                    <li><strong>No accidental prod/dev mixing</strong> - validated at PR time</li>
+                    <li><strong>Faster deployments</strong> - tag and go, no manual coordination</li>
+                </ul>
+
+                <div style="text-align: center; margin-top: 50px;">
+                    <a href="contact.html" class="btn-primary">Learn More About RTEs</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <!-- Footer injected by js/footer.js -->
+    </footer>
+    <script>renderFooter('.');</script>
+</body>
+</html>

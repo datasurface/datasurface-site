@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HGQCKTD8WG"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HGQCKTD8WG');
+    </script>
+    <title>Change Data Capture (CDC) - DataSurface</title>
+    <meta name="description" content="DataSurface captures every change from SQL Server and Snowflake databases including inserts, updates, and deletes. Native CDC integration with automatic schema validation and crash recovery.">
+    <link rel="canonical" href="https://datasurface.com/cdc.html">
+    <meta property="og:title" content="Change Data Capture (CDC) - DataSurface">
+    <meta property="og:description" content="Capture every change from SQL Server and Snowflake with native CDC integration.">
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="js/nav.js"></script>
+    <script src="js/footer.js"></script>
+</head>
+<body>
+    <header>
+        <!-- Navigation injected by js/nav.js -->
+    </header>
+    <script>renderNav('.');</script>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Change Data Capture</h1>
+                <p>Capture every change from SQL Server and Snowflake without touching source schemas.</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="container">
+                <h2>Why CDC Matters</h2>
+                <p>Traditional watermark-based ingestion relies on timestamp columns to detect changes. But what happens when a record is deleted? The watermark approach misses it entirely.</p>
+
+                <p>Change Data Capture (CDC) solves this by capturing every operation directly from the database transaction log:</p>
+                <ul>
+                    <li><strong>Inserts</strong> - New records added to the source</li>
+                    <li><strong>Updates</strong> - Modified records with before/after values</li>
+                    <li><strong>Deletes</strong> - Removed records that watermark ingestion would miss</li>
+                </ul>
+
+                <h3>CDC vs Watermark Ingestion</h3>
+                <div class="code-block">
+                    <table>
+                        <thead>
+                            <tr><th>Capability</th><th>Watermark</th><th>CDC</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Captures Deletes</td><td>No</td><td>Yes</td></tr>
+                            <tr><td>Requires Source Changes</td><td>Yes (watermark column)</td><td>No (just enable CDC)</td></tr>
+                            <tr><td>Latency</td><td>Depends on poll interval</td><td>Near real-time</td></tr>
+                            <tr><td>State Tracking</td><td>Timestamp/integer</td><td>LSN or Stream object</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2>Supported Databases</h2>
+                <p>DataSurface provides native CDC integration for:</p>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin: 30px 0;">
+                    <div style="background: var(--bg-card); padding: 25px; border-radius: 8px; border-left: 4px solid #CC2927;">
+                        <h4 style="color: var(--text-primary); margin-bottom: 10px;">SQL Server CDC</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary);">Uses native CDC functions and LSN (Log Sequence Number) tracking. Changes captured via <code>sys.fn_cdc_get_all_changes</code> with full operation type mapping.</p>
+                    </div>
+                    <div style="background: var(--bg-card); padding: 25px; border-radius: 8px; border-left: 4px solid #29B5E8;">
+                        <h4 style="color: var(--text-primary); margin-bottom: 10px;">Snowflake Streams</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary);">Uses Snowflake Streams with <code>SHOW_INITIAL_ROWS</code> for automatic initial snapshots. Stream offset managed automatically by Snowflake.</p>
+                    </div>
+                </div>
+
+                <h2>How It Works</h2>
+
+                <h3>Initial Snapshot</h3>
+                <p>When CDC is first enabled, DataSurface captures all existing data before switching to incremental mode. The key insight: capture the position marker <em>before</em> reading any data.</p>
+
+                <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; margin: 20px 0; font-family: monospace; font-size: 0.9rem;">
+                    <div style="color: var(--text-muted);">Timeline:</div>
+                    <div style="margin-top: 10px;">
+                        <span style="color: #4ade80;">T0:</span> Capture LSN/Stream position<br>
+                        <span style="color: #4ade80;">T1-T100:</span> Read all existing rows (snapshot)<br>
+                        <span style="color: var(--text-muted); padding-left: 20px;">Changes during this time have position > T0</span><br>
+                        <span style="color: #4ade80;">T101:</span> Snapshot complete, store position<br>
+                        <span style="color: #4ade80;">T102+:</span> CDC mode - query changes since T0
+                    </div>
+                </div>
+                <p>This approach guarantees no data loss: any changes during the snapshot are captured in the subsequent CDC query, and the merge process handles any duplicates automatically.</p>
+
+                <h3>Large Table Support</h3>
+                <p>For tables too large for a single batch, DataSurface supports multi-batch snapshots with checkpoint-based resumability:</p>
+                <ul>
+                    <li><strong>Bounded batches</strong> - Configure maximum rows per batch (default 100M)</li>
+                    <li><strong>Ordered reads</strong> - Uses primary key ordering for resumable snapshots</li>
+                    <li><strong>Within-batch checkpoints</strong> - Progress saved after each chunk for crash recovery</li>
+                    <li><strong>Cross-batch continuity</strong> - Resume point persisted across batches</li>
+                </ul>
+
+                <h3>Schema Evolution Protection</h3>
+                <p>CDC jobs enforce model-first schema evolution with strict validation:</p>
+                <div class="code-block">
+                    <table>
+                        <thead>
+                            <tr><th>Scenario</th><th>Result</th><th>Action Required</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Source has extra columns</td><td>Blocked</td><td>Update model to include new columns</td></tr>
+                            <tr><td>Model expects missing columns</td><td>Blocked</td><td>Add columns to source first</td></tr>
+                            <tr><td>Exact schema match</td><td>Proceeds</td><td>None</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>This prevents data corruption by ensuring schema changes are coordinated between producers and consumers.</p>
+
+                <h2>Batch Traceability</h2>
+                <p>Every committed batch stores its state in the <code>batch_metrics</code> table, providing a built-in audit trail:</p>
+                <ul>
+                    <li>When did the snapshot start and complete?</li>
+                    <li>How far did each batch get before committing?</li>
+                    <li>What LSN range did each CDC batch cover?</li>
+                    <li>How many records were inserted, updated, or deleted?</li>
+                </ul>
+
+                <h2>Configuration Example</h2>
+                <p>Enable CDC ingestion with a simple configuration change:</p>
+                <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; margin: 20px 0;">
+<pre style="margin: 0; color: var(--text-secondary); font-size: 0.9rem; overflow-x: auto;"><code>Datastore(
+    "CustomerData",
+    capture_metadata=SQLCDCIngestion(
+        source_container=EnvRefDataContainer("customer_db"),
+        trigger=CronTrigger("Every15Min", "*/15 * * * *"),
+        credential=Credential("db_reader", CredentialType.USER_PASSWORD)
+    ),
+    datasets=[...]
+)</code></pre>
+                </div>
+
+                <div style="text-align: center; margin-top: 50px;">
+                    <a href="contact.html" class="btn-primary">Learn More About CDC Integration</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <!-- Footer injected by js/footer.js -->
+    </footer>
+    <script>renderFooter('.');</script>
+</body>
+</html>

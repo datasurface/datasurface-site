@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HGQCKTD8WG"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HGQCKTD8WG');
+    </script>
+    <title>DataTransformers - DBT & Local Testing | DataSurface</title>
+    <meta name="description" content="Transform and ingest data with Python or dbt. Use dbt connectors to pull from Salesforce, HubSpot, Stripe and more. Local IDE testing with pytest, auto-generated profiles.yml.">
+    <link rel="canonical" href="https://datasurface.com/datatransformers.html">
+    <meta property="og:title" content="DataTransformers - DBT & Local Testing | DataSurface">
+    <meta property="og:description" content="Transform and ingest data with Python or dbt. Use any dbt connector for SaaS ingestion with full governance.">
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="js/nav.js"></script>
+    <script src="js/footer.js"></script>
+</head>
+<body>
+    <header>
+        <!-- Navigation injected by js/nav.js -->
+    </header>
+    <script>renderNav('.');</script>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>DataTransformers</h1>
+                <p>Transform data with Python or dbt. Test locally in your IDE before deploying.</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="container">
+                <h2>Transform Data Your Way</h2>
+                <p>DataTransformers are isolated execution environments for custom data transformations. They consume datasets from a Workspace and write results to their own Datastore, with full schema governance and version control.</p>
+
+                <p>Choose the right tool for the job:</p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin: 30px 0;">
+                    <div style="background: var(--bg-card); padding: 25px; border-radius: 8px; border-left: 4px solid #3572A5;">
+                        <h4 style="color: var(--text-primary); margin-bottom: 10px;">Python</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary);">Complex business logic, machine learning, API integrations, or transformations easier to express in code than SQL.</p>
+                    </div>
+                    <div style="background: var(--bg-card); padding: 25px; border-radius: 8px; border-left: 4px solid #FF694B;">
+                        <h4 style="color: var(--text-primary); margin-bottom: 10px;">dbt</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary);">SQL-based transformations with dbt's testing framework, model dependencies, and ecosystem of packages.</p>
+                    </div>
+                </div>
+
+                <h2>dbt Integration</h2>
+                <p>DataSurface provides first-class dbt integration. When you define a dbt DataTransformer, DataSurface automatically:</p>
+                <ul>
+                    <li><strong>Clones your dbt repository</strong> from GitHub at the specified version tag</li>
+                    <li><strong>Auto-generates <code>profiles.yml</code></strong> with database connection details</li>
+                    <li><strong>Auto-generates <code>sources.yml</code></strong> mapping your Workspace inputs to dbt sources</li>
+                    <li><strong>Handles credentials securely</strong> via Kubernetes secrets (never written to files)</li>
+                    <li><strong>Runs <code>dbt run</code></strong> and ingests results to your Datastore</li>
+                </ul>
+
+                <h3>Configuration Example</h3>
+                <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; margin: 20px 0;">
+<pre style="margin: 0; color: var(--text-secondary); font-size: 0.9rem; overflow-x: auto;"><code>DataTransformer(
+    name="CustomerSegmentation",
+    code=DBTCodeArtifact(
+        VersionedRepository(
+            GitHubRepository("myorg/dbt-transforms", "main"),
+            EnvRefReleaseSelector("dbt_version")
+        ),
+        imageKey="dbt_v1_10"
+    ),
+    trigger=CronTrigger("Daily", "0 0 * * *"),
+    runAsCredential=Credential("db_writer", CredentialType.USER_PASSWORD),
+    store=Datastore(
+        name="SegmentedCustomers",
+        datasets=[...]
+    )
+)</code></pre>
+                </div>
+
+                <h3>Writing dbt Models</h3>
+                <p>Reference input sources using the auto-generated <code>workspace_inputs</code> source:</p>
+                <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; margin: 20px 0;">
+<pre style="margin: 0; color: var(--text-secondary); font-size: 0.9rem; overflow-x: auto;"><code>{{ config(materialized='view') }}
+
+{% set target_table = var('output_customers') %}
+
+{% set insert_sql %}
+INSERT INTO {{ target_table }} (customer_id, segment)
+SELECT
+    customer_id,
+    CASE
+        WHEN tenure_days > 365 THEN 'loyal'
+        ELSE 'new'
+    END as segment
+FROM {{ source('workspace_inputs', 'customers') }}
+{% endset %}
+
+{% do run_query(insert_sql) %}
+SELECT 1 as dummy</code></pre>
+                </div>
+                <p>This pattern uses explicit INSERT into DataSurface-managed tables, respecting schema governance while giving you full dbt flexibility.</p>
+
+                <h2>dbt Connectors for Data Ingestion</h2>
+                <p>Beyond transformations, dbt DataTransformers unlock <strong>ingestion from any source with a dbt connector</strong>. This means you can bring data into DataSurface from SaaS platforms, APIs, and external systems without writing custom ingestion code.</p>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 25px 0;">
+                    <div style="background: var(--bg-card); padding: 15px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 1.5rem; margin-bottom: 8px;">☁️</div>
+                        <div style="font-weight: 600; color: var(--text-primary); font-size: 0.9rem;">Salesforce</div>
+                    </div>
+                    <div style="background: var(--bg-card); padding: 15px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 1.5rem; margin-bottom: 8px;">📊</div>
+                        <div style="font-weight: 600; color: var(--text-primary); font-size: 0.9rem;">HubSpot</div>
+                    </div>
+                    <div style="background: var(--bg-card); padding: 15px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 1.5rem; margin-bottom: 8px;">🔄</div>
+                        <div style="font-weight: 600; color: var(--text-primary); font-size: 0.9rem;">Fivetran</div>
+                    </div>
+                    <div style="background: var(--bg-card); padding: 15px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 1.5rem; margin-bottom: 8px;">📈</div>
+                        <div style="font-weight: 600; color: var(--text-primary); font-size: 0.9rem;">Google Analytics</div>
+                    </div>
+                    <div style="background: var(--bg-card); padding: 15px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 1.5rem; margin-bottom: 8px;">💳</div>
+                        <div style="font-weight: 600; color: var(--text-primary); font-size: 0.9rem;">Stripe</div>
+                    </div>
+                    <div style="background: var(--bg-card); padding: 15px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 1.5rem; margin-bottom: 8px;">📦</div>
+                        <div style="font-weight: 600; color: var(--text-primary); font-size: 0.9rem;">Shopify</div>
+                    </div>
+                </div>
+
+                <p>Any dbt source package that can extract data becomes an ingestion pathway into DataSurface. Your dbt model pulls from the external API and writes to a DataSurface-managed Datastore, where it gains full governance, SCD2 history tracking, and CQRS replication.</p>
+
+                <h3>dbt Packages</h3>
+                <p>Use any dbt package for transformations or ingestion:</p>
+                <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; margin: 20px 0;">
+<pre style="margin: 0; color: var(--text-secondary); font-size: 0.9rem; overflow-x: auto;"><code># packages.yml
+packages:
+  - package: dbt-labs/dbt_utils
+    version: 1.1.1
+  - package: calogica/dbt_expectations
+    version: 0.8.0</code></pre>
+                </div>
+
+                <h2>Python vs dbt</h2>
+                <div class="code-block">
+                    <table>
+                        <thead>
+                            <tr><th>Capability</th><th>Python</th><th>dbt</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Best for</td><td>Complex logic, ML, APIs</td><td>SQL transformations</td></tr>
+                            <tr><td>Learning curve</td><td>Steeper</td><td>Gentle for SQL users</td></tr>
+                            <tr><td>Testing</td><td>Custom code tests</td><td>dbt tests & assertions</td></tr>
+                            <tr><td>Lineage</td><td>Implicit in code</td><td>Explicit in dbt DAG</td></tr>
+                            <tr><td>Ecosystem</td><td>Python packages</td><td>dbt packages</td></tr>
+                            <tr><td>Performance</td><td>Depends on Python</td><td>Native SQL</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2>Local IDE Testing</h2>
+                <p>Test DataTransformers locally in your IDE against a local database, without deploying to Kubernetes or Airflow. Get instant feedback with standard pytest.</p>
+
+                <h3>How It Works</h3>
+                <ol>
+                    <li><strong>Prepare your transformer</strong> with self-describing input/output definitions</li>
+                    <li><strong>Create a test class</strong> inheriting from <code>BaseDTLocalTest</code></li>
+                    <li><strong>Inject test data</strong>, run the transformer, verify output</li>
+                </ol>
+
+                <h3>Test Example</h3>
+                <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; margin: 20px 0;">
+<pre style="margin: 0; color: var(--text-secondary); font-size: 0.9rem; overflow-x: auto;"><code>from tests.test_datatransformer_local import BaseDTLocalTest
+
+class TestMyTransformer(BaseDTLocalTest):
+    def setUp(self):
+        super().setUp()
+        self.setup_from_transformer_module("myproject.transformers.mask_pii")
+
+    def test_masks_email(self):
+        # 1. Inject test data
+        self.inject_data("customers", [
+            {"id": 1, "name": "Alice", "email": "alice@example.com"}
+        ])
+
+        # 2. Run transformer
+        self.run_dt_job()
+
+        # 3. Verify output
+        output = self.get_output_data()
+        self.assertEqual(len(output), 1)
+        self.assertIn("***", output[0]["email"])  # Verify masking</code></pre>
+                </div>
+
+                <h3>Key Features</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin: 30px 0;">
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px;">
+                        <h4 style="color: var(--primary-light); margin-bottom: 8px;">Database Agnostic</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary);">Works with any SQLAlchemy-compatible database. Default is local PostgreSQL.</p>
+                    </div>
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px;">
+                        <h4 style="color: var(--primary-light); margin-bottom: 8px;">Full IDE Support</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary);">Set breakpoints, step through code, inspect variables. Full debugging in PyCharm, VS Code, etc.</p>
+                    </div>
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px;">
+                        <h4 style="color: var(--primary-light); margin-bottom: 8px;">Cycle Testing</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary);">Inject data, run, verify, inject more, run again. Test incremental and CDC logic locally.</p>
+                    </div>
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px;">
+                        <h4 style="color: var(--primary-light); margin-bottom: 8px;">Schema Management</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary);">Automatically creates input/output tables from your Datastore definitions.</p>
+                    </div>
+                </div>
+
+                <h3>Environment Setup</h3>
+                <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; margin: 20px 0;">
+<pre style="margin: 0; color: var(--text-secondary); font-size: 0.9rem; overflow-x: auto;"><code># Default: PostgreSQL on localhost
+export TEST_POSTGRES_URL=postgresql://localhost/datasurface_test
+
+# Run tests with pytest
+pytest tests/test_my_transformer.py -v</code></pre>
+                </div>
+
+                <h2>Getting Started</h2>
+                <ol>
+                    <li><strong>Choose Python or dbt</strong> based on your transformation needs</li>
+                    <li><strong>Define your DataTransformer</strong> in your ecosystem model</li>
+                    <li><strong>Write local tests</strong> using the testing framework</li>
+                    <li><strong>Tag and deploy</strong> - DataSurface handles the rest</li>
+                </ol>
+
+                <div style="text-align: center; margin-top: 50px;">
+                    <a href="contact.html" class="btn-primary">Start Building Transformers</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <!-- Footer injected by js/footer.js -->
+    </footer>
+    <script>renderFooter('.');</script>
+</body>
+</html>
