@@ -19,10 +19,12 @@ function renderFooter(rootPath) {
                 <a href="${prefix}contact.html">Contact</a>
                 <a href="${prefix}about.html">About</a>
                 <a href="${prefix}blog/index.html">Blog</a>
+                <a href="https://github.com/datasurface" aria-label="GitHub">GitHub</a>
+                <a href="https://www.linkedin.com/company/datasurface" aria-label="LinkedIn">LinkedIn</a>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 DataSurface. All rights reserved.</p>
+            <p>&copy; ${new Date().getFullYear()} DataSurface. All rights reserved.</p>
         </div>
     </div>
     `;

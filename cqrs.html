@@ -55,7 +55,7 @@
                 <h2>Hybrid Cloud Example</h2>
                 <p>Consider a scenario where you have legacy on-premise data but want to leverage cloud analytics.</p>
 
-                <div style="background: #f8fafc; padding: 30px; border-radius: 12px; border: 1px solid #e2e8f0; margin-top: 20px;">
+                <div style="background: var(--bg-card); padding: 30px; border-radius: 12px; border: 1px solid var(--border-default); margin-top: 20px;">
                     <h3 style="color: var(--primary-dark); margin-bottom: 15px;">1. The Primary Ingestion (Write Side)</h3>
                     <p><strong>Location:</strong> On-Premise Data Center<br>
                     <strong>Technology:</strong> Local Kubernetes & Postgres</p>
@@ -63,20 +63,20 @@
                 </div>
 
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 20px;">
-                    <div style="background: #f0f9ff; padding: 20px; border-radius: 8px; border-left: 4px solid #0ea5e9;">
-                        <h4 style="color: #0369a1;">CRG 1: Cloud Analytics Platform</h4>
+                    <div style="background: rgba(14, 165, 233, 0.1); padding: 20px; border-radius: 8px; border-left: 4px solid #0ea5e9;">
+                        <h4 style="color: #38bdf8;">CRG 1: Cloud Analytics Platform</h4>
                         <p style="font-size: 0.9rem; margin-top: 10px;"><strong>Purpose:</strong> Enterprise Analytics & BI</p>
                         <p style="font-size: 0.9rem;">Data is replicated to a cloud analytics platform. Marketing and Finance teams run massive queries here without affecting operational systems.</p>
                     </div>
 
-                    <div style="background: #f0fdf4; padding: 20px; border-radius: 8px; border-left: 4px solid #22c55e;">
-                        <h4 style="color: #15803d;">CRG 2: AWS Aurora</h4>
+                    <div style="background: rgba(34, 197, 94, 0.1); padding: 20px; border-radius: 8px; border-left: 4px solid #22c55e;">
+                        <h4 style="color: #4ade80;">CRG 2: AWS Aurora</h4>
                         <p style="font-size: 0.9rem; margin-top: 10px;"><strong>Purpose:</strong> High-Performance App Backend</p>
                         <p style="font-size: 0.9rem;">A subset of the data is replicated to Aurora to power a customer-facing web application requiring low-latency lookups.</p>
                     </div>
 
-                    <div style="background: #fff7ed; padding: 20px; border-radius: 8px; border-left: 4px solid #f97316;">
-                        <h4 style="color: #c2410c;">CRG 3: Onsite Postgres</h4>
+                    <div style="background: rgba(249, 115, 22, 0.1); padding: 20px; border-radius: 8px; border-left: 4px solid #f97316;">
+                        <h4 style="color: #fb923c;">CRG 3: Onsite Postgres</h4>
                         <p style="font-size: 0.9rem; margin-top: 10px;"><strong>Purpose:</strong> Dev/Test & Non-Prod</p>
                         <p style="font-size: 0.9rem;">Developers work against a local Postgres replica. This avoids cloud egress costs and prevents accidental load on production cloud resources.</p>
                     </div>

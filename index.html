@@ -47,7 +47,10 @@
         },
         "telephone": "+1-352-254-3008",
         "email": "info@datasurface.com",
-        "sameAs": []
+        "sameAs": [
+            "https://github.com/datasurface",
+            "https://www.linkedin.com/company/datasurface"
+        ]
     }
     </script>
     <script type="application/ld+json">
@@ -75,6 +78,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="js/nav.js"></script>
     <script src="js/footer.js"></script>
+    <script src="js/animations.js" defer></script>
 </head>
 <body>
     <header>
@@ -82,7 +86,7 @@
     </header>
     <script>renderNav('.');</script>
 
-    <main>
+    <main id="main-content">
         <!-- New Animated Hero Section -->
         <section class="hero-split">
             <div class="hero-content-wrapper">
@@ -101,37 +105,37 @@
                     <div class="data-flow-container">
                         <!-- Producer Nodes (Left) -->
                         <div class="flow-node node-producer producer-1">
-                            <div class="node-circle">🗄️</div>
+                            <div class="node-circle" aria-hidden="true">🗄️</div>
                             <span class="node-label">Database</span>
                         </div>
                         <div class="flow-node node-producer producer-2">
-                            <div class="node-circle">📡</div>
+                            <div class="node-circle" aria-hidden="true">📡</div>
                             <span class="node-label">API Stream</span>
                         </div>
                         <div class="flow-node node-producer producer-3">
-                            <div class="node-circle">📁</div>
+                            <div class="node-circle" aria-hidden="true">📁</div>
                             <span class="node-label">File Source</span>
                         </div>
 
                         <!-- Central Hub -->
                         <div class="flow-node node-hub">
                             <div class="node-circle">
-                                <span class="hub-icon">⚡</span>
+                                <span class="hub-icon" aria-hidden="true">⚡</span>
                                 <span class="hub-text">DataSurface</span>
                             </div>
                         </div>
 
                         <!-- Consumer Nodes (Right) -->
                         <div class="flow-node node-consumer consumer-1">
-                            <div class="node-circle">📊</div>
+                            <div class="node-circle" aria-hidden="true">📊</div>
                             <span class="node-label">Analytics</span>
                         </div>
                         <div class="flow-node node-consumer consumer-2">
-                            <div class="node-circle">🤖</div>
+                            <div class="node-circle" aria-hidden="true">🤖</div>
                             <span class="node-label">AI/ML</span>
                         </div>
                         <div class="flow-node node-consumer consumer-3">
-                            <div class="node-circle">📈</div>
+                            <div class="node-circle" aria-hidden="true">📈</div>
                             <span class="node-label">Reporting</span>
                         </div>
 

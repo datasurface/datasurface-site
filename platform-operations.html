@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HGQCKTD8WG"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HGQCKTD8WG');
+    </script>
+    <title>Platform Operations Commands - DataSurface</title>
+    <meta name="description" content="GitOps-driven operational commands for DataSurface. Dry-run then execute with two-person approval, credential isolation, and full audit trails.">
+    <link rel="canonical" href="https://datasurface.com/platform-operations.html">
+    <meta property="og:title" content="Platform Operations Commands - DataSurface">
+    <meta property="og:description" content="Safe, auditable operational commands with GitOps workflows, dry-run verification, and credential isolation.">
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="js/nav.js"></script>
+    <script src="js/footer.js"></script>
+</head>
+<body>
+    <header>
+        <!-- Navigation injected by js/nav.js -->
+    </header>
+    <script>renderNav('.');</script>
+
+    <main id="main-content">
+        <section class="hero">
+            <div class="container">
+                <h1>Platform Operations Commands</h1>
+                <p>Safe, auditable operational commands through GitOps. Dry-run first, execute with confidence.</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="container">
+                <h2>The Problem</h2>
+                <p>Production data platforms need operational commands: repairing schemas after manual changes, resetting batch state after failures, forcing re-ingestion of corrupted data. These operations require database credentials stored in Kubernetes secrets.</p>
+                <p>DevOps personnel who need to invoke these operations should <strong>never see or handle database credentials</strong>. And every operation should go through a review and approval process with a complete audit trail.</p>
+
+                <h2>The Solution</h2>
+                <p>DataSurface provides a GitOps-driven command system where operational commands are expressed as Python declarations, reviewed via Pull Requests, and executed by the platform infrastructure with full credential isolation.</p>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin: 30px 0;">
+                    <div style="background: var(--bg-card); padding: 25px; border-radius: 8px; border-left: 4px solid #22c55e;">
+                        <h4 style="color: var(--text-primary); margin-bottom: 10px;">Credential Isolation</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary);">DevOps never sees or handles database credentials. Commands execute in the platform infrastructure with credentials injected from K8s secrets.</p>
+                    </div>
+                    <div style="background: var(--bg-card); padding: 25px; border-radius: 8px; border-left: 4px solid #3b82f6;">
+                        <h4 style="color: var(--text-primary); margin-bottom: 10px;">Two-Person Rule</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary);">Every operation requires PR review and approval before execution. A second pair of eyes must approve both the dry-run and the execute phase.</p>
+                    </div>
+                    <div style="background: var(--bg-card); padding: 25px; border-radius: 8px; border-left: 4px solid #f59e0b;">
+                        <h4 style="color: var(--text-primary); margin-bottom: 10px;">Dry-Run Confidence</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary);">Operations run through real code paths first, logging what they would do, before executing for real. No simulations or guesses.</p>
+                    </div>
+                    <div style="background: var(--bg-card); padding: 25px; border-radius: 8px; border-left: 4px solid #8b5cf6;">
+                        <h4 style="color: var(--text-primary); margin-bottom: 10px;">Full Audit Trail</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary);">Who requested, who approved, who promoted, what the dry-run showed, what actually happened. All traceable through git and the operations log.</p>
+                    </div>
+                </div>
+
+                <h2>Independent Lifecycle</h2>
+                <p>An earlier design embedded commands in the ecosystem model. This created an unresolvable coupling: operational commands are <strong>urgent and reactive</strong>, but model releases are <strong>planned and deliberate</strong>.</p>
+
+                <div style="background: var(--bg-card); padding: 25px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #ef4444;">
+                    <h4 style="color: #f87171; margin-bottom: 10px;">The Version Coupling Problem</h4>
+                    <p style="font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 15px;">Production runs model <code>v1.4.3-prod</code>. DevOps needs to repair a schema <strong>now</strong>. But the model branch has unreleased features at commits B, C, D. If commands are part of the model:</p>
+                    <ul style="margin-left: 20px; color: var(--text-secondary); font-size: 0.95rem; line-height: 1.8;">
+                        <li>Tagging main would push untested features to production</li>
+                        <li>Branching from the tag creates divergence and merge conflicts</li>
+                        <li>A long-lived branch mixes operational and model concerns</li>
+                    </ul>
+                </div>
+
+                <p>The solution decouples commands completely. Each PSP implicitly has a <strong>commands branch</strong> derived from its owning repo. The runtime loads the production model and the commands manifest independently.</p>
+
+                <div style="background: var(--bg-card); padding: 30px; border-radius: 12px; margin: 30px 0; text-align: center;">
+                    <div style="font-family: monospace; font-size: 0.95rem; color: var(--text-secondary);">
+                        <div style="margin-bottom: 20px;">
+                            <span style="color: var(--primary-light); font-weight: 600;">Same Git Repository, Independent Branches</span>
+                        </div>
+                        <div style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;">
+                            <div style="text-align: center;">
+                                <div style="color: #4ade80; font-weight: 600;">Model Branch</div>
+                                <div style="background: var(--bg-elevated); padding: 8px 16px; border-radius: 6px; margin-top: 8px;">PSPmain</div>
+                                <div style="color: var(--text-muted); font-size: 0.85rem; margin-top: 4px;">Tagged: v1.4.3-prod</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="color: #fbbf24; font-weight: 600;">Commands Branch</div>
+                                <div style="background: var(--bg-elevated); padding: 8px 16px; border-radius: 6px; margin-top: 8px;">cmd_PSPmain</div>
+                                <div style="color: var(--text-muted); font-size: 0.85rem; margin-top: 4px;">Tagged: cmd_v0.0.1-prod</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h2>Available Commands</h2>
+                <div class="code-block">
+                    <table>
+                        <thead>
+                            <tr><th>Command</th><th>Purpose</th><th>Use Case</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>RepairSchemaCommand</code></td><td>Repair table schemas</td><td>After manual DDL changes or schema drift</td></tr>
+                            <tr><td><code>ResetBatchStateCommand</code></td><td>Reset batch counters</td><td>After corrupted or stuck batch state</td></tr>
+                            <tr><td><code>ForceResnapshotCommand</code></td><td>Force full re-ingestion</td><td>After source data corrections</td></tr>
+                            <tr><td><code>ResetStoreCommand</code></td><td>Reset an entire store</td><td>Complete reprocessing needed</td></tr>
+                            <tr><td><code>NoopCommand</code></td><td>No-operation (testing)</td><td>Practice the workflow safely</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2>The Two-Phase Workflow</h2>
+
+                <h3>Phase 1: Dry-Run</h3>
+                <ol>
+                    <li><strong>Submit PR</strong> &mdash; DevOps adds a command with <code>mode=CommandMode.DRY_RUN</code></li>
+                    <li><strong>Review</strong> &mdash; A second person reviews and approves</li>
+                    <li><strong>Merge & Tag</strong> &mdash; PR merged, tagged (e.g. <code>cmd_v0.0.1-prod</code>)</li>
+                    <li><strong>Dry-run executes</strong> &mdash; Platform runs the real code paths with writes suppressed, logs results</li>
+                </ol>
+
+                <h3>Phase 2: Execute</h3>
+                <ol>
+                    <li><strong>Review dry-run output</strong> &mdash; DevOps verifies the dry-run results</li>
+                    <li><strong>Submit PR</strong> &mdash; Change mode from <code>DRY_RUN</code> to <code>EXECUTE</code></li>
+                    <li><strong>Review</strong> &mdash; A second person approves: "the dry-run output looks correct, go ahead"</li>
+                    <li><strong>Merge & Tag</strong> &mdash; PR merged, tagged (e.g. <code>cmd_v0.0.2-prod</code>)</li>
+                    <li><strong>Execute</strong> &mdash; Platform confirms dry-run was logged, then executes for real</li>
+                </ol>
+
+                <div style="background: rgba(8, 145, 178, 0.1); padding: 20px; border-radius: 8px; margin: 25px 0; border-left: 3px solid var(--primary);">
+                    <p style="margin: 0; line-height: 1.7; color: var(--text-secondary);">
+                        <strong style="color: var(--text-primary);">Enforced, Not Convention:</strong> The runtime <strong>refuses</strong> to execute any command that hasn't been dry-run first, even if the mode flag is set to <code>EXECUTE</code>. You cannot skip the dry-run step.
+                    </p>
+                </div>
+
+                <h2>Commands Manifest</h2>
+                <p>The commands branch contains a <code>commands.py</code> file that returns a list of command objects:</p>
+                <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; margin: 20px 0;">
+<pre style="margin: 0; color: var(--text-secondary); font-size: 0.9rem; overflow-x: auto;"><code>from datasurface.platforms.yellow.yellow_dp import RepairSchemaCommand, ResetBatchStateCommand
+from datasurface.md.governance import CommandMode
+
+commands = [
+    RepairSchemaCommand(
+        name="repair_store1_schema_2026_02_12",
+        platformName="YellowDP",
+        storeName="Store1",
+        mode=CommandMode.DRY_RUN
+    ),
+    ResetBatchStateCommand(
+        name="reset_store2_customers_2026_02_12",
+        platformName="YellowDP",
+        storeName="Store2",
+        datasetName="Customers",
+        mode=CommandMode.DRY_RUN
+    ),
+]</code></pre>
+                </div>
+
+                <p>For teams with multiple operators, commands can be organized into separate files to avoid merge conflicts:</p>
+                <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; margin: 20px 0;">
+<pre style="margin: 0; color: var(--text-secondary); font-size: 0.9rem; overflow-x: auto;"><code># commands.py (aggregator)
+from operator1_commands import commands as op1_cmds
+from operator2_commands import commands as op2_cmds
+commands = op1_cmds + op2_cmds</code></pre>
+                </div>
+
+                <h2>NoopCommand for Safe Practice</h2>
+                <p>The <code>NoopCommand</code> validates that the store exists but performs no actual operations. Use it to practice the entire command lifecycle without risk:</p>
+                <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; margin: 20px 0;">
+<pre style="margin: 0; color: var(--text-secondary); font-size: 0.9rem; overflow-x: auto;"><code>from datasurface.platforms.yellow.yellow_dp import NoopCommand
+from datasurface.md.governance import CommandMode
+
+commands = [
+    NoopCommand(
+        name="practice_command_2026_02_12",
+        platformName="YellowDP",
+        storeName="Store1",
+        mode=CommandMode.DRY_RUN
+    ),
+]</code></pre>
+                </div>
+
+                <h2>Operations Log & Audit Trail</h2>
+                <p>Every command execution is recorded in the operations log, providing a complete audit chain:</p>
+                <div class="code-block" style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr><th>command_name</th><th>phase</th><th>noticed_at_tag</th><th>status</th><th>result_summary</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>repair_store1_2026_02_12</td><td>dry-run</td><td>cmd_v0.0.1-prod</td><td>success</td><td>Would drop 1 column</td></tr>
+                            <tr><td>repair_store1_2026_02_12</td><td>execute</td><td>cmd_v0.0.2-prod</td><td>success</td><td>Dropped 1 column</td></tr>
+                            <tr><td>reset_store2_batch_2026_02_13</td><td>dry-run</td><td>cmd_v0.0.3-prod</td><td>success</td><td>Would reset batch 42</td></tr>
+                            <tr><td>reset_store2_batch_2026_02_13</td><td>execute</td><td>cmd_v0.0.4-prod</td><td>error</td><td>Permission denied</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="margin: 30px 0;">
+                    <h4 style="color: var(--primary-light); margin-bottom: 15px;">Full Traceability</h4>
+                    <p style="line-height: 1.7; color: var(--text-secondary);">Given any operation, you can trace in either direction:</p>
+                    <ul style="margin-left: 20px; color: var(--text-secondary); line-height: 1.8;">
+                        <li><strong>Forward:</strong> PR by Alice &rarr; approved by Bob &rarr; tagged by Carol &rarr; dry-run showed these SQL statements &rarr; executed successfully</li>
+                        <li><strong>Backward:</strong> "Why was <code>old_col</code> dropped from Store1?" &rarr; operations log &rarr; git tag &rarr; PR with discussion and approval</li>
+                    </ul>
+                </div>
+
+                <h2>Runtime Mode Enforcement</h2>
+                <div class="code-block">
+                    <table>
+                        <thead>
+                            <tr><th>Mode Flag</th><th>Log State</th><th>Runtime Behavior</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>DRY_RUN</code></td><td>No entry exists</td><td>Run dry-run, log results</td></tr>
+                            <tr><td><code>DRY_RUN</code></td><td>Already logged</td><td>No-op (idempotent)</td></tr>
+                            <tr><td><code>EXECUTE</code></td><td>Dry-run logged</td><td>Execute for real, log results</td></tr>
+                            <tr><td><code>EXECUTE</code></td><td>No dry-run logged</td><td><strong>Refused</strong> &mdash; generates alert</td></tr>
+                            <tr><td><code>EXECUTE</code></td><td>Already executed</td><td>No-op (idempotent)</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2>MCP Integration</h2>
+                <p>A Model Context Protocol (MCP) tool provides programmatic access to the operations log, allowing external tools to query command status without direct database access:</p>
+                <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; margin: 20px 0;">
+<pre style="margin: 0; color: var(--text-secondary); font-size: 0.9rem; overflow-x: auto;"><code>User: "Has the repair_store1_2026_02_12 command executed yet?"
+Assistant: [calls check_command_status tool]
+           "Yes, it completed successfully at 15:30 today. The dry-run
+           showed it would drop 1 column, and the execute phase confirmed
+           it dropped that column."
+
+User: "Show me any failed commands on Store2 this week"
+Assistant: [calls check_command_status with status=error, store_name=Store2]
+           "Found 1 failure: reset_store2_batch_2026_02_13 failed during
+           execute phase with 'Permission denied' error at 10:15 today."</code></pre>
+                </div>
+
+                <h2>Key Design Principles</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin: 30px 0;">
+                    <div style="background: var(--bg-card); padding: 25px; border-radius: 8px;">
+                        <h4 style="color: var(--primary-light); margin-bottom: 8px;">Declarative</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary);">Operations are expressed as desired intent, not imperative scripts. The platform handles the execution details.</p>
+                    </div>
+                    <div style="background: var(--bg-card); padding: 25px; border-radius: 8px;">
+                        <h4 style="color: var(--primary-light); margin-bottom: 8px;">Zero Configuration</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary);">The commands branch is implicitly derived from the PSP's owning repo. No extra setup in the model.</p>
+                    </div>
+                    <div style="background: var(--bg-card); padding: 25px; border-radius: 8px;">
+                        <h4 style="color: var(--primary-light); margin-bottom: 8px;">Real Code Paths</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary);">Dry-runs use the same code that executes for real, with writes suppressed. What you see is exactly what will happen.</p>
+                    </div>
+                    <div style="background: var(--bg-card); padding: 25px; border-radius: 8px;">
+                        <h4 style="color: var(--primary-light); margin-bottom: 8px;">Extensible</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary);">New command types are added as subclasses. The GitOps workflow, PR process, and operations log work unchanged.</p>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 50px;">
+                    <a href="contact.html" class="btn-primary">Learn More About Platform Operations</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <!-- Footer injected by js/footer.js -->
+    </footer>
+    <script>renderFooter('.');</script>
+</body>
+</html>

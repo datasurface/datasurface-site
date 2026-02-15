@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>DataSurface Blog</title>
+    <link>https://datasurface.com/blog/index.html</link>
+    <description>Insights on enterprise data management, data logistics, and breaking free from vendor lock-in.</description>
+    <language>en-us</language>
+    <atom:link href="https://datasurface.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>How DataSurface Implements True "Shift Left" with Data Contracts</title>
+      <link>https://datasurface.com/blog/shift-left-data-contracts.html</link>
+      <guid>https://datasurface.com/blog/shift-left-data-contracts.html</guid>
+      <description>DataSurface enforces data contracts through PR workflows, ensuring backward compatibility, controlled deprecation, and mutual approval between producers and consumers.</description>
+    </item>
+    <item>
+      <title>The "Day 2" Trap: Why Your New Data Platform Won't Save You</title>
+      <link>https://datasurface.com/blog/day-2-trap.html</link>
+      <guid>https://datasurface.com/blog/day-2-trap.html</guid>
+      <description>Why your new data platform won't save you. The real costs begin on Day 2—building pipeline spaghetti around expensive platforms. There's a better way.</description>
+    </item>
+    <item>
+      <title>The Walled Gardens Are Back</title>
+      <link>https://datasurface.com/blog/walled-gardens.html</link>
+      <guid>https://datasurface.com/blog/walled-gardens.html</guid>
+      <description>Today's data landscape is dominated by proprietary walled gardens. DataSurface is the 'Amazon for Data'—a logistics layer that frees you from vendor lock-in.</description>
+    </item>
+  </channel>
+</rss>

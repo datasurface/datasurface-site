@@ -92,6 +92,7 @@
         frozenset(["customer_db"]): PostgresDatabase(
             "CustomerDB_Prod",
             hostPort=HostPortPair("prod-db.internal", 5432),
+            locations={LocationKey("MyCorp:USA/us-east-1")},
             databaseName="customer_production",
             productionStatus=ProductionStatus.PRODUCTION
         )
@@ -109,6 +110,7 @@ team.add(EnvironmentMap(
         frozenset(["customer_db"]): PostgresDatabase(
             "CustomerDB_Dev",
             hostPort=HostPortPair("dev-db.internal", 5432),
+            locations={LocationKey("MyCorp:USA/us-east-1")},
             databaseName="customer_dev",
             productionStatus=ProductionStatus.NOT_PRODUCTION
         )
@@ -136,7 +138,7 @@ team.add(EnvironmentMap(
 
 DataTransformer(
     name="MaskCustomerPII",
-    code=PythonCodeArtifact(
+    code=PythonRepoCodeArtifact(
         VersionedRepository(
             GitHubRepository("myorg/transformers", "main"),
             EnvRefReleaseSelector("transformer_version")  # Logical reference

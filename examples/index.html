@@ -63,7 +63,8 @@ def create_producer_model(eco: Ecosystem):
                 databaseName="customer_db_qa",
                 productionStatus=ProductionStatus.NOT_PRODUCTION
             )
-        }
+        },
+        dtReleaseSelectors={}
     ))
 
     # Prod Connection
@@ -77,7 +78,8 @@ def create_producer_model(eco: Ecosystem):
                 databaseName="customer_db",
                 productionStatus=ProductionStatus.PRODUCTION
             )
-        }
+        },
+        dtReleaseSelectors={}
     ))
     
     # 2. Add the Datastore (Producer)
@@ -194,8 +196,8 @@ def create_transformer_model(team: Team):
 
             # Transformer Definition
             DataTransformer(
-                name="MaskedCustomerGenerator",
-                
+                "MaskedCustomerGenerator",
+
                 # Code Reference (Resolves via EnvMap 'custMaskRev')
                 code=PythonRepoCodeArtifact(
                     VersionedRepository(
@@ -207,8 +209,9 @@ def create_transformer_model(team: Team):
                 # Configuration Reference (Resolves via EnvMap 'mask_customer_dt')
                 kv=EnvRefConfigMap("mask_customer_dt"),
                 
+                runAsCredential=Credential("transformer_user", CredentialType.USER_PASSWORD),
                 trigger=CronTrigger("Every 1 minute", "*/1 * * * *"),
-                
+
                 # Output Schema
                 store=Datastore(
                     name="MaskedCustomers",

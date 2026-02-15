@@ -45,10 +45,10 @@
             <div class="container">
                 <h2>What is SCD2?</h2>
                 <p>Slowly Changing Dimension Type 2 (SCD2) is a data warehousing technique used to track historical data. Unlike standard updates that overwrite existing data (SCD1), SCD2 keeps a full history of changes.</p>
-                <p>DataSurface automates this pattern, adding two system columns to your data to enable point-in-time analysis: <code>batch_in</code> and <code>batch_out</code>.</p>
+                <p>DataSurface automates this pattern, adding two system columns to your data to enable point-in-time analysis: <code>ds_surf_batch_in</code> and <code>ds_surf_batch_out</code>.</p>
                 
                 <h3>How It Works</h3>
-                <p>Every record has a validity window defined by batch numbers. When a record is created, it is valid from the ingestion batch until the end of time (MAXINT). When it is updated, the old version is "closed" (its <code>batch_out</code> is set to the previous batch ID), and a new version is inserted with the new batch ID as its <code>batch_in</code>.</p>
+                <p>Every record has a validity window defined by batch numbers. When a record is created, it is valid from the ingestion batch until the end of time (MAXINT). When it is updated, the old version is "closed" (its <code>ds_surf_batch_out</code> is set to the previous batch ID), and a new version is inserted with the new batch ID as its <code>ds_surf_batch_in</code>.</p>
 
                 <h3>Example: Tracking Employee Changes</h3>
                 <p>Consider a <code>Person</code> table with the following schema:</p>
@@ -73,7 +73,7 @@
                 <div class="code-block">
                     <table>
                         <thead>
-                            <tr><th>id</th><th>firstName</th><th>surname</th><th>address</th><th>employer</th><th>batch_in</th><th>batch_out</th></tr>
+                            <tr><th>id</th><th>firstName</th><th>surname</th><th>address</th><th>employer</th><th>ds_surf_batch_in</th><th>ds_surf_batch_out</th></tr>
                         </thead>
                         <tbody>
                             <tr><td>101</td><td>John</td><td>Doe</td><td>123 Main St</td><td>Acme Corp</td><td>100</td><td>MAXINT</td></tr>
@@ -87,7 +87,7 @@
                 <div class="code-block">
                     <table>
                         <thead>
-                            <tr><th>id</th><th>firstName</th><th>surname</th><th>address</th><th>employer</th><th>batch_in</th><th>batch_out</th></tr>
+                            <tr><th>id</th><th>firstName</th><th>surname</th><th>address</th><th>employer</th><th>ds_surf_batch_in</th><th>ds_surf_batch_out</th></tr>
                         </thead>
                         <tbody>
                             <tr class="dimmed"><td>101</td><td>John</td><td>Doe</td><td>123 Main St</td><td>Acme Corp</td><td>100</td><td>104</td></tr>
@@ -102,7 +102,7 @@
                 <div class="code-block">
                     <table>
                         <thead>
-                            <tr><th>id</th><th>firstName</th><th>surname</th><th>address</th><th>employer</th><th>batch_in</th><th>batch_out</th></tr>
+                            <tr><th>id</th><th>firstName</th><th>surname</th><th>address</th><th>employer</th><th>ds_surf_batch_in</th><th>ds_surf_batch_out</th></tr>
                         </thead>
                         <tbody>
                             <tr class="dimmed"><td>101</td><td>John</td><td>Doe</td><td>123 Main St</td><td>Acme Corp</td><td>100</td><td>104</td></tr>
@@ -117,7 +117,7 @@
                 <div class="code-block">
                     <table>
                         <thead>
-                            <tr><th>id</th><th>firstName</th><th>surname</th><th>address</th><th>employer</th><th>batch_in</th><th>batch_out</th></tr>
+                            <tr><th>id</th><th>firstName</th><th>surname</th><th>address</th><th>employer</th><th>ds_surf_batch_in</th><th>ds_surf_batch_out</th></tr>
                         </thead>
                         <tbody>
                             <tr class="dimmed"><td>101</td><td>John</td><td>Doe</td><td>123 Main St</td><td>Acme Corp</td><td>100</td><td>104</td></tr>
@@ -126,7 +126,7 @@
                         </tbody>
                     </table>
                 </div>
-                <p><em>Status: No active record exists (all have a <code>batch_out</code>). However, the history remains for forensic analysis.</em></p>
+                <p><em>Status: No active record exists (all have a <code>ds_surf_batch_out</code>). However, the history remains for forensic analysis.</em></p>
 
                 <h3>Why This Matters</h3>
                 <p>With SCD2, you can ask questions like:</p>
