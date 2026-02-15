@@ -1046,6 +1046,167 @@ code {
 }
 
 /* ============================================
+   Homepage Sections
+   ============================================ */
+
+/* Integrations Bar */
+.integrations-section {
+    padding: 50px 20px 30px;
+}
+
+.integrations-label {
+    text-align: center;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+}
+
+.integrations-grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 40px;
+    opacity: 0.85;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+.integrations-grid:hover {
+    opacity: 1;
+}
+
+.integration-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.integration-name {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.integrations-note {
+    text-align: center;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: 25px;
+    opacity: 0.7;
+}
+
+/* Articles Section */
+.articles-section {
+    padding: 60px 20px 40px;
+}
+
+.articles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+}
+
+.article-card h3 {
+    margin-bottom: 15px;
+    font-size: 1.4rem;
+}
+
+.article-card h3 a {
+    color: var(--primary-light);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.article-card h3 a:hover {
+    color: var(--text-primary);
+}
+
+.article-subtitle {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.article-body {
+    margin-bottom: 20px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+}
+
+.article-body strong {
+    color: var(--text-primary);
+}
+
+.article-quote {
+    margin-bottom: 20px;
+    line-height: 1.7;
+    font-style: italic;
+    color: var(--text-muted);
+    padding: 16px;
+    background: var(--bg-elevated);
+    border-left: 3px solid var(--primary-light);
+    border-radius: 0 8px 8px 0;
+}
+
+/* Capabilities Section */
+.capabilities-section {
+    padding: 40px 20px;
+}
+
+.capabilities-section .stats-card h2 {
+    margin-bottom: 32px;
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+/* Closing Section */
+.closing-section {
+    padding: 60px 20px;
+}
+
+.closing-section h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2rem;
+    color: var(--text-secondary);
+    font-weight: 700;
+}
+
+.closing-description {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 40px;
+    color: var(--text-muted);
+}
+
+.closing-section .stats-card {
+    text-align: center;
+}
+
+.closing-stats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 48px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+}
+
+.closing-cta {
+    font-size: 1rem;
+}
+
+.closing-cta .btn-secondary {
+    padding: 14px 32px;
+}
+
+/* ============================================
    Footer
    ============================================ */
 

@@ -188,28 +188,23 @@
         </section>
 
         <!-- Integrations Section -->
-        <section class="container" style="padding: 50px 20px 30px;">
-            <p style="text-align: center; font-size: 0.95rem; color: var(--text-muted); margin-bottom: 30px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600;">
-                Works With Your Existing Stack
-            </p>
-            <a href="supported.html" style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 40px; opacity: 0.85; text-decoration: none; transition: opacity 0.2s ease;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
-                <!-- AWS -->
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+        <section class="integrations-section container">
+            <p class="integrations-label">Works With Your Existing Stack</p>
+            <a href="supported.html" class="integrations-grid">
+                <div class="integration-item">
                     <svg width="60" height="48" viewBox="0 0 60 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <text x="30" y="30" text-anchor="middle" fill="#FF9900" font-size="18" font-weight="bold" font-family="Arial">aws</text>
                     </svg>
-                    <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 500;">AWS</span>
+                    <span class="integration-name">AWS</span>
                 </div>
-                <!-- IBM DB/2 -->
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                <div class="integration-item">
                     <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect x="8" y="10" width="32" height="28" rx="3" stroke="#054ADA" stroke-width="2.5" fill="none"/>
                         <text x="24" y="29" text-anchor="middle" fill="#054ADA" font-size="11" font-weight="bold" font-family="Arial">DB/2</text>
                     </svg>
-                    <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 500;">IBM DB/2</span>
+                    <span class="integration-name">IBM DB/2</span>
                 </div>
-                <!-- Snowflake -->
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                <div class="integration-item">
                     <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M24 4v40M4 24h40M9.86 9.86l28.28 28.28M38.14 9.86L9.86 38.14" stroke="#29B5E8" stroke-width="3" stroke-linecap="round"/>
                         <circle cx="24" cy="4" r="3" fill="#29B5E8"/>
@@ -221,70 +216,61 @@
                         <circle cx="38.14" cy="9.86" r="3" fill="#29B5E8"/>
                         <circle cx="9.86" cy="38.14" r="3" fill="#29B5E8"/>
                     </svg>
-                    <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 500;">Snowflake</span>
+                    <span class="integration-name">Snowflake</span>
                 </div>
-                <!-- Databricks -->
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                <div class="integration-item">
                     <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M24 4L4 16v16l20 12 20-12V16L24 4z" fill="none" stroke="#FF3621" stroke-width="2"/>
                         <path d="M24 4v16M4 16l20 4 20-4M24 36l20-12M24 36L4 24" stroke="#FF3621" stroke-width="2"/>
                     </svg>
-                    <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 500;">Databricks</span>
+                    <span class="integration-name">Databricks</span>
                 </div>
-                <!-- Oracle -->
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                <div class="integration-item">
                     <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect x="6" y="16" width="36" height="16" rx="8" stroke="#C74634" stroke-width="3" fill="none"/>
                     </svg>
-                    <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 500;">Oracle</span>
+                    <span class="integration-name">Oracle</span>
                 </div>
-                <!-- PostgreSQL -->
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                <div class="integration-item">
                     <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <ellipse cx="24" cy="18" rx="14" ry="10" stroke="#336791" stroke-width="2.5" fill="none"/>
                         <path d="M10 18v12c0 5.5 6.3 10 14 10s14-4.5 14-10V18" stroke="#336791" stroke-width="2.5" fill="none"/>
                         <ellipse cx="24" cy="18" rx="8" ry="5" stroke="#336791" stroke-width="2" fill="none"/>
                     </svg>
-                    <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 500;">PostgreSQL</span>
+                    <span class="integration-name">PostgreSQL</span>
                 </div>
-                <!-- SQL Server -->
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                <div class="integration-item">
                     <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect x="8" y="8" width="32" height="32" rx="4" stroke="#CC2927" stroke-width="2.5" fill="none"/>
                         <text x="24" y="30" text-anchor="middle" fill="#CC2927" font-size="14" font-weight="bold" font-family="Arial">SQL</text>
                     </svg>
-                    <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 500;">SQL Server</span>
+                    <span class="integration-name">SQL Server</span>
                 </div>
-                <!-- Kubernetes -->
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                <div class="integration-item">
                     <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M24 6l16.5 9.5v19L24 44 7.5 34.5v-19L24 6z" stroke="#326CE5" stroke-width="2.5" fill="none"/>
                         <circle cx="24" cy="24" r="6" stroke="#326CE5" stroke-width="2" fill="none"/>
                         <path d="M24 18v-6M24 36v-6M18.5 21l-5-3M34.5 33l-5-3M18.5 27l-5 3M34.5 15l-5 3" stroke="#326CE5" stroke-width="2"/>
                     </svg>
-                    <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 500;">Kubernetes</span>
+                    <span class="integration-name">Kubernetes</span>
                 </div>
-                <!-- Trino/Iceberg -->
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                <div class="integration-item">
                     <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M24 8L8 18v12l16 10 16-10V18L24 8z" fill="none" stroke="#DD00A1" stroke-width="2.5"/>
                         <path d="M24 8v32M8 18l16 10 16-10" stroke="#DD00A1" stroke-width="2"/>
                     </svg>
-                    <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 500;">Trino/Iceberg</span>
+                    <span class="integration-name">Trino/Iceberg</span>
                 </div>
-                <!-- Datadog -->
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                <div class="integration-item">
                     <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M24 4C12.95 4 4 12.95 4 24s8.95 20 20 20 20-8.95 20-20S35.05 4 24 4z" fill="#632CA6"/>
                         <path d="M24 10c-7.73 0-14 6.27-14 14s6.27 14 14 14 14-6.27 14-14-6.27-14-14-14z" fill="#fff"/>
                         <circle cx="24" cy="24" r="7" fill="#632CA6"/>
                     </svg>
-                    <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 500;">Datadog</span>
+                    <span class="integration-name">Datadog</span>
                 </div>
             </a>
-            <p style="text-align: center; font-size: 0.7rem; color: var(--text-muted); margin-top: 25px; opacity: 0.7;">
-                All trademarks are property of their respective owners.
-            </p>
+            <p class="integrations-note">All trademarks are property of their respective owners.</p>
         </section>
 
         <section class="features container stagger-children">
@@ -302,47 +288,47 @@
             </div>
         </section>
 
-        <section class="container" style="padding: 60px 20px 40px;">
+        <section class="articles-section container">
             <h2 class="section-title">Why DataSurface?</h2>
             <p class="section-subtitle">
                 The data landscape is broken. Enterprises are drowning in point-to-point pipelines and vendor lock-in. Here's why that's about to change.
             </p>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px;" class="stagger-children">
+            <div class="articles-grid stagger-children">
                 <article class="article-card">
-                    <h3 style="margin-bottom: 15px; font-size: 1.4rem;">
-                        <a href="blog/walled-gardens.html" style="color: var(--primary-light); text-decoration: none;">The Walled Gardens Are Back</a>
+                    <h3>
+                        <a href="blog/walled-gardens.html">The Walled Gardens Are Back</a>
                     </h3>
-                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px; font-weight: 500;">And This Time It's Your Data</p>
-                    <p style="margin-bottom: 20px; line-height: 1.7; color: var(--text-secondary);">
-                        Today's data landscape looks eerily like the 90s internet—dominated by proprietary walled gardens from Big Data Vendors. 
-                        <strong style="color: var(--text-primary);">DataSurface is the "HTTP for Data"</strong>, an open protocol layer that connects producers and consumers while keeping you in control of your destiny, free from vendor lock-in.
+                    <p class="article-subtitle">And This Time It's Your Data</p>
+                    <p class="article-body">
+                        Today's data landscape looks eerily like the 90s internet—dominated by proprietary walled gardens from Big Data Vendors.
+                        <strong>DataSurface is the "HTTP for Data"</strong>, an open protocol layer that connects producers and consumers while keeping you in control of your destiny, free from vendor lock-in.
                     </p>
-                    <p style="margin-bottom: 20px; line-height: 1.7; font-style: italic; color: var(--text-muted); padding: 16px; background: var(--bg-elevated); border-left: 3px solid var(--primary-light); border-radius: 0 8px 8px 0;">
+                    <p class="article-quote">
                         "Just as internet users don't care how packets traverse the network, DataSurface users won't care how data moves from producers to consumers."
                     </p>
-                    <a href="blog/walled-gardens.html" class="btn-secondary" style="display: inline-block;">Read the Full Story →</a>
+                    <a href="blog/walled-gardens.html" class="btn-secondary">Read the Full Story →</a>
                 </article>
 
                 <article class="article-card">
-                    <h3 style="margin-bottom: 15px; font-size: 1.4rem;">
-                        <a href="blog/day-2-trap.html" style="color: var(--primary-light); text-decoration: none;">The "Day 2" Trap</a>
+                    <h3>
+                        <a href="blog/day-2-trap.html">The "Day 2" Trap</a>
                     </h3>
-                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px; font-weight: 500;">Why Your New Data Platform Won't Save You</p>
-                    <p style="margin-bottom: 20px; line-height: 1.7; color: var(--text-secondary);">
-                        Many CDOs expect that signing a multi-year deal for Snowflake or Databricks will lead to immediate productivity gains. <strong style="color: var(--text-primary);">But the real work—and the real costs—begin after the contract is signed.</strong> 
+                    <p class="article-subtitle">Why Your New Data Platform Won't Save You</p>
+                    <p class="article-body">
+                        Many CDOs expect that signing a multi-year deal for Snowflake or Databricks will lead to immediate productivity gains. <strong>But the real work—and the real costs—begin after the contract is signed.</strong>
                         You can easily spend tens of millions on labor building "pipeline spaghetti" around that expensive platform.
                     </p>
-                    <p style="margin-bottom: 20px; line-height: 1.7; font-style: italic; color: var(--text-muted); padding: 16px; background: var(--bg-elevated); border-left: 3px solid var(--primary-light); border-radius: 0 8px 8px 0;">
+                    <p class="article-quote">
                         "DataSurface is the logistics layer. The data nervous system for your enterprise that allows platforms to be swapped out or upgraded without breaking the business."
                     </p>
-                    <a href="blog/day-2-trap.html" class="btn-secondary" style="display: inline-block;">Read the Full Story →</a>
+                    <a href="blog/day-2-trap.html" class="btn-secondary">Read the Full Story →</a>
                 </article>
             </div>
         </section>
 
-        <section class="container" style="padding: 40px 20px;">
+        <section class="capabilities-section container">
             <div class="stats-card">
-                <h2 style="margin-bottom: 32px; font-size: 2rem; font-weight: 800;">Core Capabilities</h2>
+                <h2>Core Capabilities</h2>
                 <div class="capabilities-grid">
                     <div class="capability-item">
                         <h4><a href="scd2.html">Automated History (SCD2)</a></h4>
@@ -372,13 +358,13 @@
             </div>
         </section>
 
-        <section class="container" style="padding: 60px 20px;">
-            <h2 style="text-align: center; margin-bottom: 20px; font-size: 2rem; color: var(--text-secondary); font-weight: 700;">Built by Engineers Who've Been There</h2>
-            <p style="text-align: center; max-width: 700px; margin: 0 auto 40px; color: var(--text-muted);">
+        <section class="closing-section container">
+            <h2>Built by Engineers Who've Been There</h2>
+            <p class="closing-description">
                 DataSurface was created by veterans of enterprise-scale distributed systems. Decades of experience running production data platforms inform every design decision.
             </p>
-            <div class="stats-card" style="text-align: center;">
-                <div style="display: flex; justify-content: center; align-items: center; gap: 48px; flex-wrap: wrap; margin-bottom: 32px;">
+            <div class="stats-card closing-section">
+                <div class="closing-stats">
                     <div class="stat-item">
                         <div class="stat-number">6+ years</div>
                         <div class="stat-label">Running petabyte-scale platforms</div>
@@ -394,7 +380,9 @@
                         <div class="stat-label">Production system expertise</div>
                     </div>
                 </div>
-                <a href="about.html" class="btn-secondary" style="font-size: 1rem; padding: 14px 32px;">Learn More About Us</a>
+                <div class="closing-cta">
+                    <a href="about.html" class="btn-secondary">Learn More About Us</a>
+                </div>
             </div>
         </section>
 
